@@ -1,0 +1,6 @@
+[submodule "vendor/HistorianSim"]
+	path = vendor/HistorianSim
+	url = https://github.com/ScottDuncanAI/HistorianSim.git
+[submodule "vendor/HistorianRCA"]
+	path = vendor/HistorianRCA
+	url = https://github.com/ScottDuncanAI/HistorianRCA.git
