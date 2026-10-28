@@ -1,4 +1,6 @@
 name: Milestone 1 validation layers
+permissions:
+  contents: read
 on:
   push:
     branches: [main]
