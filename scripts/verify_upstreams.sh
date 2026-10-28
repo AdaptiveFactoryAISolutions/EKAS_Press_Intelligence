@@ -15,4 +15,8 @@ fail(){ echo "UPSTREAM VERIFY FAIL: $*" >&2; exit 1; }
 [[ -f "$RCA/LICENSE" ]] || fail "HistorianRCA LICENSE missing"
 [[ -f "$SIM/README.md" ]] || fail "HistorianSim README missing"
 [[ -f "$RCA/CHALLENGE.md" ]] || fail "HistorianRCA challenge definition missing"
+for upstream in "$SIM" "$RCA"; do
+  [[ "$(git -C "$upstream" rev-parse --is-shallow-repository)" == false ]] || fail "Shallow upstream history"
+  [[ -z "$(git -C "$upstream" status --porcelain --untracked-files=normal)" ]] || fail "Upstream working tree modified"
+done
 echo "UPSTREAM VERIFY PASS"

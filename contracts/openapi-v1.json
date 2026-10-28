@@ -1,0 +1,1962 @@
+{
+  "components": {
+    "schemas": {
+      "ActionRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "maxLength": 1000,
+            "minLength": 5,
+            "title": "Description",
+            "type": "string"
+          },
+          "repair_at_s": {
+            "minimum": 1.0,
+            "title": "Repair At S",
+            "type": "integer"
+          },
+          "target_event_class": {
+            "title": "Target Event Class",
+            "type": "string"
+          }
+        },
+        "required": [
+          "target_event_class",
+          "repair_at_s",
+          "description"
+        ],
+        "title": "ActionRequest",
+        "type": "object"
+      },
+      "AssessmentRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "profile": {
+            "default": "sparse",
+            "enum": [
+              "sparse",
+              "enhanced"
+            ],
+            "title": "Profile",
+            "type": "string"
+          },
+          "signals": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Signals"
+          }
+        },
+        "title": "AssessmentRequest",
+        "type": "object"
+      },
+      "AssessmentResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "assessment_id": {
+            "title": "Assessment Id",
+            "type": "string"
+          },
+          "available_signals": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Available Signals",
+            "type": "array"
+          },
+          "classes": {
+            "items": {
+              "$ref": "#/components/schemas/Visibility"
+            },
+            "title": "Classes",
+            "type": "array"
+          },
+          "coverage": {
+            "$ref": "#/components/schemas/Coverage"
+          },
+          "pair_coverage": {
+            "$ref": "#/components/schemas/Coverage"
+          },
+          "pairs": {
+            "items": {
+              "$ref": "#/components/schemas/DiscriminationPair"
+            },
+            "title": "Pairs",
+            "type": "array"
+          },
+          "profile": {
+            "enum": [
+              "sparse",
+              "enhanced"
+            ],
+            "title": "Profile",
+            "type": "string"
+          },
+          "unresolved_equivalence_groups": {
+            "items": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "title": "Unresolved Equivalence Groups",
+            "type": "array"
+          }
+        },
+        "required": [
+          "assessment_id",
+          "profile",
+          "available_signals",
+          "classes",
+          "pairs",
+          "coverage",
+          "pair_coverage",
+          "unresolved_equivalence_groups"
+        ],
+        "title": "AssessmentResponse",
+        "type": "object"
+      },
+      "AssetResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "asset_id": {
+            "title": "Asset Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "parent": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent"
+          },
+          "relationship": {
+            "title": "Relationship",
+            "type": "string"
+          }
+        },
+        "required": [
+          "asset_id",
+          "name",
+          "parent",
+          "relationship"
+        ],
+        "title": "AssetResponse",
+        "type": "object"
+      },
+      "AssetsResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "assets": {
+            "items": {
+              "$ref": "#/components/schemas/AssetResponse"
+            },
+            "title": "Assets",
+            "type": "array"
+          }
+        },
+        "required": [
+          "assets"
+        ],
+        "title": "AssetsResponse",
+        "type": "object"
+      },
+      "CaseEvidenceResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "control_plan": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Control Plan",
+            "type": "array"
+          },
+          "events": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Events",
+            "type": "array"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/EvidenceRecord"
+            },
+            "title": "Evidence",
+            "type": "array"
+          },
+          "maintenance": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Maintenance",
+            "type": "array"
+          },
+          "pfmea": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Pfmea",
+            "type": "array"
+          },
+          "quality": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Quality",
+            "type": "array"
+          },
+          "samples": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Samples",
+            "type": "array"
+          }
+        },
+        "required": [
+          "evidence",
+          "samples",
+          "events",
+          "maintenance",
+          "quality",
+          "pfmea",
+          "control_plan"
+        ],
+        "title": "CaseEvidenceResponse",
+        "type": "object"
+      },
+      "CaseResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "alternatives": {
+            "items": {
+              "$ref": "#/components/schemas/HypothesisResponse"
+            },
+            "title": "Alternatives",
+            "type": "array"
+          },
+          "asset_id": {
+            "title": "Asset Id",
+            "type": "string"
+          },
+          "case_id": {
+            "title": "Case Id",
+            "type": "string"
+          },
+          "diagnosis_state": {
+            "$ref": "#/components/schemas/DiagnosisState"
+          },
+          "direct_answer": {
+            "title": "Direct Answer",
+            "type": "string"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/EvidenceRecord"
+            },
+            "title": "Evidence",
+            "type": "array"
+          },
+          "hypotheses": {
+            "items": {
+              "$ref": "#/components/schemas/HypothesisResponse"
+            },
+            "title": "Hypotheses",
+            "type": "array"
+          },
+          "observed_problem": {
+            "title": "Observed Problem",
+            "type": "string"
+          },
+          "period": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Period",
+            "type": "object"
+          },
+          "qualification": {
+            "title": "Qualification",
+            "type": "string"
+          },
+          "recommended_action": {
+            "title": "Recommended Action",
+            "type": "string"
+          },
+          "run_id": {
+            "title": "Run Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "case_id",
+          "run_id",
+          "asset_id",
+          "diagnosis_state",
+          "observed_problem",
+          "direct_answer",
+          "evidence",
+          "hypotheses",
+          "alternatives",
+          "qualification",
+          "recommended_action",
+          "period"
+        ],
+        "title": "CaseResponse",
+        "type": "object"
+      },
+      "Claim": {
+        "additionalProperties": false,
+        "properties": {
+          "alternatives": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Alternatives",
+            "type": "array"
+          },
+          "diagnosis_state": {
+            "$ref": "#/components/schemas/DiagnosisState",
+            "default": "SUSPECTED_CAUSE"
+          },
+          "end_s": {
+            "exclusiveMinimum": 0.0,
+            "title": "End S",
+            "type": "number"
+          },
+          "event_kind": {
+            "default": "fault",
+            "enum": [
+              "fault",
+              "benign",
+              "artifact"
+            ],
+            "title": "Event Kind",
+            "type": "string"
+          },
+          "evidence": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Evidence",
+            "type": "array"
+          },
+          "failed_item": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Failed Item"
+          },
+          "failure_mechanism": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Failure Mechanism"
+          },
+          "start_s": {
+            "minimum": 0.0,
+            "title": "Start S",
+            "type": "number"
+          }
+        },
+        "required": [
+          "start_s",
+          "end_s"
+        ],
+        "title": "Claim",
+        "type": "object"
+      },
+      "Coverage": {
+        "additionalProperties": true,
+        "properties": {
+          "definition": {
+            "title": "Definition",
+            "type": "string"
+          },
+          "denominator": {
+            "title": "Denominator",
+            "type": "integer"
+          },
+          "numerator": {
+            "title": "Numerator",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "numerator",
+          "denominator",
+          "definition"
+        ],
+        "title": "Coverage",
+        "type": "object"
+      },
+      "DiagnosisState": {
+        "enum": [
+          "OBSERVED_ANOMALY",
+          "CONTRIBUTOR",
+          "SUSPECTED_CAUSE",
+          "EVIDENCE_SUPPORTED_CAUSE",
+          "VERIFIED_ROOT_CAUSE",
+          "CORRECTIVE_ACTION",
+          "VERIFICATION",
+          "SUSTAINED"
+        ],
+        "title": "DiagnosisState",
+        "type": "string"
+      },
+      "DiscriminationPair": {
+        "additionalProperties": true,
+        "properties": {
+          "available_observations": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Available Observations",
+            "type": "array"
+          },
+          "classes": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Classes",
+            "type": "array"
+          },
+          "distinguishable": {
+            "title": "Distinguishable",
+            "type": "boolean"
+          },
+          "missing_discriminators": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Missing Discriminators",
+            "type": "array"
+          },
+          "required_observations": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Required Observations",
+            "type": "array"
+          }
+        },
+        "required": [
+          "classes",
+          "required_observations",
+          "available_observations",
+          "missing_discriminators",
+          "distinguishable"
+        ],
+        "title": "DiscriminationPair",
+        "type": "object"
+      },
+      "EvidenceRecord": {
+        "additionalProperties": true,
+        "properties": {
+          "asset": {
+            "title": "Asset",
+            "type": "string"
+          },
+          "calculation": {
+            "title": "Calculation"
+          },
+          "confidence": {
+            "title": "Confidence",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "qualification": {
+            "title": "Qualification",
+            "type": "string"
+          },
+          "rule": {
+            "title": "Rule",
+            "type": "string"
+          },
+          "signal": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Signal"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "timestamp": {
+            "title": "Timestamp"
+          }
+        },
+        "required": [
+          "id",
+          "source",
+          "asset",
+          "timestamp",
+          "calculation",
+          "rule",
+          "confidence",
+          "qualification"
+        ],
+        "title": "EvidenceRecord",
+        "type": "object"
+      },
+      "FinancialRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "assumption_source": {
+            "maxLength": 1000,
+            "minLength": 5,
+            "title": "Assumption Source",
+            "type": "string"
+          },
+          "contribution_per_unit": {
+            "minimum": 0.0,
+            "title": "Contribution Per Unit",
+            "type": "number"
+          },
+          "currency": {
+            "pattern": "^[A-Z]{3}$",
+            "title": "Currency",
+            "type": "string"
+          }
+        },
+        "required": [
+          "contribution_per_unit",
+          "currency",
+          "assumption_source"
+        ],
+        "title": "FinancialRequest",
+        "type": "object"
+      },
+      "FinancialResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "assumptions": {
+            "additionalProperties": true,
+            "title": "Assumptions",
+            "type": "object"
+          },
+          "avoided_cost": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Avoided Cost"
+          },
+          "currency": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Currency"
+          },
+          "estimated_financial_impact": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Estimated Financial Impact"
+          },
+          "financial_id": {
+            "title": "Financial Id",
+            "type": "string"
+          },
+          "lost_capacity": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lost Capacity"
+          },
+          "potential_contribution_at_risk": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Potential Contribution At Risk"
+          },
+          "production_opportunity": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Production Opportunity"
+          },
+          "provenance": {
+            "additionalProperties": true,
+            "title": "Provenance",
+            "type": "object"
+          },
+          "unknowns": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Unknowns",
+            "type": "array"
+          },
+          "verified_savings": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verified Savings"
+          }
+        },
+        "required": [
+          "financial_id",
+          "lost_capacity",
+          "production_opportunity",
+          "potential_contribution_at_risk",
+          "estimated_financial_impact",
+          "avoided_cost",
+          "verified_savings",
+          "currency",
+          "assumptions",
+          "provenance",
+          "unknowns"
+        ],
+        "title": "FinancialResponse",
+        "type": "object"
+      },
+      "GapsResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "profile": {
+            "enum": [
+              "sparse",
+              "enhanced"
+            ],
+            "title": "Profile",
+            "type": "string"
+          },
+          "recommendations": {
+            "items": {
+              "$ref": "#/components/schemas/SensorRecommendationResponse"
+            },
+            "title": "Recommendations",
+            "type": "array"
+          }
+        },
+        "required": [
+          "profile",
+          "recommendations"
+        ],
+        "title": "GapsResponse",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "HypothesisResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "asset": {
+            "title": "Asset",
+            "type": "string"
+          },
+          "contradicting_evidence": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Contradicting Evidence",
+            "type": "array"
+          },
+          "disposition": {
+            "enum": [
+              "SUPPORTED",
+              "CONTRADICTED",
+              "UNRESOLVED",
+              "NOT_OBSERVABLE"
+            ],
+            "title": "Disposition",
+            "type": "string"
+          },
+          "event_class": {
+            "title": "Event Class",
+            "type": "string"
+          },
+          "event_kind": {
+            "enum": [
+              "fault",
+              "benign",
+              "artifact"
+            ],
+            "title": "Event Kind",
+            "type": "string"
+          },
+          "failed_item": {
+            "title": "Failed Item",
+            "type": "string"
+          },
+          "failure_mechanism": {
+            "title": "Failure Mechanism",
+            "type": "string"
+          },
+          "missing_evidence": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Missing Evidence",
+            "type": "array"
+          },
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          },
+          "score": {
+            "title": "Score",
+            "type": "number"
+          },
+          "supporting_evidence": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Supporting Evidence",
+            "type": "array"
+          }
+        },
+        "required": [
+          "event_class",
+          "event_kind",
+          "asset",
+          "failed_item",
+          "failure_mechanism",
+          "score",
+          "disposition",
+          "supporting_evidence",
+          "contradicting_evidence",
+          "missing_evidence",
+          "reason"
+        ],
+        "title": "HypothesisResponse",
+        "type": "object"
+      },
+      "InvestigationRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "asset_id": {
+            "default": "Press 27",
+            "enum": [
+              "Press 27",
+              "Feeder 27",
+              "Decoiler 27",
+              "Line 03"
+            ],
+            "title": "Asset Id",
+            "type": "string"
+          },
+          "end_s": {
+            "exclusiveMinimum": 0.0,
+            "title": "End S",
+            "type": "integer"
+          },
+          "question": {
+            "maxLength": 2000,
+            "minLength": 3,
+            "title": "Question",
+            "type": "string"
+          },
+          "run_id": {
+            "title": "Run Id",
+            "type": "string"
+          },
+          "start_s": {
+            "minimum": 0.0,
+            "title": "Start S",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "run_id",
+          "question",
+          "start_s",
+          "end_s"
+        ],
+        "title": "InvestigationRequest",
+        "type": "object"
+      },
+      "RunRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "duration_s": {
+            "default": 86400,
+            "maximum": 604800.0,
+            "minimum": 10800.0,
+            "title": "Duration S",
+            "type": "integer"
+          },
+          "profile": {
+            "default": "sparse",
+            "enum": [
+              "sparse",
+              "enhanced"
+            ],
+            "title": "Profile",
+            "type": "string"
+          },
+          "seed": {
+            "default": 7,
+            "maximum": 4294967295.0,
+            "minimum": 0.0,
+            "title": "Seed",
+            "type": "integer"
+          }
+        },
+        "title": "RunRequest",
+        "type": "object"
+      },
+      "RunResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "duration_s": {
+            "title": "Duration S",
+            "type": "integer"
+          },
+          "hidden_truth_status": {
+            "const": "HIDDEN",
+            "title": "Hidden Truth Status",
+            "type": "string"
+          },
+          "profile": {
+            "enum": [
+              "sparse",
+              "enhanced"
+            ],
+            "title": "Profile",
+            "type": "string"
+          },
+          "run_id": {
+            "title": "Run Id",
+            "type": "string"
+          },
+          "windows": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Windows",
+            "type": "array"
+          }
+        },
+        "required": [
+          "run_id",
+          "profile",
+          "duration_s",
+          "hidden_truth_status",
+          "windows"
+        ],
+        "title": "RunResponse",
+        "type": "object"
+      },
+      "ScoreResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "correct_cause": {
+            "title": "Correct Cause",
+            "type": "integer"
+          },
+          "detected": {
+            "title": "Detected",
+            "type": "integer"
+          },
+          "false_positives": {
+            "title": "False Positives",
+            "type": "integer"
+          },
+          "missed": {
+            "title": "Missed",
+            "type": "integer"
+          },
+          "points": {
+            "title": "Points",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "points",
+          "detected",
+          "correct_cause",
+          "false_positives",
+          "missed"
+        ],
+        "title": "ScoreResponse",
+        "type": "object"
+      },
+      "SensorRecommendationResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "calculation": {
+            "title": "Calculation",
+            "type": "string"
+          },
+          "current_source_available": {
+            "title": "Current Source Available",
+            "type": "boolean"
+          },
+          "expected_diagnostic_gain": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Expected Diagnostic Gain",
+            "type": "object"
+          },
+          "fault_classes_separated": {
+            "items": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "title": "Fault Classes Separated",
+            "type": "array"
+          },
+          "hardware_required": {
+            "title": "Hardware Required",
+            "type": "boolean"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "plc_input_possible": {
+            "title": "Plc Input Possible",
+            "type": "boolean"
+          },
+          "priority": {
+            "title": "Priority",
+            "type": "integer"
+          },
+          "signal": {
+            "title": "Signal",
+            "type": "string"
+          }
+        },
+        "required": [
+          "signal",
+          "fault_classes_separated",
+          "current_source_available",
+          "plc_input_possible",
+          "kind",
+          "hardware_required",
+          "priority",
+          "expected_diagnostic_gain",
+          "calculation"
+        ],
+        "title": "SensorRecommendationResponse",
+        "type": "object"
+      },
+      "SignalResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "asset": {
+            "title": "Asset",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "existing": {
+            "title": "Existing",
+            "type": "boolean"
+          },
+          "hardware_required": {
+            "title": "Hardware Required",
+            "type": "boolean"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "priority": {
+            "title": "Priority",
+            "type": "integer"
+          },
+          "signal_id": {
+            "title": "Signal Id",
+            "type": "string"
+          },
+          "unit": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unit"
+          }
+        },
+        "required": [
+          "signal_id",
+          "asset",
+          "description",
+          "unit",
+          "existing",
+          "kind",
+          "priority",
+          "hardware_required"
+        ],
+        "title": "SignalResponse",
+        "type": "object"
+      },
+      "SignalsResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "signals": {
+            "items": {
+              "$ref": "#/components/schemas/SignalResponse"
+            },
+            "title": "Signals",
+            "type": "array"
+          }
+        },
+        "required": [
+          "signals"
+        ],
+        "title": "SignalsResponse",
+        "type": "object"
+      },
+      "SubmissionRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "claims": {
+            "items": {
+              "$ref": "#/components/schemas/Claim"
+            },
+            "maxItems": 100,
+            "title": "Claims",
+            "type": "array"
+          }
+        },
+        "required": [
+          "claims"
+        ],
+        "title": "SubmissionRequest",
+        "type": "object"
+      },
+      "SubmissionResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "hidden_truth_status": {
+            "const": "SCORED",
+            "title": "Hidden Truth Status",
+            "type": "string"
+          },
+          "run_id": {
+            "title": "Run Id",
+            "type": "string"
+          },
+          "score": {
+            "$ref": "#/components/schemas/ScoreResponse"
+          },
+          "submission": {
+            "items": {
+              "$ref": "#/components/schemas/Claim"
+            },
+            "title": "Submission",
+            "type": "array"
+          }
+        },
+        "required": [
+          "run_id",
+          "submission",
+          "score",
+          "hidden_truth_status"
+        ],
+        "title": "SubmissionResponse",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      },
+      "VerificationResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "comparisons": {
+            "additionalProperties": true,
+            "title": "Comparisons",
+            "type": "object"
+          },
+          "reasons": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Reasons",
+            "type": "array"
+          },
+          "status": {
+            "enum": [
+              "VERIFIED",
+              "NOT_VERIFIED",
+              "INCONCLUSIVE"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "sustained": {
+            "title": "Sustained",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "status",
+          "sustained",
+          "reasons",
+          "comparisons"
+        ],
+        "title": "VerificationResponse",
+        "type": "object"
+      },
+      "VerifyRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "action_id": {
+            "title": "Action Id",
+            "type": "string"
+          },
+          "after_end_s": {
+            "exclusiveMinimum": 0.0,
+            "title": "After End S",
+            "type": "integer"
+          },
+          "after_start_s": {
+            "minimum": 0.0,
+            "title": "After Start S",
+            "type": "integer"
+          },
+          "before_end_s": {
+            "exclusiveMinimum": 0.0,
+            "title": "Before End S",
+            "type": "integer"
+          },
+          "before_start_s": {
+            "minimum": 0.0,
+            "title": "Before Start S",
+            "type": "integer"
+          },
+          "sustained_duration_s": {
+            "default": 86400,
+            "minimum": 3600.0,
+            "title": "Sustained Duration S",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "action_id",
+          "before_start_s",
+          "before_end_s",
+          "after_start_s",
+          "after_end_s"
+        ],
+        "title": "VerifyRequest",
+        "type": "object"
+      },
+      "Visibility": {
+        "additionalProperties": true,
+        "properties": {
+          "available_observations": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Available Observations",
+            "type": "array"
+          },
+          "competing_fault_classes": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Competing Fault Classes",
+            "type": "array"
+          },
+          "event_class": {
+            "title": "Event Class",
+            "type": "string"
+          },
+          "required_observations": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Required Observations",
+            "type": "array"
+          },
+          "status": {
+            "enum": [
+              "NOT_OBSERVABLE",
+              "FULLY_DISTINGUISHABLE",
+              "PARTIALLY_DISTINGUISHABLE",
+              "INDISTINGUISHABLE"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "event_class",
+          "status",
+          "required_observations",
+          "available_observations",
+          "competing_fault_classes"
+        ],
+        "title": "Visibility",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "description": "Synthetic press observability and governed evidence-only RCA. No real machine connection.",
+    "title": "EKAS Press Intelligence",
+    "version": "1.0.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/v1/assets": {
+      "get": {
+        "operationId": "list_assets_v1_assets_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetsResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "List Assets"
+      }
+    },
+    "/v1/benchmark/run": {
+      "post": {
+        "operationId": "run_v1_benchmark_run_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RunRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Run"
+      }
+    },
+    "/v1/benchmark/{run_id}/score": {
+      "get": {
+        "operationId": "benchmark_score_v1_benchmark__run_id__score_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "title": "Run Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScoreResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Benchmark Score"
+      }
+    },
+    "/v1/benchmark/{run_id}/submit": {
+      "post": {
+        "operationId": "submission_v1_benchmark__run_id__submit_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "title": "Run Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmissionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Submission"
+      }
+    },
+    "/v1/benchmark/{run_id}/truth": {
+      "get": {
+        "operationId": "reveal_v1_benchmark__run_id__truth_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "title": "Run Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Reveal"
+      }
+    },
+    "/v1/datasets/{run_id}/samples": {
+      "get": {
+        "operationId": "samples_v1_datasets__run_id__samples_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "title": "Run Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "start_s",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "title": "Start S",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "end_s",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "End S"
+            }
+          },
+          {
+            "in": "query",
+            "name": "step",
+            "required": false,
+            "schema": {
+              "default": 10,
+              "maximum": 3600,
+              "minimum": 1,
+              "title": "Step",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Samples"
+      }
+    },
+    "/v1/health": {
+      "get": {
+        "operationId": "health_v1_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Health"
+      }
+    },
+    "/v1/observability/assess": {
+      "post": {
+        "operationId": "assessment_v1_observability_assess_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssessmentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssessmentResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Assessment"
+      }
+    },
+    "/v1/rca/cases/{case_id}": {
+      "get": {
+        "operationId": "case_v1_rca_cases__case_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "case_id",
+            "required": true,
+            "schema": {
+              "title": "Case Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaseResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Case"
+      }
+    },
+    "/v1/rca/cases/{case_id}/actions": {
+      "post": {
+        "operationId": "action_v1_rca_cases__case_id__actions_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "case_id",
+            "required": true,
+            "schema": {
+              "title": "Case Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Action"
+      }
+    },
+    "/v1/rca/cases/{case_id}/evidence": {
+      "get": {
+        "operationId": "case_evidence_v1_rca_cases__case_id__evidence_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "case_id",
+            "required": true,
+            "schema": {
+              "title": "Case Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaseEvidenceResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Case Evidence"
+      }
+    },
+    "/v1/rca/cases/{case_id}/financial": {
+      "post": {
+        "operationId": "financial_v1_rca_cases__case_id__financial_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "case_id",
+            "required": true,
+            "schema": {
+              "title": "Case Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FinancialRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FinancialResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Financial"
+      }
+    },
+    "/v1/rca/cases/{case_id}/verify": {
+      "post": {
+        "operationId": "verification_v1_rca_cases__case_id__verify_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "case_id",
+            "required": true,
+            "schema": {
+              "title": "Case Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerificationResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Verification"
+      }
+    },
+    "/v1/rca/investigate": {
+      "post": {
+        "operationId": "investigation_v1_rca_investigate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InvestigationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaseResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Investigation"
+      }
+    },
+    "/v1/sensor-gaps": {
+      "get": {
+        "operationId": "gaps_v1_sensor_gaps_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "profile",
+            "required": false,
+            "schema": {
+              "default": "sparse",
+              "pattern": "^(sparse|enhanced)$",
+              "title": "Profile",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GapsResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Gaps"
+      }
+    },
+    "/v1/signals": {
+      "get": {
+        "operationId": "list_signals_v1_signals_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignalsResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "List Signals"
+      }
+    }
+  }
+}

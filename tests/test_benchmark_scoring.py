@@ -1,8 +1,9 @@
-from ekas_press_intelligence.benchmark.scoring import GroundTruthEvent, Claim, score_claims
+from ekas_press_intelligence.benchmark.scoring import score
+
 
 def test_false_positive_costs_points():
-    truth=[GroundTruthEvent("E1","feeder sensor intermittency")]
-    claims=[Claim("E1","feeder sensor intermittency",("EV1",)),Claim("X","die wear",("EV2",))]
-    s=score_claims(truth,claims)
-    assert s.points == 2
-    assert s.false_positives == 1
+    truth=[dict(start_s=10,end_s=20,event_class='unknown',event_kind='fault',failed_item='belt',failure_mechanism='slip')]
+    one=[dict(start_s=10,end_s=20,event_kind='fault')]
+    extra=one+[dict(start_s=100,end_s=110,event_kind='fault')]
+    assert score(truth,extra)['points']==score(truth,one)['points']-1
+    assert score(truth,extra)['false_positives']==1

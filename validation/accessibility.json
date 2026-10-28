@@ -1,0 +1,13 @@
+{
+  "checks": [
+    "language",
+    "one main",
+    "one h1",
+    "editable names",
+    "button names",
+    "keyboard skip",
+    "desktop overflow"
+  ],
+  "violations": [],
+  "scope": "Structural and keyboard audit; not complete WCAG certification."
+}

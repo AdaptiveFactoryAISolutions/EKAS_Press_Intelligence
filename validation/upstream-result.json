@@ -1,0 +1,11 @@
+{
+  "source": "complete command console summary recorded in this delivery session",
+  "command": "PYTHONPATH=src:vendor/HistorianSim/src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 bash scripts/run_upstream_baseline.sh",
+  "upstream_commit": "14e616c382a9db8026cbb4ab86bdd803d56ca72e",
+  "passed": 173,
+  "skipped": 0,
+  "failed": 0,
+  "exit_code": 0,
+  "duration_seconds": 753.13,
+  "qualification": "Unmodified pinned upstream full test suite; no claim of separate upstream full-duration data generation. Test XML was temporary in the baseline helper; count and no-skip gate were checked by that helper."
+}
