@@ -1,84 +1,56 @@
-# EKAS Press Intelligence & RCA
+# EKAS Press Intelligence
 
-> **Status: upstream-preservation checkpoint only.** The press adaptation and
-> Milestone 1 acceptance are incomplete. Existing source/UI are supplied bootstrap
-> material, not qualified product behavior. Start with [the checkpoint](docs/CHECKPOINT.md),
-> [provenance](UPSTREAM_PROVENANCE.md), [the capability matrix](docs/PRESERVATION_ADAPTATION_MATRIX.md)
-> and [proposed architecture](docs/PROPOSED_ARCHITECTURE.md).
+Independent synthetic press-line engineering prototype. It runs without EKAS_Demo_UI and integrates only through a versioned HTTP contract.
 
-Standalone EKAS add-on prototype for press-line observability, governed root-cause analysis (RCA), synthetic fault benchmarking, sensor-gap analysis, corrective-action verification, and financial impact.
+**Acceptance status:** see [MILESTONE_1_ACCEPTANCE.md](MILESTONE_1_ACCEPTANCE.md). Patrick's manual acceptance is the final gate. All displayed manufacturing data is synthetic; no SmartPAC, PLC or plant historian is connected.
 
-## Isolation rule
+## Run locally
 
-This repository is intentionally independent from `EKAS_Demo_UI`.
-
-- Do not import this repository from `EKAS_Demo_UI` during prototype development.
-- Do not add this repository as a submodule of `EKAS_Demo_UI` during prototype development.
-- Do not copy experimental code into `EKAS_Demo_UI`.
-- Integration is permitted only through the versioned module contract under `contracts/` after independent acceptance.
-
-## Upstream foundation
-
-This project is designed to comprehensively use, preserve, and extend two upstream projects:
-
-- `ScottDuncanAI/HistorianSim` pinned at `14e616c382a9db8026cbb4ab86bdd803d56ca72e`
-- `ScottDuncanAI/HistorianRCA` pinned at `8d12a821395ce5f72e464dc78cc2c10d05cbb9ed`
-
-The upstream projects are not rewritten into simplified substitutes. `scripts/bootstrap_upstreams.sh` obtains the complete repositories and verifies the pinned commits. EKAS-specific press-line behavior is implemented beside them through adapters, contracts, and new plant models.
-
-Read `UPSTREAM_POLICY.md` before changing simulator or benchmark code.
-
-## Product objective
-
-A typical stamping plant has useful press signals but limited auxiliary instrumentation. EKAS Press Intelligence & RCA must answer four questions:
-
-1. What can the current signals prove?
-2. What can they not prove?
-3. What is the strongest evidence-supported cause of production loss?
-4. What minimum additional signal will reduce the most important RCA ambiguity?
-
-The module must never create certainty from missing instrumentation.
-
-## First prototype
-
-The first prototype models one progressive press line with:
-
-- SmartPAC-like press state and production signals
-- PLC sequence and fault bits
-- Feeder, decoiler, lubrication, die-protection, production, quality, and maintenance domains
-- Configurable instrumentation coverage so the same simulated physical process can be viewed through a sparse real-world signal set or an enhanced signal set
-- Hidden fault ground truth
-- Benign operator actions and data-quality artifacts
-- Evidence-based diagnosis and alternative-cause elimination
-- Sensor-gap recommendations
-- Post-action verification
-
-## Repository map
-
-```text
-contracts/                 Versioned EKAS integration boundary
-docs/                      Architecture, requirements, decisions
-src/ekas_press_intelligence/
-  benchmark/               Hidden truth, challenge scoring, blind-test logic
-  contracts/               Runtime models for module API
-  observability/           Signal coverage and sensor-gap analysis
-  rca/                     Evidence, hypotheses, alternatives, verification
-  simulator/               HistorianSim integration and press-line plant model
-  terminology/             Canonical manufacturing terms and aliases
-ui-prototype/               Isolated prototype UI assets
-vendor/                     Complete upstream checkouts after bootstrap
-scripts/                    Reproducible setup and verification
-```
-
-## Quick start
+Linux with Python 3.11+ and Bubblewrap is required for enforced diagnostic isolation. Install Bubblewrap through the host package manager. Do not disable the sandbox or expose this local service publicly.
 
 ```bash
-./scripts/bootstrap_upstreams.sh
-python -m venv .venv
-source .venv/bin/activate
-python -m pip install -e '.[dev]'
-pytest
-python -m ekas_press_intelligence.demo
+git clone --recurse-submodules https://github.com/AdaptiveFactoryAISolutions/EKAS_Press_Intelligence.git
+cd EKAS_Press_Intelligence
+bash scripts/verify_upstreams.sh
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements-lock.txt
+.venv/bin/python -m pip install --no-deps -e 'vendor/HistorianSim[dev]' -e '.[dev]'
+.venv/bin/python -m uvicorn ekas_press_intelligence.api:create_app --factory --host 127.0.0.1 --port 18727
 ```
 
-The upstream bootstrap is a required gate. A local build without verified upstream sources is an incomplete development environment, not a valid product build.
+Open http://127.0.0.1:18727 . Generate a campaign, choose an observed window and ask why production was lost. Inspect evidence and alternatives, compare instrumentation, freeze a benchmark submission, then reveal truth after scoring. Apply a synthetic action and compare controlled windows. INCONCLUSIVE and unresolved causes are supported results.
+
+The default campaign is 86,400 seconds with a two-hour normal baseline, 16 event classes and recovery periods. Sparse and enhanced profiles observe identical underlying physics. A single-window UI claim intentionally leaves other campaign events missed; it is not the complete automated blind evaluation.
+
+## Tests and retained evidence
+
+```bash
+.venv/bin/python -m playwright install chromium
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python -m pytest tests -q
+bash scripts/run_upstream_baseline.sh
+.venv/bin/python scripts/validate_campaign.py
+```
+
+The upstream baseline helper must run in the activated environment (or set PATH to its bin directory). It requires exactly 173 upstream tests with no skips. CI separates preservation, upstream regression and eight EKAS test layers. On hosts that forbid user namespaces, diagnosis fails closed; there is no in-process fallback.
+
+[VALIDATION_REPORT.md](VALIDATION_REPORT.md) links test, browser and full-duration artifacts. [validation/CAMPAIGN.md](validation/CAMPAIGN.md) records genuine evidence-only detection and diagnosis before evaluator truth is read. Previous adverse results remain under validation/history/. Raw historian data, private simulation truth, local state databases and installed runtimes remain in ignored work/.
+
+## Engineering boundaries
+
+- Integer stroke/feed/count transitions with continuous lubrication/load dynamics; unmodified HistorianSim RNG, colored noise, PID, RK4 and historian compression primitives.
+- Public pairwise discrimination requirements and conditional sensor gains. Availability is structural diagnostic capacity, not a probability of real-world accuracy.
+- OS-isolated evidence-only RCA; public physical priors and maintenance/quality/PFMEA context do not establish a cause by themselves.
+- Temporal one-to-one scoring with failed-item/mechanism and relevant measured evidence requirements, false-positive and unsupported-certainty penalties.
+- Controlled before/after verification with explicit significance thresholds and uncertainty. A recorded repair is not success.
+- SQLite cases, evidence, transitions, actions, assessments and immutable scored submissions.
+- API-backed UI; no RCA, coverage, scoring or verification logic in JavaScript.
+- Financial opportunity estimates preserve assumptions; opportunity never becomes verified savings.
+- Vendor-neutral optional source-observation contract. No advanced sensor, camera or NVIDIA hardware is required or connected.
+
+This is a single-user local prototype, not an authenticated multi-tenant production deployment. Mechanics are idealized and uncalibrated; one-second scans do not constitute waveform acquisition. Synthetic benchmark results do not prove performance at a real plant. See architecture, fault catalog and acceptance limitations.
+
+## Provenance
+
+HistorianSim is pinned to 14e616c382a9db8026cbb4ab86bdd803d56ca72e (MIT); HistorianRCA to 8d12a821395ce5f72e464dc78cc2c10d05cbb9ed (CC BY 4.0). Scott Duncan's full repositories, histories, attribution, licenses, data, tests and validation documents remain preserved.
+
+[UPSTREAM_PROVENANCE.md](UPSTREAM_PROVENANCE.md) · [LICENSES.md](LICENSES.md) · [PRESERVATION_ADAPTATION_MATRIX.md](PRESERVATION_ADAPTATION_MATRIX.md) · [API_CONTRACT.md](API_CONTRACT.md)

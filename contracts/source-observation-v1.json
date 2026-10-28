@@ -1,0 +1,95 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "asset": {
+      "minLength": 1,
+      "title": "Asset",
+      "type": "string"
+    },
+    "calculation": {
+      "minLength": 1,
+      "title": "Calculation",
+      "type": "string"
+    },
+    "modality": {
+      "enum": [
+        "plc",
+        "historian",
+        "vision",
+        "vibration",
+        "acoustic",
+        "motor_current",
+        "tonnage_waveform",
+        "thermal"
+      ],
+      "title": "Modality",
+      "type": "string"
+    },
+    "quality": {
+      "enum": [
+        "GOOD",
+        "UNCERTAIN",
+        "BAD",
+        "MISSING",
+        "STUCK"
+      ],
+      "title": "Quality",
+      "type": "string"
+    },
+    "signal": {
+      "minLength": 1,
+      "title": "Signal",
+      "type": "string"
+    },
+    "source": {
+      "minLength": 1,
+      "title": "Source",
+      "type": "string"
+    },
+    "synthetic": {
+      "title": "Synthetic",
+      "type": "boolean"
+    },
+    "timestamp": {
+      "format": "date-time",
+      "title": "Timestamp",
+      "type": "string"
+    },
+    "unit": {
+      "minLength": 1,
+      "title": "Unit",
+      "type": "string"
+    },
+    "value": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Value"
+    }
+  },
+  "required": [
+    "source",
+    "signal",
+    "asset",
+    "timestamp",
+    "value",
+    "unit",
+    "quality",
+    "modality",
+    "calculation",
+    "synthetic"
+  ],
+  "title": "SourceObservation",
+  "type": "object"
+}

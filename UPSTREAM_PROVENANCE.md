@@ -33,3 +33,7 @@ git submodule status
 Submodule pins, not moving upstream branches, define the baseline. Upstream baseline execution is separate from preservation verification. Test execution and limitations are recorded in `docs/CHECKPOINT.md`.
 
 HistorianRCA intentionally withholds its answer key. Its public pinned repository contains no scorer implementation or automated test suite. Preserve the challenge; do not fabricate an upstream score or retrieve private answers as part of a blind investigation.
+
+## Milestone 1 continuation
+
+The accepted preservation checkpoint is historical. Milestone 1 replaces the starter truth-ID scorer and coverage heuristic with canonical temporal and pairwise entry points; the original demo command now launches the real API-backed product. New adaptations remain outside upstream. Both pins and original license files remain unchanged. Startup rejects shallow/modified upstream trees or a HistorianSim import from an unrelated installation. Current implementation/test evidence is in MILESTONE_1_ACCEPTANCE.md and VALIDATION_REPORT.md.

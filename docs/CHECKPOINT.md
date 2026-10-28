@@ -2,7 +2,7 @@
 
 Date: 2026-10-28. Scope: sections 28–29 only; no new press adaptation written.
 
-Repository: https://github.com/AdaptiveFactoryAISolutions/EKAS_Press_Intelligence (private).
+Repository: https://github.com/AdaptiveFactoryAISolutions/EKAS_Press_Intelligence (private at this historical checkpoint; now public, confirmed 2026-10-28).
 The checkpoint commit is the `main` commit containing this report. The delivery message supplies its exact SHA, verified against the GitHub branch after push; this avoids embedding a self-referential commit hash.
 
 | Required item | Result |
