@@ -19,6 +19,8 @@ class Store:
                 CREATE TABLE IF NOT EXISTS resources (
                     kind TEXT, id TEXT, payload TEXT NOT NULL,
                     PRIMARY KEY(kind,id));
+                CREATE INDEX IF NOT EXISTS resources_by_run
+                    ON resources(kind,json_extract(payload,'$.run_id'));
                 CREATE TABLE IF NOT EXISTS audit (
                     sequence INTEGER PRIMARY KEY, kind TEXT, id TEXT,
                     operation TEXT, timestamp TEXT, reason TEXT, payload TEXT);
@@ -75,6 +77,13 @@ class Store:
             except sqlite3.IntegrityError as exc:
                 raise Conflict(f'{kind} {ident} already exists or is immutable') from exc
         return value
+
+    def for_run(self, kind, run_id):
+        """Read only the indexed run partition, including on existing databases."""
+        with self._connect() as db:
+            rows=db.execute("SELECT payload FROM resources WHERE kind=? AND json_extract(payload,'$.run_id')=?",
+                            (kind,run_id)).fetchall()
+        return [json.loads(row[0]) for row in rows]
 
     def create(self, kind, ident, value):
         return self._write(kind, ident, value, True, 'create')

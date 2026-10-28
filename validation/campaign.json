@@ -13,12 +13,12 @@
           {
             "bytes": 2185050,
             "path": "/home/pat/Documents/Codex/2026-10-28/files-mentioned-by-the-user-ekas/outputs/EKAS_Press_Intelligence/work/campaign/enhanced/historian/regular_1s.csv.gz",
-            "sha256": "b2fc9b9e5c64ae282428da08ba8b3eb11045b2bacdaafd8468338625588403cc"
+            "sha256": "1be402cf72d1546108ddf2fd82e387a26c3f59eb4d1635c7c2f5402301382fb1"
           },
           {
             "bytes": 1953540,
             "path": "/home/pat/Documents/Codex/2026-10-28/files-mentioned-by-the-user-ekas/outputs/EKAS_Press_Intelligence/work/campaign/enhanced/historian/historian_compressed.csv.gz",
-            "sha256": "b5f3dd5accf5890b7c02ac878b1ec17f2918edc06c5a1ac0f650cadd3ca85f4a"
+            "sha256": "df1767f2d4f6fa6c18b7cb6353289ca9424e73336891b9b0cf3d4b18b8aa0592"
           }
         ],
         "regular_rows": 86400,
@@ -4593,12 +4593,12 @@
           {
             "bytes": 910557,
             "path": "/home/pat/Documents/Codex/2026-10-28/files-mentioned-by-the-user-ekas/outputs/EKAS_Press_Intelligence/work/campaign/sparse/historian/regular_1s.csv.gz",
-            "sha256": "8057e906348a9f451f27ad13118949b6f7052281b0fef4710ea1380cfb72dcfe"
+            "sha256": "74725d0ee67c0e7d45e87dbadc9c3a4c90b746379ed7a9d78b5a8547c9444348"
           },
           {
             "bytes": 925259,
             "path": "/home/pat/Documents/Codex/2026-10-28/files-mentioned-by-the-user-ekas/outputs/EKAS_Press_Intelligence/work/campaign/sparse/historian/historian_compressed.csv.gz",
-            "sha256": "7d8e76fe15dff589aeebb96bc3818a8d3e237c38f623cade889e7eefb65decd2"
+            "sha256": "f3d31dc469bf138753d27b2e4d7881148d7d0a08b79f5202e56720c858b5f6f6"
           }
         ],
         "regular_rows": 86400,
@@ -9067,7 +9067,7 @@
     "src/ekas_press_intelligence/acquisition.py": "f73e7783b5295b9e15ed96ca61df2dbc35020f2bf0eb4531b36d70db5aa4bb92",
     "src/ekas_press_intelligence/benchmark/evaluator.py": "ff289ffcd46559bccde3f4a6011c1fabe4a2b001e81f41b0db168fa271807791",
     "src/ekas_press_intelligence/domain.py": "2dbed8cbdef859af446abc8620002895be38d51855d5af49dde85bda0055bf8a",
-    "src/ekas_press_intelligence/observability/model.py": "4a6612761214ccde10f2a79c9e0b8a33d657567d69f4740d40561ee0febfebd8",
+    "src/ekas_press_intelligence/observability/model.py": "765f9e7c63e54158640c3172ff3f0a173a8e9b4ed49736396497a67cac46169c",
     "src/ekas_press_intelligence/rca/campaign.py": "4b585b6e580e7d3fb57a41243f5580935d3642d74037ac465aef1f6ad9f131d1",
     "src/ekas_press_intelligence/rca/engine.py": "225e71e6fe3965c112c386a5b9b2af7a890fb139b595c5df9b4e812fc8a19484",
     "src/ekas_press_intelligence/sandbox.py": "2c0438a02e1619b5eb38b829cd60a57a39933b26d4ba85169058e75d291594f6",

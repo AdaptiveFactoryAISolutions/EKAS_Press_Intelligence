@@ -28,3 +28,16 @@ def test_freeze_submission_and_score_is_atomic(tmp_path):
         store.freeze_benchmark('run1',{'claims':[]},{'points':0})
     with pytest.raises(KeyError):
         store.get('submission','run1')
+
+
+def test_run_lookup_is_indexed_and_excludes_other_runs(tmp_path):
+    from ekas_press_intelligence.api import store_records_for_run
+    store=Store(tmp_path/'state.sqlite')
+    store.create('case','a',{'run_id':'run-a','case_id':'a'})
+    store.create('case','b',{'run_id':'run-b','case_id':'b'})
+    store.create('assessment','c',{'run_id':'run-a'})
+    assert store_records_for_run(store,'run-a')==[{'run_id':'run-a','case_id':'a'}]
+    with store._connect() as db:
+        plan=db.execute("EXPLAIN QUERY PLAN SELECT payload FROM resources WHERE kind=? AND json_extract(payload,'$.run_id')=?",('case','run-a')).fetchall()
+    assert any('resources_by_run' in row[-1] for row in plan)
+    assert Store(store.path).for_run('case','run-b')==[{'run_id':'run-b','case_id':'b'}]

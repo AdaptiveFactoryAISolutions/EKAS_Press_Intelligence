@@ -11,11 +11,11 @@ This is technical readiness for Patrick's manual acceptance, not his acceptance 
 | HistorianSim | 14e616c382a9db8026cbb4ab86bdd803d56ca72e; unchanged |
 | HistorianRCA | 8d12a821395ce5f72e464dc78cc2c10d05cbb9ed; unchanged |
 | Upstream suite | 173 passed, zero skips |
-| EKAS suite | 135 passed, zero failures/errors/skips |
-| Clean install | 132 non-browser passed; dependency check clean |
+| EKAS suite | 138 passed, zero failures/errors/skips |
+| Clean install | 135 non-browser passed; dependency check clean |
 | Simulation validation | 23 simulation/campaign/gate tests; 17 full-duration physical assertions |
 | Contract tests | 3 in contract CI layer; 2 additional optional-source schema tests |
-| API tests | 15; plus 3 persistence tests |
+| API tests | 16; plus 4 persistence tests |
 | Browser tests | 3; 12-flow real API smoke, console/network clean |
 | Accessibility | Bounded structural/keyboard/mobile checks passed; not full WCAG certification |
 | Known defects | No known Critical/Important defect within the tested prototype; test-client deprecation warning retained |

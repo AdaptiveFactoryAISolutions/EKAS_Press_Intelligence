@@ -186,7 +186,7 @@ class SensorRecommendationResponse(Extensible):
     signal: str
     fault_classes_separated: list[list[str]]
     current_source_available: bool
-    plc_input_possible: bool
+    plc_input_possible: bool | None
     kind: str
     hardware_required: bool
     priority: int

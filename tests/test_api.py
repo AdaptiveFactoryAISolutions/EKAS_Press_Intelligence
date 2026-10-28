@@ -136,3 +136,15 @@ def test_financial_assumptions_never_turn_opportunity_into_verified_savings(serv
     assert result['potential_contribution_at_risk']==result['lost_capacity']*2.5
     assert result['assumptions']['provenance']
     assert service.post(path,json={'contribution_per_unit':-1,'currency':'USD','assumption_source':'bad'}).status_code==422
+
+
+def test_context_references_resolve_after_case_namespacing(service,run):
+    response=service.post('/v1/rca/investigate',json={'run_id':run['run_id'],'asset_id':'Press 27',
+        'question':'Investigate production loss','start_s':7200,'end_s':7800})
+    assert response.status_code==201,response.text
+    case=response.json(); ids={e['id'] for e in case['evidence']}
+    references=[ref for group in ('hypotheses','alternatives') for h in case[group]
+                for ref in h['contextual_evidence']]
+    assert references
+    assert set(references)<=ids
+    assert all(ref.startswith(case['case_id']+':') for ref in references)

@@ -141,7 +141,8 @@ def create_app(state_dir=None):
         for e in result['evidence']:e['id']=names[e['id']]
         for group in ('hypotheses','alternatives'):
             for h in result[group]:
-                h['supporting_evidence']=[names.get(ref,ref) for ref in h['supporting_evidence']]
+                for field in ('supporting_evidence','contextual_evidence'):
+                    h[field]=[names.get(ref,ref) for ref in h[field]]
         result.update(case_id=ident,run_id=request.run_id,asset_id=request.asset_id,question=request.question,intent=intent)
         save('case',ident,result)
         return result
@@ -245,7 +246,4 @@ def create_app(state_dir=None):
 
 
 def store_records_for_run(store,run_id):
-    with store._connect() as db:
-        import json
-        rows=db.execute("SELECT payload FROM resources WHERE kind='case'").fetchall()
-    return [r for row in rows if (r:=json.loads(row[0])).get('run_id')==run_id]
+    return store.for_run('case',run_id)

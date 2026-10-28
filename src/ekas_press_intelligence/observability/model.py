@@ -43,5 +43,8 @@ def sensor_gaps(available):
         augmented=assess(list(available)+[name]); gain=augmented['pair_coverage']['numerator']-current
         if gain<=0: continue
         separated=[p['classes'] for p,q in zip(augmented['pairs'],baseline['pairs']) if p['distinguishable'] and not q['distinguishable']]
-        result.append({'signal':name,'fault_classes_separated':separated,'ambiguity_reduced':separated,'current_source_available':signal.get('existing',False),'plc_input_possible':signal.get('kind') in ('discrete','analog','plc'),'kind':signal.get('kind'),'hardware_required':signal.get('hardware_required',True),'priority':signal.get('priority',6),'expected_diagnostic_gain':{'pairs':gain,'pair_denominator':len(baseline['pairs']),'fully_distinguishable_classes':augmented['coverage']['numerator']-baseline['coverage']['numerator']},'calculation':'Recompute assess(available + signal); gains are conditional and must not be added.'})
+        # Existing synthetic control channels permit a mapping investigation.
+        # New hardware says nothing about controller I/O compatibility/capacity.
+        plc_possible=True if signal.get('existing',False) else None
+        result.append({'signal':name,'fault_classes_separated':separated,'ambiguity_reduced':separated,'current_source_available':signal.get('existing',False),'plc_input_possible':plc_possible,'kind':signal.get('kind'),'hardware_required':signal.get('hardware_required',True),'priority':signal.get('priority',6),'expected_diagnostic_gain':{'pairs':gain,'pair_denominator':len(baseline['pairs']),'fully_distinguishable_classes':augmented['coverage']['numerator']-baseline['coverage']['numerator']},'calculation':'Recompute assess(available + signal); gains are conditional and must not be added.'})
     return sorted(result,key=lambda g:(g['priority'],-g['expected_diagnostic_gain']['pairs'],g['signal']))

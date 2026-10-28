@@ -7,21 +7,21 @@ Candidate branch: `milestone-1`, based on accepted preservation checkpoint `e1d0
 | Layer | Actual result | Retained evidence |
 |---|---:|---|
 | Pinned HistorianSim complete suite | 173 passed, zero skips; exit 0 | validation/upstream-result.json; baseline helper enforces count |
-| Complete EKAS suite | 135 passed, zero failures/errors/skips | validation/ekas-tests.xml |
-| Clean installed environment, no PYTHONPATH | 132 non-browser passed; one test-client deprecation warning | validation/clean-environment-tests.xml; requirements-lock.txt |
+| Complete EKAS suite | 138 passed, zero failures/errors/skips | validation/ekas-tests.xml |
+| Clean installed environment, no PYTHONPATH | 135 non-browser passed; one test-client deprecation warning | validation/clean-environment-tests.xml; requirements-lock.txt |
 | Simulation tests | 16 | test_simulation.py |
 | Campaign/export tests and acceptance gate | 6 + 1 | test_campaign_validation.py, test_campaign_gate.py |
 | Full-duration physical assertions | 17 passed | validation/campaign.json |
 | Contract CI layer | 3 passed within the full suite | API OpenAPI operation test + 2 foundation tests |
 | Optional source schema tests | 2 passed | test_sources.py |
-| API tests | 15 passed | test_api.py |
-| Persistence tests | 3 passed | test_storage.py |
+| API tests | 16 passed | test_api.py |
+| Persistence tests | 4 passed | test_storage.py |
 | Blind RCA tests | 16 passed | test_blind_rca.py |
 | OS/pinned-runtime negative tests | 2 passed | test_security.py |
 | Temporal scoring tests | 20 passed | test_temporal_benchmark.py |
 | Verification/financial tests | 43 passed | test_verification.py |
 | Browser tests | 3 passed; 12 engineering-flow actions | browser-tests.xml; browser-flow.json; screenshots |
-| Observability | 5 tests passed | test_observability.py + test_discrimination_model.py |
+| Observability | 6 tests passed | test_observability.py + test_discrimination_model.py |
 
 Categories overlap where explicitly noted; do not add the rows to infer a new test total. The complete-suite XML is authoritative. Three original starter tests now exercise canonical temporal scoring and catalog-based coverage; no truth-ID scorer or parallel heuristic remains.
 
@@ -41,7 +41,7 @@ Categories overlap where explicitly noted; do not add the rows to infer a new te
 
 Four events in each profile are benign or acquisition artifacts, not physical-fault points. Every enhanced mechanism manifests in measured data; eleven sparse primary mechanism observations are unavailable and remain explicitly qualified. All 16 recovery checks per profile pass. Aggregate metrics agree with independently computed per-class scores.
 
-Primary evidence: [validation/CAMPAIGN.md](validation/CAMPAIGN.md), [campaign.json](validation/campaign.json). Final report SHA-256: `0ebe18ac104e6642eb2c060d1b234f52d9e577f272463292274940261fec6e34`. The campaign gate checks current qualification rather than treating successful file generation as acceptance. Earlier adverse results remain under validation/history/.
+Primary evidence: [validation/CAMPAIGN.md](validation/CAMPAIGN.md), [campaign.json](validation/campaign.json). Final report SHA-256: `b5cb512b1b5a17fec77a3c438281421d04ab7dfe50f1b74a528cc883224d14bc`. The campaign gate checks current qualification rather than treating successful file generation as acceptance. Earlier adverse results remain under validation/history/.
 
 Historian exports retain 86,400 regular rows per profile, exact discrete changes/quality boundaries and compressed analog observations. File sizes, row counts and actual checksums are in the report; raw exports/private truth/frozen claims remain in ignored work/campaign/. The stuck-quality monitor derives its flag from at least 30 seconds of repeated public readings and advancing independent counts. It receives no event class or schedule.
 
@@ -60,6 +60,8 @@ The financial API calculates opportunity using measured counts and baseline capa
 ## Review, CI and boundaries
 
 Independent review initially found five Important defects. Their adverse record and corrective regressions are retained in validation/INDEPENDENT_REVIEW.md. Further scan/quality/UI/runtime-origin defects were reproduced and corrected. No known Critical or Important defect remains in the tested local prototype boundary.
+
+Hosted review subsequently found dangling contextual evidence references, an unbounded case lookup and unqualified PLC feasibility metadata. All three were reproduced red, corrected and verified by regression plus the complete suites. See validation/history/pr-lens-60e0561.md. Hosted CI also caught a pip warning embedded in the lock file; its corrected syntax was checked against the installed environment and successfully installed on GitHub. CodeQL's missing workflow-permission findings were corrected with contents: read. Adverse records remain under validation/history/.
 
 CI has ten separate validation categories, with a full-duration campaign gate in simulation. Workflow definitions do not prove hosted-run success; live hosted status belongs to the PR checks. Local results above were actually executed. Dependencies were installed in a clean local environment; pip check found no broken requirements. The locked FastAPI/Starlette test-client path emits a deprecation warning; tests pass and production HTTP/browser traffic is unaffected.
 

@@ -1,5 +1,7 @@
 # Milestone 1 execution ledger
 
+Final hosted-review correction: three reproduced PR Lens findings corrected (context-reference namespace, indexed run lookup, unknown new-hardware PLC feasibility). Complete EKAS138 and clean installed non-browser135 passed; contract matches runtime; regenerated full-duration campaign passes with unchanged diagnostic outcomes and current source hashes. Prior report retained in history. Candidate 76e0248 passed all ten hosted validation categories including the complete pinned upstream173; the correction is submitted to the same full matrix. Patrick's manual acceptance remains pending.
+
 - Accepted base: `e1d04e539a87183a34835caf449395354c454b43`; clean independent checkout; work branch `milestone-1`.
 - Scope: master completion charter; continuous implementation authorized. Upstream source remains immutable.
 - Architecture decision: JSON evidence-domain interfaces, typed versioned API, hybrid simulator, OS-isolated diagnostic process, SQLite persistence, same-origin browser UI. Decisions and limits will be documented as implemented.
@@ -14,6 +16,6 @@
 
 - Review fixes verified with actual failing-then-passing regressions; versioned comparison rejects trivial noise and permits only meaningful controlled improvement. Real seeded drive repair is VERIFIED; no-output comparison remains INCONCLUSIVE.
 - Scan-end PLC/count consistency corrected and checked in the full campaign. STUCK flags now derive from public acquisition observations after 30 seconds with advancing counters, never directly from injected event classes.
-- Final local all-suite: 135 passed, zero failures/errors/skips; clean installed environment: 132 non-browser passed, one upstream test-client deprecation warning. Browser3 tests cover12flows plus structural/keyboard/mobile checks; console and network errors zero.
+- Pre-hosted-review local all-suite: 135 passed, zero failures/errors/skips; clean installed environment: 132 non-browser passed, one upstream test-client deprecation warning. Browser3 tests cover12flows plus structural/keyboard/mobile checks; console and network errors zero.
 - Full upstream baseline:173 passed/zero skips; unmodified pins. Final campaign:24h x2/profile,17physics assertions,16events/profile, sparse12correctlyunresolved,enhanced12correctphysicalcauses,0FP/misses/incorrect/certainty,16evidencecomplete/profile. Actual hashes retained; prior failures preserved.
 - Generated machine OpenAPI/source-provider schemas; every required operation has a named response model. Canonical temporal/coverage modules replace the bootstrap heuristics. Startup validates both upstream checkout integrity and actual imported simulator origin.

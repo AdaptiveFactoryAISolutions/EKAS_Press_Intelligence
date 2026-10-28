@@ -37,3 +37,12 @@ def test_gains_are_conditional_not_independently_additive():
         augmented=assess(base+[chosen,gap['signal']])
         current=assess(base+[chosen])
         assert gap['expected_diagnostic_gain']['pairs']==augmented['pair_coverage']['numerator']-current['pair_coverage']['numerator']
+
+
+def test_new_hardware_plc_feasibility_is_unknown_without_controller_evidence():
+    gaps=sensor_gaps(profile_signals('sparse'))
+    existing=[g for g in gaps if g['current_source_available']]
+    hardware=[g for g in gaps if g['hardware_required']]
+    assert existing and hardware
+    assert all(g['plc_input_possible'] is True for g in existing)
+    assert all(g['plc_input_possible'] is None for g in hardware)

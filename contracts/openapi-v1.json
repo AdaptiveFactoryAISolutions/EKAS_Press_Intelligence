@@ -999,8 +999,15 @@
             "type": "string"
           },
           "plc_input_possible": {
-            "title": "Plc Input Possible",
-            "type": "boolean"
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Plc Input Possible"
           },
           "priority": {
             "title": "Priority",
