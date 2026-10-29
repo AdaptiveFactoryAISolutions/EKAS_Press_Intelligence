@@ -36,6 +36,17 @@ class EKASNativeClient:
 
     def health(self):return self._request('GET','/v2/health')
     def capabilities(self):return self._request('GET','/v2/capabilities')
+    def line_preset(self):return self._request('GET','/v2/line/preset')
+    def line_preflight(self,config):return self._request('POST','/v2/line/preflight',json={'config':config})
+    def line_drafts(self):return self._request('GET','/v2/line/drafts')['drafts']
+    def save_line_draft(self,name,config,step=1,draft_id=None,revision=None):
+        body={'name':name,'config':config,'step':step}
+        if draft_id is None:return self._request('POST','/v2/line/drafts',json=body)
+        if revision is None:raise ValueError('Updating a setup requires its current revision')
+        return self._request('PUT','/v2/line/drafts/'+quote(draft_id,safe=''),json=dict(body,revision=revision))
+    def run_line_draft(self,draft_id,revision,idempotency_key):
+        return self._request('POST','/v2/line/drafts/'+quote(draft_id,safe='')+'/run',
+                             json={'revision':revision,'idempotency_key':idempotency_key})
     def datasets(self):return self._request('GET','/v2/datasets')['datasets']
     def dataset(self,ident):return self._request('GET','/v2/datasets/'+quote(ident,safe=''))
     def samples(self,ident,tags,source='grid',start=None,end=None,max_points=2000):

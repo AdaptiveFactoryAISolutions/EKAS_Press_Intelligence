@@ -155,5 +155,5 @@ def query_events(path:Path,source='journal',start=None,end=None,max_points=2000)
         for key,value in row.items():
             if isinstance(value,float) and not math.isfinite(value):row[key]=None
     return {'source':source,'file':name,'rows':rows,'truncated':truncated,'max_points':max_points,'returned_points':len(rows),'aggregation':'none',
-            'event_codes':{'-1':'unavailable acquisition','0':'permissive hold','1':'completed stroke','2':'completed feed','3':'inspection delivery'} if source=='journal' else None,
+            'event_codes':{'-1':'unavailable acquisition','0':'permissive hold','1':'completed stroke','2':'completed feed','3':'inspection delivery','4':'finished-part discharge','5':'manual packing completion'} if source=='journal' else None,
             'disclosure':'Measured digital edges quantized to1ms; non-GOOD acquisition masks code/count. No private pitch, rejection detail or conservation ledger.' if source=='journal' else 'Measured status/counters on the native historian scan; not a timestamp-per-stroke journal.'}

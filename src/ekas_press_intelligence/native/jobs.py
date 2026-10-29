@@ -119,6 +119,16 @@ class JobStore:
             db.execute('BEGIN')
             return [self._job(r,db) for r in db.execute('SELECT * FROM jobs ORDER BY created_at DESC')]
 
+    def line_binding(self,ident):
+        """Public identity only; training selection and engineering settings stay private."""
+        with self.connect() as db:
+            db.execute('BEGIN')
+            if not db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='line_runs'").fetchone():return None
+            columns={r['name'] for r in db.execute('PRAGMA table_info(line_runs)')}
+            source='model_sha256' if 'model_sha256' in columns else "NULL AS model_sha256"
+            row=db.execute('SELECT draft_id,revision,config_sha256,'+source+' FROM line_runs WHERE job_id=?',(ident,)).fetchone()
+            return dict(row,scope='UNQUALIFIED_PRACTICE',simulation_only=True) if row else None
+
     def claim(self,worker):
         with self.connect() as db:
             db.execute('BEGIN IMMEDIATE')

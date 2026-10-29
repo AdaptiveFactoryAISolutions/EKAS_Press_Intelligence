@@ -78,6 +78,9 @@ def prepare_runtime(repo_root:Path,target:Path|None=None)->Path:
     extension_target=target/'src/historiansim/plants/stamping_press'
     if extension_target.exists(): shutil.rmtree(extension_target)
     shutil.copytree(repo_root/'extensions/stamping_press',extension_target,ignore=shutil.ignore_patterns('__pycache__'))
+    line_target=target/'src/historiansim/plants/stamping_line'
+    if line_target.exists(): shutil.rmtree(line_target)
+    shutil.copytree(repo_root/'extensions/stamping_line',line_target,ignore=shutil.ignore_patterns('__pycache__'))
     reference_overlay=repo_root/'extensions/reference_pfd'
     reference_hashes=_file_hashes(reference_overlay) if reference_overlay.exists() else {}
     for name in reference_hashes:
@@ -96,8 +99,17 @@ def prepare_runtime(repo_root:Path,target:Path|None=None)->Path:
         artifact=extension_target/'cycle_kernel.so'
         subprocess.run([str(compiler),*flags,str(kernel_source),'-o',str(artifact)],check=True)
         kernel_build={'compiler':str(compiler.resolve()),'compiler_sha256':hashlib.sha256(compiler.read_bytes()).hexdigest(),'flags':flags,'source_sha256':hashlib.sha256(kernel_source.read_bytes()).hexdigest(),'artifact_sha256':hashlib.sha256(artifact.read_bytes()).hexdigest()}
+    line_kernel_build={}
+    line_kernel_source=line_target/'cycle_kernel.cpp'
+    if line_kernel_source.exists():
+        compiler=Path('/usr/bin/g++')
+        if not compiler.is_file():raise RuntimeError('COMPILED_LINE_COMPILER_MISSING: project runtime requires g++')
+        flags=['-O3','-std=c++17','-fPIC','-shared','-ffp-contract=off','-fno-fast-math','-Wl,--build-id=none']
+        artifact=line_target/'cycle_kernel.so'
+        subprocess.run([str(compiler),*flags,str(line_kernel_source),'-o',str(artifact)],check=True)
+        line_kernel_build={'compiler':str(compiler.resolve()),'compiler_sha256':hashlib.sha256(compiler.read_bytes()).hexdigest(),'flags':flags,'source_sha256':hashlib.sha256(line_kernel_source.read_bytes()).hexdigest(),'artifact_sha256':hashlib.sha256(artifact.read_bytes()).hexdigest()}
     provenance={'upstream_commit':expected,'source':'committed full source blobs','patches':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((repo_root/'patches').glob('*.patch'))},
-                'extension':{str(p.relative_to(repo_root/'extensions')):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((repo_root/'extensions/stamping_press').rglob('*')) if p.is_file() and '__pycache__' not in str(p)}}
+                'extension':{str(p.relative_to(repo_root/'extensions')):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(p for overlay in ('stamping_press','stamping_line') for p in (repo_root/'extensions'/overlay).rglob('*')) if p.is_file() and '__pycache__' not in str(p)}}
     provenance['patch_application_sha256']=applied_patches
     provenance['source_tests_sha256']=source_tests
     provenance['runtime_tests_sha256']=_file_hashes(target/'tests')
@@ -105,6 +117,7 @@ def prepare_runtime(repo_root:Path,target:Path|None=None)->Path:
     provenance['test_suite_kind']='native_patched_upstream_compatibility'
     provenance['test_compatibility_changes']={'0010-native-optional-pfd-layout-tests.patch':['tests/test_pipeline.py::test_write_dataset_emits_the_documented_layout','tests/test_pipeline.py::test_make_challenge_leaves_the_answers_behind']}
     provenance['compiled_kernel_build']=kernel_build
+    provenance['line_compiled_kernel_build']=line_kernel_build
     provenance['reference_pfd_overlay_sha256']=reference_hashes
     provenance['reference_pfd_origin']='authored engineering overlay; no upstream PFD assets exist at pinned commit'
     _validate_source_root(target/'src')
@@ -154,8 +167,7 @@ def verify_runtime(repo_root:Path,runtime:Path)->dict:
     if vendor_commit!=UPSTREAM_COMMIT: raise ValueError('protected vendor pin changed')
     if manifest['upstream_commit']!=vendor_commit: raise ValueError('runtime upstream commit mismatch')
     patches={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((repo_root/'patches').glob('*.patch'))}
-    extensions=_file_hashes(repo_root/'extensions/stamping_press')
-    extensions={'stamping_press/'+name:digest for name,digest in extensions.items()}
+    extensions={overlay+'/'+name:digest for overlay in ('stamping_press','stamping_line') for name,digest in _file_hashes(repo_root/'extensions'/overlay).items()}
     if manifest['patches']!=patches: raise ValueError('runtime patch hashes mismatch')
     if manifest['extension']!=extensions: raise ValueError('runtime extension hashes mismatch')
     overlay=repo_root/'extensions/reference_pfd'

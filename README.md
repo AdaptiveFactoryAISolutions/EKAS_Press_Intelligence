@@ -6,7 +6,7 @@ The full-stack rebuild uses the actual complete [HistorianSim](https://github.co
 
 ## Start here: plain-language wiki
 
-The [user wiki](docs/wiki/Home.md) explains installation, the current workspace, configuration, testing and EKAS integration. The [guided 1,500-ton line design](docs/superpowers/specs/2026-10-29-guided-1500t-line-design.md) specifies the requested one-screen-per-step setup. That wizard and complete line are planned work, not controls already available in the current workspace.
+The [user wiki](docs/wiki/Home.md) explains installation, configuration, testing and EKAS integration. The complete generic continuous-strip line now has an eight-step setup wizard, saved profiles, plain-language help and real native execution. On the development workstation open [Guided press setup](http://127.0.0.1:18729/#setup). Follow the [press-line installation guide](docs/wiki/02-Installation-and-first-use.md) for a fresh installation. This is unqualified practice: all native findings are retained and engineering ledger failures still block output registration. The separate reference service remains on port 18728.
 
 ## Start the native reference workspace
 

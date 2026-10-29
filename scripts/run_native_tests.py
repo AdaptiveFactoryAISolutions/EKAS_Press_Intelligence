@@ -41,8 +41,9 @@ def main():
     if args.layer=='core':
         targets=[str(p.relative_to(ROOT)) for p in sorted((ROOT/'tests').glob('test_native_*.py')) if p.name!='test_native_browser.py']
         targets+=['tests/test_reference_runtime.py']
+        targets+=['tests/test_line_setup.py','tests/test_line_api.py','tests/test_line_scheduler.py','tests/test_line_sdk.py','tests/test_line_validation_scope.py']
     elif args.layer=='browser':
-        targets=['tests/test_native_browser.py']
+        targets=['tests/test_native_browser.py','tests/test_line_browser.py','tests/test_line_browser_integration.py','tests/test_line_full_flow.py']
         env['EKAS_NATIVE_BROWSER_ARTIFACTS']=str(report/'browser-artifacts')
     elif args.layer=='physics':
         runtime=report/'native-runtime';reference=report/'reference-runtime'
@@ -52,7 +53,7 @@ def main():
         env['PYTHONPATH']=str(runtime/'src')+os.pathsep+str(ROOT/'src')
         env['EKAS_NATIVE_RUNTIME']=str(runtime)
         env['EKAS_NATIVE_TEST_REFERENCE_RUNTIME']=str(reference)
-        targets=['tests/test_press_native.py','extensions/stamping_press/pfd/test_press_pfd.py']
+        targets=['tests/test_press_native.py','extensions/stamping_press/pfd/test_press_pfd.py','tests/test_stamping_line.py']
     else:
         runtime=report/'native-runtime'
         subprocess.run([sys.executable,str(ROOT/'scripts/prepare_native_runtime.py'),'--target',str(runtime)],check=True,cwd=ROOT,env=env)

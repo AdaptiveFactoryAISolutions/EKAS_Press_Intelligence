@@ -9,13 +9,13 @@ A simulation is a virtual machine. It produces measurements from modeled equipme
 | Native historian browser, saved jobs and public measurements | Yes | You can explore existing datasets and run supported native operations. |
 | Reference tank and reactor simulations | Yes | Useful for learning the workflow; they are not press models. |
 | Earlier experimental stamping model | In a separate prepared runtime | It has a different design basis and incomplete qualification. |
-| Your complete 1,500-ton line, ten stations, washer and packing | Not yet | Defined in the new design; not created by changing a label. |
-| One-screen-per-step press configuration | Not yet | The required wizard is described in this wiki and design. |
+| Your complete generic 1,500-ton line, ten stations, washer and packing | Yes, for practice | A distinct connected native plant, with conservation tests and unresolved native measurement findings. |
+| One-screen-per-step press configuration | Yes | Eight screens, filled-in defaults, help, validation, saved progress and immutable runs. |
 | HTTP client for another application | Yes | A developer can read datasets through the backend API. |
 | Existing EKAS demo automatically connected | No | It needs an explicit adapter and an end-to-end check. |
 | Customer Ignition data connected | No | No customer gateway or real press is connected. |
 
-The current local workspace is normally at `http://127.0.0.1:18728/`. Its navigation includes **Dataset explorer**, **Native workflows**, **Durable jobs**, **Investigation & submission**, **Evaluation**, and **Sources & capabilities**. These are current labels. The proposed beginner wizard is a new entry point, not a renamed raw settings form.
+Use `http://127.0.0.1:18729/#setup` for the configured press line. Navigation includes **Guided press setup**, **Dataset explorer**, **Native workflows**, **Durable jobs**, **Investigation & submission**, **Evaluation**, and **Sources & capabilities**. Start in guided setup; the expert native form is not needed for ordinary press configuration.
 
 ## What a result means
 
@@ -25,4 +25,4 @@ The current local workspace is normally at `http://127.0.0.1:18728/`. Its naviga
 - **Failed:** keep the error and evidence. Do not treat missing output as a successful empty dataset.
 - **EXTERNAL_SCORING_REQUIRED:** the local system lacks the original benchmark's private answer key. It cannot invent a score.
 
-The earlier press model passed some engineering gates but failed an encoder measurement check. That remains recorded. The newly requested line requires a new configuration and evidence; it does not inherit qualification from tank tests or the older press model.
+The earlier press model passed some engineering gates but failed an encoder measurement check. That remains recorded. The new line has its own source-bound evidence and does not inherit qualification from it. Its unchanged native battery reports deterministic encoder coloring, short-history retention and (for healthy cases) a fault/twin divergence expectation. Practice runs retain these findings and register as **UNVALIDATED**, even when their engineering accounting passes. Engineering accounting failures still block registration.

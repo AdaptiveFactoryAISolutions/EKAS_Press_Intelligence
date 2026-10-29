@@ -11,9 +11,11 @@ This wiki is stored with the code so everyone sees instructions for the same ver
 | Connect an EKAS demo or backend | [Connecting EKAS](05-Connecting-EKAS.md) |
 | Solve a problem or understand a word | [Help and glossary](06-Help-and-glossary.md) |
 
-**Current status, 29 October 2026:** the native reference workspace works. The complete 1,500-ton, ten-station line and its beginner setup wizard are specified, but are not implemented or qualified yet. Do not mistake the older press model for this complete line. Each page distinguishes current instructions from planned screens.
+**Start the configured line:** on the development workstation open [Guided press setup](http://127.0.0.1:18729/#setup). Keep the standard settings for your first test. The separate reference workspace on port 18728 is for tank/reactor examples; it does not contain the complete line runtime.
 
-The intended experience is simple: select the standard line, follow one screen at a time, check the summary, run a test and inspect the result. Ordinary users should not edit program code, environment settings or JSON (a developer's structured settings format).
+**Current status, 29 October 2026:** the complete generic line, saved configurations and eight-step wizard are implemented. Actual native generation and a browser-to-worker-to-evidence walkthrough passed. This is an **unqualified practice system**: the physical accounting audits passed the tested cases, but the unchanged native measurement battery still reports findings. These remain visible; no failed check is reported as passing. A generic simulation is not a calibrated real-machine twin.
+
+Follow one screen at a time, check the summary, run a practice test and inspect the result. Ordinary users do not edit program code, environment settings or JSON (a developer's structured settings format). Use **Save and exit** to leave without losing your settings, then **Resume** to return.
 
 Your line, in order:
 

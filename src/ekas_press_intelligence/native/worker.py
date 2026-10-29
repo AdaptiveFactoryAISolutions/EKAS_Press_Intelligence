@@ -90,6 +90,8 @@ def run_job(directory,ident):
     target=Path(directory)/'artifacts'/ident
     try:
         submission=None;adjudication=None
+        from .line_source import check_binding
+        check_binding(store.line_binding(ident))
         if job['operation']=='independent_evaluation':
             from .evaluation import execute_evaluation
             parameters=dict(job['parameters']);dataset_id=parameters.pop('dataset_id',None)
@@ -139,6 +141,10 @@ def run_job(directory,ident):
             parameters=dict(job['parameters']);parameters.pop('dataset_id',None)
             result=execute(job['operation'],parameters,target,REPO,
                            progress=lambda phase:store.heartbeat(ident,phase))
+        binding=store.line_binding(ident)
+        if binding:
+            result['line_setup']=binding
+            if result.get('dataset'):result['dataset']=dict(result['dataset'],name='Generic 1,500-ton ten-station line',line_setup=binding)
         result['worker_configuration']={'requested_blas_threads':os.environ.get('EKAS_NATIVE_BLAS_THREADS'),
                                         'blas_environment':{name:os.environ.get(name) for name in THREAD_VARIABLES}}
         if store.get(ident)['state']=='cancel_requested':store.cancelled(ident);return 130

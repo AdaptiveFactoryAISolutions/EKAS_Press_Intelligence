@@ -18,7 +18,9 @@ Remote deployment requires EKAS_NATIVE_LOCAL_ONLY=0, configured role tokens, and
 
 ## Jobs and data
 
-POST `/v2/jobs` with an operation, strict parameters and optional idempotency key. Poll the returned job ID. A client polling timeout leaves the durable server job running; explicit cancellation requires administrator authority. Concurrent managers share one SQLite claim guard. Failed native validation retains adverse artifacts and does not register a successful dataset. NATIVE_VALIDATED means the native checks passed for that run; it does not imply press engineering qualification or EKAS readiness.
+POST `/v2/jobs` with an operation, strict parameters and optional idempotency key. Poll the returned job ID. A client polling timeout leaves the durable server job running; explicit cancellation requires administrator authority. Concurrent managers share one SQLite claim guard. Qualified generation requires passing native validation; failures retain adverse artifacts. NATIVE_VALIDATED means the native checks passed for that run; it does not imply press engineering qualification or EKAS readiness.
+
+The guided `stamping_line` workflow explicitly creates unqualified practice. Its native battery still runs and all findings are retained. With passing engineering accounting, the result can register as UNVALIDATED / UNQUALIFIED_PRACTICE; it never registers as qualified, even if the battery passes. Engineering accounting failures block registration. Draft revisions, idempotency and immutable configuration/runtime bindings are documented in the [guided-line evidence](validation/guided-1500t-line.md) and [wiki](wiki/Home.md).
 
 The original reference dataset is `historianrca`. Its private key was not published, so scoring returns EXTERNAL_SCORING_REQUIRED. Generated datasets retain their private key on the server. Freeze a free-text CSV through `/v2/datasets/{id}/submissions`; a separate evaluator records item/mechanism judgments, then the original native scorer applies its matching and six-hour timing rules. Analyst self-adjudication is rejected. Frozen submissions and judgments cannot be edited in place.
 

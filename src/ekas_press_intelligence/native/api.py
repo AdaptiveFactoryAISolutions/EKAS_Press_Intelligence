@@ -110,10 +110,18 @@ def create_native_app(state_dir=None,start_worker=True,tokens=None,local_only=No
     def require(request,roles):
         if request.state.role not in roles:forbidden('ROLE_FORBIDDEN','This operation requires a separate authorized role')
 
+    from .line_api import mount_line_routes
+    mount_line_routes(app,store,require)
+
+    def display_record(item):
+        binding=store.line_binding(item['job_id']) if item.get('job_id') else None
+        if binding:return dict(item,label='1,500-ton line · practice · '+item['id'][:8],line_setup=binding)
+        return item
+
     def record(ident):
         if ident=='historianrca':return {'id':ident,'label':'HistorianRCA · original 90-day TK-101 benchmark','source':'original','status':'PUBLISHED_REFERENCE',
                 'scoring_status':'EXTERNAL_SCORING_REQUIRED','public_path':str(REPO/'vendor'/'HistorianRCA'),'private_path':None}
-        return store.dataset(ident)
+        return display_record(store.dataset(ident))
 
     def detail(ident):
         item=record(ident)
@@ -157,7 +165,7 @@ def create_native_app(state_dir=None,start_worker=True,tokens=None,local_only=No
             return {'role':'analyst','operations':['describe_process','plot','blind_analysis'],'evidence_sources':['raw','grid'],'scoring':'frozen submissions; independent evaluation'}
         return dict(capabilities(REPO),role=request.state.role)
     @app.get('/v2/datasets')
-    def datasets():return {'datasets':[redact(record('historianrca')),*[redact({k:v for k,v in d.items() if k!='metadata'}) for d in store.datasets()]]}
+    def datasets():return {'datasets':[redact(record('historianrca')),*[redact({k:v for k,v in display_record(d).items() if k!='metadata'}) for d in store.datasets()]]}
     @app.get('/v2/datasets/{ident}')
     def dataset(ident:str):return detail(ident)
     @app.get('/v2/datasets/{ident}/tags')

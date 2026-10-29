@@ -7,12 +7,16 @@
 | What you see | What to do |
 |---|---|
 | Browser cannot connect | Confirm the address with the installer and whether the service is running. On another computer, `127.0.0.1` points to that computer. |
-| No press option | The running reference runtime contains tank/reactor examples. The full requested press preset is not implemented yet; renaming a tank will not create it. |
+| No press option / Run disabled | Use the configured press-line service on port 18729. Port 18728 is the separate reference runtime; its wizard correctly reports that the line runtime is unavailable. Ask the installer if working elsewhere. |
 | Access denied / 403 | Use the credential for your role. Ask the administrator rather than borrowing an admin credential for blind analysis. |
-| Invalid parameters | Read the exact field error. In the current expert form inspect the request preview. The planned wizard will link the error to the relevant screen. |
+| Invalid parameters | Read the exact field error. The guided wizard returns to the relevant screen and focuses the field. The separate expert form also has a request preview. |
+| Selected dataset could not load | Read the error, then select **Refresh datasets** to retry your chosen dataset. A failed request is not an empty successful result. |
 | CAPACITY_EXCEEDED | Ask the installer to review memory requirements and resource limits. Do not shorten a qualification run silently. |
 | A job stays queued | Check **Durable jobs**; another job may own the single worker. Do not submit repeated copies. |
 | Waiting timed out | Reopen the same job number. The server job may still be running. |
+| Run response was lost | Resume the saved setup and recover/retry its existing run. Do not make a new setup merely to find out whether the first run started. |
+| Runtime version changed | Ask the installer to restart using the verified prepared runtime. Review the setup again; a queued run cannot silently execute a different model version. |
+| Washer or packing bottleneck warning | Restore sufficient downstream capacity, or deliberately acknowledge the bottleneck test at Step 6. The application does not silently accept it as normal production. |
 | Validation failed | Retain the result. Passing other checks does not cancel the failure. Ask the maintainer to investigate the specific cause. |
 | Missing or flat readings | Inspect quality and source availability before inferring a machine fault. A bad/missing reading is not a measured zero. |
 | Only early history appears | The query may be truncated. Set a smaller UTC interval or use a complete public download/native plot. |
@@ -49,4 +53,4 @@ For a useful support report, provide the page name, job/dataset ID, error code, 
 
 ## Maintaining this wiki
 
-Update the wiki in the same change as the behavior it describes. Mark planned screens as available only after their browser and backend checks pass. Keep visible labels, supported limits and examples synchronized with the actual application. Preserve previous adverse evidence; do not rewrite a failed qualification as a pass.
+Update the wiki in the same change as the behavior it describes. Mark new controls as available only after browser and backend checks pass. Keep visible labels, supported limits and examples synchronized with the actual application. Preserve previous adverse evidence; do not rewrite a failed qualification as a pass. The Fluent appearance/help uses locally implemented native controls following Fluent patterns, rather than an installed Microsoft component package; implementation details stay out of the beginner's screens.

@@ -2,28 +2,34 @@
 
 [Wiki home](Home.md) · [Next: testing](04-Testing-and-results.md)
 
-**Planned wizard: these screens are not available yet.** This page is the operating sequence the implementation must deliver. Until it is implemented and verified, there is no supported click sequence that fully configures this line in the current workspace.
+Open [the press-line wizard](http://127.0.0.1:18729/#setup). These are implemented screens. Use the installed address if working on another computer. The reference-only service on port 18728 shows the settings but correctly blocks Run because it lacks this plant.
 
-Every screen has a title, “Step X of 8”, a short explanation, **Back**, **Next**, and **Save and exit**. Completed steps remain visible in a progress list. Returning resumes your saved draft. The wizard does not advance past an error; it explains the problem next to the field and takes you there. The standard preset fills in all required simulation assumptions.
+Each screen shows a title, “Step X of 8” and a short explanation. Use **Next**, **Back**, **Save setup**, or **Save and exit**. Back appears after Step 1; Run replaces Next at the end. Completed steps are available in the progress list. After leaving, open guided setup and choose **Resume** beside your saved setup. The standard preset fills in every required setting. Essential help is visible; question-mark buttons provide extra explanations.
 
 ## Step 1 — Choose your line
 
-1. Choose **Generic 1,500-ton continuous-strip press line**.
+![Choose the standard line and name the setup](images/01-choose-line.png)
+
+1. Confirm the selected **Generic 1,500-ton continuous-strip press line**.
 2. Read the equipment diagram and the prominent **Simulation only** label.
-3. Name the saved setup, for example “Training line”.
+3. Enter a **Setup name**, for example “Training line”.
 4. Choose **Next**.
 
 Expected result: ten die stations and the complete reel-to-packing route are already selected. Tank and reactor examples cannot be mistaken for this preset.
 
 ## Step 2 — Confirm capacity and production speed
 
-1. Confirm the displayed force unit. The proposed generic preset uses **1,500 metric tonnes-force**; this is an explicit assumption, not confirmed customer hardware. A US-short-ton rating is a different force.
+![Capacity, explicit force units and the ten-strokes-per-minute limit](images/02-correct-speed.png)
+
+The screenshot deliberately shows a mistake: **600 entered as strokes per minute**. The error catches it. For the first test, enter **8**; 600 strokes **per hour** is the maximum of **10 per minute**.
+
+1. Confirm the displayed force unit. The generic preset uses **1,500 metric tonnes-force**; this is an explicit assumption, not confirmed customer hardware. Switching to US short tons-force converts the displayed capacity and reference load while preserving the same physical forces. The fixed capacity is not editable.
 2. Leave the initial operating speed at **8 strokes/minute** (a proposed training default).
 3. Check the maximum: **10 strokes/minute**, also displayed as **600 strokes/hour**.
 4. Leave **one finished part per completed production stroke** selected unless the tooling is multi-out. The preset allows ten strokes to fill the initially empty die before steady output begins.
 5. Choose **Next**.
 
-The application must reject an operating speed above 10 SPM for this preset. Nominal capacity is a limit, not the force applied on every stroke. Lower speed does not automatically make an excessive die load acceptable.
+The application rejects speed above 10 SPM. Nominal capacity is a limit, not force applied on every stroke. Lower speed does not make an excessive die load acceptable.
 
 ## Step 3 — Confirm material supply and feeding
 
@@ -33,7 +39,7 @@ The application must reject an operating speed above 10 SPM for this preset. Nom
 4. Leave loop capacity, reel controls and feeder timing at the preset values for your first run.
 5. Choose **Next**.
 
-The numerical material/geometry defaults are to be documented and mechanically checked during implementation. They are not copied from the old 100 mm-pitch, 60-SPM model. The setup summary must show the actual values before you can run.
+Defaults are 600 mm width, 1.5 mm thickness, 800 mm progression, steel density 7,850 kg/m³, a 10,000 kg coil and a 6 m slack capacity starting at 3 m. These are generic assumptions, not customer dimensions. Changing material dimensions changes the resolved forming force/work; overloads are rejected. The summary shows the actual settings.
 
 ## Step 4 — Confirm die stations, lubrication and scrap handling
 
@@ -43,7 +49,7 @@ The numerical material/geometry defaults are to be documented and mechanically c
 4. Choose the installed scrap removal pattern: shaker chutes, motorized conveyors, or the preset combination.
 5. Choose **Next**.
 
-Station loads must come from declared tooling assumptions. A station force shown by the simulator must say whether it represents a direct sensor or a derived estimate; the application must not pretend ordinary corner tonnage sensors directly measure every station.
+Station load channels represent the declared synthetic station instrumentation and occupancy-dependent load model. They are not inferred from a claim that ordinary corner sensors independently resolve every station. The reference recipe is 1,000 metric tonnes-force peak and 100,000 J work for the default geometry; actual demand scales with material dimensions and lubrication. See [the engineering basis](../../extensions/stamping_line/DESIGN.md) for fixed model assumptions and limitations.
 
 ## Step 5 — Confirm washing and manual packing
 
@@ -55,33 +61,37 @@ Station loads must come from declared tooling assumptions. A station force shown
 
 Packing is manual. Its rate can vary; it is not an automatic packer. The model must show what happens when washing or packing is slower than stamping. Customer-container identity is simulated training data.
 
+The generic default is two people at six parts per minute each, 50 parts per container and 30 seconds to change containers. Including those changes, the nominal capacity is about 10.7 parts per minute, enough for the press's maximum 10 strokes per minute with one part per stroke. This is a training assumption, not a measured customer packing rate.
+
 ## Step 6 — Choose your test
 
-1. For your first run choose **Healthy line — first test**.
+1. For your first run keep **Healthy line — first test**.
 2. Keep the recommended duration, repeat number and measurement settings.
-3. For later tests, choose one named problem such as **Feeder slipping**. Read what is introduced and when. Keep known answers hidden in a blind investigation.
-4. Choose **Next**.
+3. For later tests choose one named problem, such as **Feeder slipping**. The fault-free starting period is an earliest baseline, not a promise of an exact onset; the native scheduler records the actual onset privately. Keep known answers hidden in a blind investigation.
+4. Leave **Deliberate throughput bottleneck** at No for the first test. If you intentionally lower washer or packing capacity below press output, you must select Yes; the choice is saved with the run.
+5. Choose **Next**.
 
-The repeat number (seed) makes a case reproducible. A short practice run must be labeled **Practice**, not qualification. The engine must check that there is enough time for warm-up, transport and any selected fault; it must never silently shorten a test or omit a fault.
+The default is a 60-minute simulated practice run, repeat number 7. The screen does not predict an exact wall-clock duration. All wizard runs are labeled Practice, not qualification. Settings validation rejects a fault baseline that leaves less than two minutes for the fault; the native scheduler fits the actual episode inside the requested history.
 
 ## Step 7 — Choose where to view the result
 
 1. Keep **Built-in workspace** for the first run. It needs no external application.
-2. To use an EKAS application, choose an administrator-configured connection. Do not type secret tokens into ordinary setup fields.
-3. Choose **Test connection**. Read whether the service is reachable, access is allowed and sample evidence can be read.
-4. Choose **Next** after all required connection checks pass.
+2. Read the connection note. A separate external EKAS application is not provisioned in this build; the wizard does not offer a fictional connection selector or success check.
+3. Choose **Next**. To connect a separate application, follow [Connecting EKAS](05-Connecting-EKAS.md) with its maintainer.
 
-An unavailable EKAS connection must not silently switch to fictional demo data. You may explicitly return to the built-in workspace. Backend integration instructions are on [Connecting EKAS](05-Connecting-EKAS.md).
+An external application remains an explicit integration task until its editable source and response contract are supplied. This step uses the actual built-in workspace; there is no automatic switch to fictional demo data.
 
 ## Step 8 — Review and run
 
+![Review the complete configuration before running practice](images/03-review-and-run.png)
+
 1. Read the line diagram and settings summary. Confirm ten stations and maximum 10 SPM.
-2. Inspect any assumptions and warnings. Each section has an **Edit** link back to its step.
-3. Choose **Check configuration**. The server checks the complete combination of settings, required sensors, timing, capacity and available resources.
-4. When the checks pass, choose **Run test** once.
+2. Inspect the settings and assumptions. Use the completed-step buttons to return and edit.
+3. Choose **Check setup**. The server checks the complete configuration and confirms whether the required runtime is available. Native execution separately checks resource limits; an exceeded limit fails visibly rather than changing the test.
+4. When the checks pass, choose **Run practice** once.
 5. The application opens the run-progress screen with your saved configuration version and job number.
 
-If checks fail, the run button stays unavailable and a specific correction link appears. You must not need raw JSON or a terminal to complete this workflow.
+If a field check fails, the wizard returns to its step, focuses the field and explains the correction. If the line runtime is absent, Run stays disabled with an installer message. You do not need raw JSON or a terminal to complete this workflow. Exact configuration/source hashes are available inside the optional **Exact configuration and source binding** section.
 
 ## Tooltips and help
 

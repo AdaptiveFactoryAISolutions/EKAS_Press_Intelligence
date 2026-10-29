@@ -1,0 +1,14 @@
+diff --git a/src/historiansim/faults/scheduler.py b/src/historiansim/faults/scheduler.py
+--- a/src/historiansim/faults/scheduler.py
++++ b/src/historiansim/faults/scheduler.py
+@@ -143,7 +143,9 @@ def _episode_duration(
+     else:                                           # slow degradation
+         base = rng.uniform(5.0, 11.0) * DAY
+ 
+-    room = max(slot_s - gap_s, 0.5 * DAY)
++    room = slot_s - gap_s
++    if room <= 0:
++        raise ValueError("fault episode has no positive duration available")
+     return min(base * scale, room)
+ 
+ 

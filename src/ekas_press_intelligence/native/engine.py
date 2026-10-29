@@ -13,7 +13,7 @@ from .data import dataset_info, public_files
 
 OPS={
  'new_plant':{'name','equipment'},
- 'generate':{'scenario','profile','seed','days','scan','dt_sim','ballast','faults','difficulty','resample','no_fault','validate','start','timezone','baseline_days','config'},
+ 'generate':{'scenario','profile','seed','days','scan','dt_sim','ballast','faults','difficulty','resample','no_fault','validate','start','timezone','baseline_days','config','practice'},
  'validate':{'dataset_dir'}, 'plant_check':{'plant','stage','seed'},
  'describe_process':{'dataset_dir','plant'},'make_challenge':{'dataset_dir'},
  'plot':{'dataset_dir','tags','episode','days','shade_episodes'},'report':{'dataset_dir'},'summarise':{'dataset_dir'},
@@ -44,7 +44,7 @@ def _config(p):
     from historiansim.config.schema import ScenarioConfig
     from historiansim.scenarios import build_scenario
     if 'config' in p:
-        if set(p)-{'config','resample','validate'}: raise ValueError('INVALID_PARAMETERS: config cannot be combined with scenario overrides')
+        if set(p)-{'config','resample','validate','practice'}: raise ValueError('INVALID_PARAMETERS: config cannot be combined with scenario overrides')
         # Native Pydantic currently permits ignored extras; recursively check before parsing.
         def check(model,data):
             if not isinstance(data,dict): return
@@ -81,9 +81,22 @@ def _passed(checks):
     return all(c.passed or c.severity!='error' for c in checks)
 
 
+def validation_outcome(checks,performed,practice,engineering):
+    native_passed=_passed(checks) if performed else None
+    engineering_failed=engineering is not None and not engineering['passed']
+    # Practice retains the complete native findings but never receives qualified
+    # registration. Broken physical ledgers still block output registration.
+    return {'passed':False if engineering_failed else None if practice else native_passed,
+            'native_validation_passed':native_passed,'validation_performed':performed,
+            'qualification_status':'UNQUALIFIED_PRACTICE' if practice else 'NATIVE_CHECKS_ONLY'}
+
+
 def _press_engineering(data):
-    if data.cfg.unit!='stamping_press':return None
-    from .qualification import engineering_acceptance
+    if data.cfg.unit not in ('stamping_press','stamping_line'):return None
+    if data.cfg.unit=='stamping_line':
+        from historiansim.plants.stamping_line.cycles import engineering_acceptance
+    else:
+        from .qualification import engineering_acceptance
     reports={}
     for name,truth in [('faulted',data.truth),('twin',data.twin)]:
         try:reports[name]=engineering_acceptance(truth)
@@ -96,7 +109,7 @@ def execute(operation:str,parameters:dict,target:Path,repo_root:Path,progress=No
     if operation not in OPS: raise ValueError('INVALID_OPERATION: '+str(operation))
     if not isinstance(parameters,dict) or set(parameters)-OPS[operation]: raise ValueError('INVALID_PARAMETERS: unknown operation option')
     p=dict(parameters); target=Path(target)
-    for flag in ('validate','no_fault','shade_episodes'):
+    for flag in ('validate','no_fault','shade_episodes','practice'):
         if flag in p and type(p[flag]) is not bool: raise ValueError('INVALID_PARAMETERS: '+flag+' must be boolean')
     if any(q.is_symlink() for q in (target,*target.parents)): raise ValueError('INVALID_TARGET: symlink path')
     target.mkdir(parents=True,exist_ok=True)
@@ -128,6 +141,8 @@ def execute(operation:str,parameters:dict,target:Path,repo_root:Path,progress=No
         result.update(plant_directory=str(directory),authoring_directory='authoring/HistorianSim',status='SCAFFOLDED_REQUIRES_DESIGN_AND_NATIVE_GATES')
     elif operation=='generate':
         cfg=_config(p)
+        if p.get('practice') and (cfg.unit!='stamping_line' or p.get('validate',True) is not True):
+            raise ValueError('INVALID_PARAMETERS: practice scope requires stamping_line with native checks enabled')
         resample=p.get('resample',60.)
         if isinstance(resample,bool) or not isinstance(resample,(int,float)) or not math.isfinite(resample) or resample<=0: raise ValueError('INVALID_PARAMETERS: resample must be positive finite seconds')
         from historiansim import layout
@@ -176,9 +191,8 @@ def execute(operation:str,parameters:dict,target:Path,repo_root:Path,progress=No
                 if file.is_file(): modules[name]={'origin':str(file.resolve()),'sha256':hashlib.sha256(file.read_bytes()).hexdigest()}
         (private/'metadata'/'execution_provenance.json').write_text(json.dumps({'modules':modules,'config':cfg.model_dump(mode='json')},indent=2),encoding='utf-8')
         result.update(dataset=dataset_info(public),public_directory='public',private_directory='private',validation=_checks(checks),passed=_passed(checks) if p.get('validate',True) else None,validation_performed=p.get('validate',True),capacity={'estimated_bytes':estimate,'configured_limit_bytes':limit,'steps':n,'duration_days':cfg.time.days,'requested_grid_rows':requested_grid_rows},resample={'requested_seconds':resample,'native_challenge_canonical_60s_added':compatibility},files=public_files(public))
-        if engineering is not None:
-            result['engineering_acceptance']=engineering
-            if p.get('validate',True):result['passed']=result['passed'] and engineering['passed']
+        result.update(validation_outcome(checks,p.get('validate',True),p.get('practice',False),engineering))
+        if engineering is not None:result['engineering_acceptance']=engineering
     elif operation=='plant_check':
         from historiansim.validation.plant_checks import run_plant_checks
         if 'plant' not in p: raise ValueError('INVALID_PARAMETERS: plant required')

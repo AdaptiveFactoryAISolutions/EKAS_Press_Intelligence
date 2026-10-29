@@ -1,8 +1,8 @@
 # Guided generic 1,500-ton stamping line
 
-Date: 29 October 2026. Status: design for review; not implemented or qualified.
+Date: 29 October 2026. Status: user-approved design implemented as unqualified practice. Exact-head publication checks are recorded in draft PR2; production qualification remains separate.
 
-Independent builder check completed: no consequential unanswered planning questions or misleading current-versus-planned claims found. Generic engineering values and implementation choices are explicitly delegated; target-specific external EKAS wiring still needs identified source/contract. User approval of this full design is pending.
+Independent builder check completed: no consequential unanswered planning questions or misleading current-versus-planned claims found. Generic engineering values and implementation choices are explicitly delegated; target-specific external EKAS wiring still needs identified source/contract. The user approved this full design and implementation on 29 October 2026.
 
 ## Purpose and user outcome
 
