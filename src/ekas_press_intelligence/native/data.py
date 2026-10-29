@@ -11,17 +11,40 @@ import pyarrow.parquet as pq
 
 FIXED_FILES = frozenset({'SOURCE_AVAILABILITY.md','SOURCE_AVAILABILITY.json','cycle_event_journal.parquet','cycle_events.parquet','historian.parquet','historian_10s.parquet','tags.csv','PROCESS_DESCRIPTION.md','CHALLENGE.md','submission_template.csv','PFD.svg','PFD.png','tk-101-hold-tank.svg','tk-101-hold-tank.png','README.md','CITATION.cff','LICENSE'})
 
+def _public_name(name: str)->str:
+    """Construct a filename from trusted constants and ASCII numeric tokens.
+
+    Never pass the request string into a path join. Fractional zero padding is
+    significant in native resample filenames and must survive reconstruction.
+    """
+    if not isinstance(name,str):
+        raise ValueError('PUBLIC_FILE_FORBIDDEN: filename is not public')
+    for fixed in FIXED_FILES:
+        if name==fixed:return fixed
+    if name=='historian_grid_10s.parquet':return 'historian_grid_10s.parquet'
+    match=re.fullmatch(r'historian_([1-9][0-9]*|0)(?:p([0-9]*[1-9]))?s\.parquet',name)
+    if match is None or (match[1]=='0' and match[2] is None):
+        raise ValueError('PUBLIC_FILE_FORBIDDEN: filename is not public')
+    # Convert each character independently: this accepts arbitrarily long
+    # native numeric tokens without Python's whole-integer conversion limit.
+    integer=''.join(str(int(digit)) for digit in match[1])
+    fraction=('p'+''.join(str(int(digit)) for digit in match[2])) if match[2] is not None else ''
+    return 'historian_'+integer+fraction+'s.parquet'
+
+
 def _allowed(name):
-    return isinstance(name,str) and Path(name).name==name and (name in FIXED_FILES or name=='historian_grid_10s.parquet' or re.fullmatch(r'historian_(?:[1-9][0-9]*(?:p[0-9]*[1-9])?|0p[0-9]*[1-9])s\.parquet',name) is not None)
+    try:_public_name(name)
+    except ValueError:return False
+    return True
 
 def resolve_public_file(path: Path,name: str)->Path:
     path=Path(path)
-    if not _allowed(name): raise ValueError('PUBLIC_FILE_FORBIDDEN: filename is not public')
+    public_name=_public_name(name)
     # Refuse symlink components, even those pointing back inside the dataset.
     if any(p.is_symlink() for p in (path,*path.parents)): raise ValueError('PUBLIC_FILE_FORBIDDEN: symlink directory')
-    p=path/name
+    p=path/public_name
     if p.is_symlink(): raise ValueError('PUBLIC_FILE_FORBIDDEN: symlink file')
-    if not p.is_file(): raise FileNotFoundError(name)
+    if not p.is_file(): raise FileNotFoundError(public_name)
     if p.resolve().parent!=path.resolve(): raise ValueError('PUBLIC_FILE_FORBIDDEN: path escape')
     return p
 

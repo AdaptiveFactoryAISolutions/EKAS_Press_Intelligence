@@ -87,3 +87,39 @@ def test_measured_event_queries_preserve_codes_quality_and_time(tmp_path):
     assert result['aggregation']=='none'
     with pytest.raises(ValueError):query_events(tmp_path,source='../metadata')
     with pytest.raises(ValueError):query_events(tmp_path,max_points=10001)
+
+
+def test_canonical_public_names_preserve_exact_supported_grammar():
+    from ekas_press_intelligence.native.data import FIXED_FILES,_public_name
+    import re
+    fixed=set(FIXED_FILES)|{'historian_grid_10s.parquet'}
+    valid=sorted(fixed)+['historian_1s.parquet','historian_10s.parquet','historian_60s.parquet','historian_0p001s.parquet','historian_0p0025s.parquet','historian_1p0025s.parquet','historian_1p001s.parquet','historian_20p0001s.parquet','historian_999999999999999999999999s.parquet']
+    for name in valid:
+        assert _public_name(name)==name
+    invalid=['','../tags.csv','./tags.csv','/tags.csv','metadata/ground_truth.json','FAULT_ANSWER_KEY.md','tags.csv/','tags.csv\\extra','tags.csv\x00','tags.csv\n','historian_00s.parquet','historian_01s.parquet','historian_0s.parquet','historian_0p0s.parquet','historian_1p0s.parquet','historian_1p10s.parquet','historian_1.5s.parquet','historian_１s.parquet','historian_1s.parquet\n','historian_1ps.parquet',None,1]
+    for name in invalid:
+        with pytest.raises(ValueError,match='PUBLIC_FILE_FORBIDDEN'):_public_name(name)
+    # Compare all short numeric suffixes with the prior exact allowlist grammar.
+    from itertools import product
+    pattern=r'historian_(?:[1-9][0-9]*(?:p[0-9]*[1-9])?|0p[0-9]*[1-9])s\.parquet'
+    for length in range(1,5):
+        for chars in product('01p',repeat=length):
+            name='historian_'+''.join(chars)+'s.parquet'
+            if re.fullmatch(pattern,name):assert _public_name(name)==name
+            else:
+                with pytest.raises(ValueError):_public_name(name)
+
+
+def test_all_public_boundary_files_and_symlink_roots(tmp_path):
+    from ekas_press_intelligence.native.data import FIXED_FILES,public_files
+    folder=tmp_path/'public';folder.mkdir()
+    names=sorted(set(FIXED_FILES)|{'historian_grid_10s.parquet','historian_0p001s.parquet','historian_20p0001s.parquet'})
+    for name in names:(folder/name).write_bytes(name.encode())
+    assert [f['name'] for f in public_files(folder)]==names
+    for name in names:assert resolve_public_file(folder,name).read_bytes()==name.encode()
+    link=tmp_path/'alias';link.symlink_to(folder,target_is_directory=True)
+    for path in (link,link/'.'):
+        with pytest.raises(ValueError,match='symlink directory'):resolve_public_file(path,'tags.csv')
+    (folder/'PFD.svg').unlink();(folder/'PFD.svg').symlink_to(folder/'tags.csv')
+    with pytest.raises(ValueError,match='symlink file'):resolve_public_file(folder,'PFD.svg')
+    with pytest.raises(ValueError,match='symlink file'):public_files(folder)

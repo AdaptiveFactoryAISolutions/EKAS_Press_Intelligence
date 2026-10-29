@@ -197,3 +197,29 @@ def test_evaluator_answer_key_requires_frozen_claims_even_for_admin_created_job(
     assert client.get('/v2/jobs/'+ident,headers=evaluator).status_code==200
     assert client.get('/v2/jobs/'+ident+'/files/FAULT_ANSWER_KEY.md',headers=evaluator).status_code==200
     assert client.post('/v2/jobs',json=body,headers=evaluator).status_code==201
+
+
+def test_artifact_request_ids_cannot_be_paths_even_if_store_contains_noncanonical_id(client):
+    """Defense in depth for imported/corrupt store rows, not an API insertion route."""
+    store=client.app.state.store
+    job=store.create('describe_process',{'plant':'heated_stirred_tank'});store.claim('test')
+    store.finish(job['id'],{'artifact':'PROCESS_DESCRIPTION.md'})
+    (store.directory/'artifacts').mkdir(exist_ok=True)
+    (store.directory/'PROCESS_DESCRIPTION.md').write_text('PRIVATE_STATE_OUTSIDE_ARTIFACTS')
+    with store.connect() as db:db.execute('UPDATE jobs SET id=? WHERE id=?',('..',job['id']))
+    h={'Authorization':'Bearer read'}
+    response=client.get('/v2/jobs/%2e%2e/files/PROCESS_DESCRIPTION.md',headers=h)
+    assert response.status_code in (404,422)
+    assert 'PRIVATE_STATE_OUTSIDE_ARTIFACTS' not in response.text
+    listing=client.get('/v2/jobs/%2e%2e/files',headers=h)
+    assert listing.status_code in (404,422)
+
+
+def test_unknown_artifact_request_ids_never_resolve_existing_directory(client):
+    from uuid import uuid4
+    store=client.app.state.store;ident=str(uuid4())
+    folder=store.directory/'artifacts'/ident;folder.mkdir(parents=True)
+    (folder/'PROCESS_DESCRIPTION.md').write_text('UNREGISTERED_FILE')
+    h={'Authorization':'Bearer read'}
+    assert client.get('/v2/jobs/'+ident+'/files/PROCESS_DESCRIPTION.md',headers=h).status_code==404
+    assert client.get('/v2/jobs/'+ident+'/files',headers=h).status_code==404

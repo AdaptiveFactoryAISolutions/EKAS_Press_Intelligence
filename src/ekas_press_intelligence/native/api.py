@@ -8,6 +8,7 @@ import ipaddress
 import tempfile
 from pathlib import Path
 from typing import Literal
+from uuid import UUID
 import pandas as pd
 from fastapi import FastAPI,HTTPException,Request,Query
 from fastapi.responses import FileResponse,JSONResponse,Response
@@ -174,7 +175,7 @@ def create_native_app(state_dir=None,start_worker=True,tokens=None,local_only=No
     def file(ident:str,name:str):
         try:path=resolve_public_file(Path(record(ident)['public_path']),name)
         except (ValueError,FileNotFoundError):raise HTTPException(404,detail={'code':'PUBLIC_FILE_UNAVAILABLE','message':'File is not in the public dataset allowlist'})
-        return FileResponse(path,filename=name)
+        return FileResponse(path,filename=path.name)
 
     @app.post('/v2/jobs',status_code=201)
     def create_job(body:JobRequest,request:Request):
@@ -228,17 +229,23 @@ def create_native_app(state_dir=None,start_worker=True,tokens=None,local_only=No
         current=store.get(ident)
         if privileged_job(current):require(request,{'admin','evaluator'})
         require_frozen_key_job(current,request)
-        root=directory/'artifacts'/ident
+        # Only the canonical identity read from the durable store enters a path.
+        # A request ID is a lookup key, never a filesystem component.
+        try:artifact_id=UUID(current['id'])
+        except (ValueError,TypeError,AttributeError):forbidden('ARTIFACT_UNAVAILABLE','Job artifact identity is invalid',404)
+        if str(artifact_id)!=current['id']:forbidden('ARTIFACT_UNAVAILABLE','Job artifact identity is not canonical',404)
+        root=directory/'artifacts'/str(artifact_id)
         result=current.get('result') or {};allowed={}
-        name=result.get('artifact')
-        if name in ('plot.png','PROCESS_DESCRIPTION.md','FAULT_ANSWER_KEY.md'):
+        for name in ('plot.png','PROCESS_DESCRIPTION.md','FAULT_ANSWER_KEY.md'):
+            if name!=result.get('artifact'):continue
             path=root/name
             if path.is_file() and not path.is_symlink():allowed[name]=path
         if current['operation']=='blind_analysis':
             analysis_files={'submission.csv','analysis_notes.md'}
             if request.state.role in ('admin','evaluator'):
                 analysis_files|={'analysis_provenance.json','input_snapshot.json','evidence_queries.jsonl'}
-            for name in analysis_files.intersection(result.get('artifacts',[])):
+            for name in sorted(analysis_files):
+                if name not in result.get('artifacts',[]):continue
                 path=root/name
                 if path.is_file() and not path.is_symlink():allowed[name]=path
             if request.state.role in ('admin','evaluator'):
@@ -248,7 +255,8 @@ def create_native_app(state_dir=None,start_worker=True,tokens=None,local_only=No
                     path=root/name
                     if path.is_file() and not path.is_symlink():allowed[name]=path
         if current['operation']=='independent_evaluation' and request.state.role in ('admin','evaluator'):
-            for name in {'evaluation_proposals.json','evaluation_provenance.json','provider_status.json'}.intersection(result.get('artifacts',[])):
+            for name in ('evaluation_proposals.json','evaluation_provenance.json','provider_status.json'):
+                if name not in result.get('artifacts',[]):continue
                 path=root/name
                 if path.is_file() and not path.is_symlink():allowed[name]=path
         # Failed native checks retain inspectable public data, explicitly unqualified.
@@ -279,7 +287,8 @@ def create_native_app(state_dir=None,start_worker=True,tokens=None,local_only=No
     def job_file(ident:str,name:str,request:Request):
         _,allowed=job_artifacts(ident,request)
         if name not in allowed:forbidden('ARTIFACT_UNAVAILABLE','Artifact is not available to this role',404)
-        return FileResponse(allowed[name],filename=name)
+        path=allowed[name]
+        return FileResponse(path,filename=path.name)
 
     def parse_submission(text):
         try:frame=pd.read_csv(StringIO(text),dtype=str).fillna('')
