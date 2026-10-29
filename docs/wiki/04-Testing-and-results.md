@@ -7,9 +7,10 @@
 1. Open [Guided press setup](http://127.0.0.1:18729/#setup).
 2. Keep the standard line settings and **Healthy line — first test**. The default history is 60 simulated minutes.
 3. Follow all eight screens. At the end select **Check setup**, then **Run practice**.
-4. In **Durable jobs**, wait for the recorded completion state and choose **View practice results**.
-5. Read **Synthetic press practice — not qualified for production**. A completed practice job is not an all-checks-passed certificate.
-6. Select a signal and choose **Query measurements**. Use these signal names for a starting exercise:
+4. In **Durable jobs**, wait for the recorded completion state and choose **Read my results**.
+5. Read the report in order. It explains the settings, time period, graphs, part counts, check findings, and next steps.
+6. Select **Print or save as PDF** if you need a copy. Use **View measurements** for the technical explorer.
+7. In that explorer, select a signal and choose **Query measurements**. Use these signal names for a starting exercise:
 
 | What to inspect | Signal |
 |---|---|
@@ -22,6 +23,30 @@
 | Drive current | `II-DRIVE` |
 
 Counts differ normally while parts fill the die, travel and await packing. Do not compare ten stations with ten finished parts per stroke. The first ten completed strokes fill the die before steady output; throughput is then nominally one finished part per stroke for one-out tooling.
+
+## Read the plain-language report
+
+![The completed run report starts with explained part counts](images/04-plain-report.jpg)
+
+**Read my results** is available to an administrator for each completed guided press run.
+It does not run another simulation. It reads that run's saved settings and original stored observations.
+The report includes separate graphs with real units, explanatory captions, a technical-term list, and the recorded check findings.
+The report states that this is simulation practice. Successful generation does not mean that every check passed.
+
+The part balance includes packed parts, rejected parts, and parts still on the conveyor, in the washer, or waiting for packing.
+It needs usable final readings at the same time. Missing readings do not become zero.
+The report shows the original observation times, so an earlier graph endpoint cannot silently become a final total.
+
+Graphs show up to 960 selected stored points per signal. Summaries cover the full primary file.
+Dots represent stored observations. They do not fill gaps or add interpolated values.
+The source identifiers and hashes are available under **How was this report made?**
+
+The wording uses ASD-STE100 Issue 9 as its reference. Full vocabulary and terminology review remains open.
+This status is visible in the report. See the [language review](../PLAIN_REPORT_LANGUAGE_REVIEW.md).
+
+The report contains setup information. It is not part of the blind analyst or independent evaluator workflow.
+Backend applications can request `GET /v2/jobs/{job_id}/practice-report` with an administrator credential.
+This read request returns the structured report without changing the run or its qualification status.
 
 ## Repeat with a feeder problem
 

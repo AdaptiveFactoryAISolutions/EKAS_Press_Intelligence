@@ -233,6 +233,24 @@ def create_native_app(state_dir=None,start_worker=True,tokens=None,local_only=No
         require(request,{'admin'})
         return public_job(store.request_cancel(ident),request)
 
+    @app.get('/v2/jobs/{ident}/practice-report')
+    def practice_report(ident:str,request:Request):
+        require(request,{'admin'})
+        current=store.get(ident)
+        binding=store.line_binding(ident)
+        if current['state']!='succeeded' or current['operation']!='generate' or not binding:
+            forbidden('PRACTICE_REPORT_UNAVAILABLE','Select a completed guided press practice run',409)
+        result=current.get('result') or {}
+        config=current['parameters'].get('config') or {}
+        if result.get('qualification_status')!='UNQUALIFIED_PRACTICE' or config.get('unit')!='stamping_line' or not result.get('dataset_id'):
+            forbidden('PRACTICE_REPORT_UNAVAILABLE','This result is not a guided press practice dataset',409)
+        data=store.dataset(result['dataset_id'])
+        if data.get('job_id')!=current['id']:
+            forbidden('PRACTICE_REPORT_BINDING','The registered dataset does not belong to this run',409)
+        from .practice_report import build_report
+        try:return build_report(current,binding,Path(data['public_path']))
+        except FileNotFoundError:forbidden('REPORT_SOURCE_UNAVAILABLE','The primary readings are not available for this run',409)
+
     def job_artifacts(ident,request):
         current=store.get(ident)
         if privileged_job(current):require(request,{'admin','evaluator'})

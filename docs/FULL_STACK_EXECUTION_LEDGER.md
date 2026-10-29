@@ -61,3 +61,23 @@ actual live exports: 10 exact public-Parquet comparisons passed, source digests
 unchanged, no resimulation. Both wheels built and distribution checks passed.
 Frozen model/vendor sources unchanged. See the guided-line validation report
 and machine-readable software receipt. Remote CI/CodeQL billing block remains.
+# Plain-language automatic run report — 2026-10-29
+
+The approved report format is now available through **Read my results** on completed guided press runs.
+The admin-only backend uses immutable settings and full primary observations; it does not resimulate or expose private truth.
+Separate real-unit graphs, explained counts/findings, next steps, a glossary, source hashes, and browser print support are included.
+
+Core layer: 206 passed/zero skips. Browser layer: 29 passed/zero skips.
+Final focused regressions: 16 passed after rejection, timestamp-order and axis-label corrections.
+Package builds/distribution checks passed; nine packaged UI/backend files match the checkout.
+Independent review closed the rejected-part accounting finding with no remaining material findings.
+
+The idle owned port-18729 wrapper was backed up/restarted. Before/after hashes matched all saved rows in six state tables.
+The actual user's run reconciles 467 produced, 459 packed, eight in-line and zero rejected.
+All 19 jobs, 16 datasets and nine drafts/bindings remain intact.
+Model/runtime R7 and both vendor trees are unchanged. No merge or physical activation occurred.
+
+The one-process whole-suite attempt remains recorded as a mixed-native-import collection failure; isolated layers passed.
+ASD-STE100 Issue 9 is the language reference; full vocabulary/terminology review remains explicitly open.
+Remote CI/CodeQL still has the separately confirmed GitHub billing lock.
+See [software evidence](validation/plain-run-report.md) and [language review](PLAIN_REPORT_LANGUAGE_REVIEW.md).

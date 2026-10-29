@@ -803,6 +803,43 @@
         }
       }
     },
+    "/v2/jobs/{ident}/practice-report": {
+      "get": {
+        "summary": "Practice Report",
+        "operationId": "practice_report_v2_jobs__ident__practice_report_get",
+        "parameters": [
+          {
+            "name": "ident",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Ident"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v2/jobs/{ident}/files": {
       "get": {
         "summary": "Job Files",

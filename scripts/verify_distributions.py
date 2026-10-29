@@ -28,7 +28,7 @@ def main():
     subprocess.run([sys.executable,'-I','-c',code,str(sdk[0].resolve())],check=True)
     with zipfile.ZipFile(server[0]) as archive:
         names=set(archive.namelist())
-        required={'ekas_press_intelligence/native_ui/'+f for f in ('index.html','app.js','app.css','setup.js','setup.css')}
+        required={'ekas_press_intelligence/native_ui/'+f for f in ('index.html','app.js','app.css','setup.js','setup.css','report.js','report.css')}
         required.update({'ekas_press_intelligence/native/api.py','ekas_historian_client/__init__.py'})
         if not required.issubset(names):raise SystemExit('Server wheel is missing runtime assets')
         with zipfile.ZipFile(sdk[0]) as client_archive:verify_shared_client(client_archive,archive)
