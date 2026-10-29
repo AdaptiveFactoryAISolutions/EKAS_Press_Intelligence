@@ -33,7 +33,13 @@ def activate():
         try:verifier.verify_runtime(root,Path(runtime))
         except Exception as exc:raise RuntimeError('Prepared native runtime verification failed: '+str(exc)) from exc
         source=Path(runtime).resolve()/'src';kind='verified_native_reference' if reference else 'verified_hybrid_extension'
-    else:source=root/'vendor/HistorianSim/src'
+    else:
+        source=root/'vendor/HistorianSim/src'
+        script=root/'scripts/prepare_reference_runtime.py'
+        spec=importlib.util.spec_from_file_location('_ekas_default_source_verifier',script)
+        verifier=importlib.util.module_from_spec(spec);spec.loader.exec_module(verifier)
+        try:verifier.verify_default_source(root,source)
+        except Exception as exc:raise RuntimeError('Default native source verification failed: '+str(exc)) from exc
     loaded=sys.modules.get('historiansim')
     expected=(source/'historiansim').resolve()
     if loaded is not None:

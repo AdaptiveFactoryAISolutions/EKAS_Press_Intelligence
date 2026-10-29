@@ -1,0 +1,28 @@
+{
+  "scope": "Repaired local backend checkpoint; final-head remote CI is separate.",
+  "full_press_qualified": false,
+  "backend": {
+    "passed": 149, "skipped": 0, "returncode": 0,
+    "elapsed_seconds": 169.21832418441772,
+    "provider": "No host Claude available; mocked provider contracts explicitly scoped, no real provider invoked.",
+    "report": "work/native-test-reports/core/74d741fa-39a4-4865-be88-0baf48b25b9a/result.json",
+    "report_sha256": "f1bb322c631fbc5281baafdb7dcc400853a6fd4400d60b04f06e763d5d08d510"
+  },
+  "repaired_source_sha256": {
+    "scripts/prepare_reference_runtime.py": "5a6e1825741e23960e297e734f7608c864f4400601e94ffabe743098c8f03bf0",
+    "src/ekas_press_intelligence/native/analysis.py": "a21c6baa7bfbdd0d01234d3d99ed512db1322876bf731894962e7e7a3e455436",
+    "src/ekas_press_intelligence/native/bootstrap.py": "982bc1a7b190a0b166a4b5447766929c098d547fbfd38ca684b84a036f5cb464"
+  },
+  "adverse_evidence": [
+    {"commit": "856485341e74d8afdd0e1afb7eddccecfc446875", "ci_run": 40818569994, "artifact": 12873438290, "failed_core_cases": 5, "total_core_cases": 143},
+    {"report": "work/native-test-reports/core/31152df7-76ec-4677-a440-f15d3f8d34a8/result.json", "passed": 144, "failed": 2, "reason": "Accidental removal of existing scoped test placeholders; restored before final local run."}
+  ],
+  "distributions": {
+    "verification_passed": true,
+    "version": "2.0.0.dev0",
+    "client_sha256": "3e5588671ab9c226249a86ad54eed12878cff32d070fb855be83e03090a110cf",
+    "server_sha256": "275c88574532a321552044a6fb8648ee0d6464359c9ff4eb4c98b8fcce0ca286"
+  },
+  "press_gate_evidence": "press/v36-gates.json",
+  "limitations": "Press Stage5 remains failed; matrix and six full90day runs held. Actual external analyst/evaluator qualification remains incomplete. Supported Linux layouts tested; no broader platform portability claim."
+}

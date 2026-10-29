@@ -41,13 +41,49 @@ def overlay(root):
 def expected(root):
     files=committed(root);files.update(overlay(root));return files
 
+def _reject_symlink_ancestors(path):
+    if any(item.is_symlink() for item in (path,*path.parents)):
+        raise ValueError('runtime path may not contain symbolic link ancestors')
+
+
+def _validate_source_root(source,allow_editable_metadata=False):
+    # Bootstrap prepends this whole directory to sys.path. Hashing only the
+    # native package cannot authenticate siblings that shadow lazy dependencies.
+    _reject_symlink_ancestors(source)
+    if not source.is_dir():raise ValueError('runtime src must be a directory')
+    for path in source.iterdir():
+        if path.name=='historiansim':continue
+        if allow_editable_metadata and path.name=='historiansim.egg-info':
+            allowed={'PKG-INFO','SOURCES.txt','dependency_links.txt','entry_points.txt','requires.txt','top_level.txt','namespace_packages.txt','not-zip-safe','zip-safe','licenses/LICENSE'}
+            if path.is_symlink() or not path.is_dir():raise ValueError('editable metadata must be a real directory')
+            for entry in path.rglob('*'):
+                name=str(entry.relative_to(path))
+                if entry.is_symlink() or (not entry.is_file() and not entry.is_dir()):raise ValueError('unsafe editable metadata entry')
+                if (entry.is_dir() and name!='licenses') or (entry.is_file() and name not in allowed):raise ValueError('unsupported editable metadata file')
+        else:raise ValueError('runtime src contains an unsupported sibling')
+    package=source/'historiansim'
+    if package.is_symlink() or not package.is_dir():raise ValueError('runtime package must be a real directory')
+
+
+def verify_default_source(repo_root,source=None):
+    """Authenticate ignored executable files as well as tracked working files."""
+    root=Path(repo_root).resolve()
+    source=Path(source) if source is not None else root/'vendor/HistorianSim/src'
+    _validate_source_root(source,allow_editable_metadata=True)
+    prefix='src/historiansim/'
+    wanted={name.removeprefix(prefix):digest(data) for name,data in committed(root).items() if name.startswith(prefix)}
+    if hashes(source/'historiansim')!=wanted:raise ValueError('default native source file hashes mismatch')
+    return {'source':str(source),'package_sha256':wanted}
+
+
 def prepare_runtime(repo_root,target=None):
     root=Path(repo_root).resolve();target=Path(target or root/'work/reference-runtime')
-    if target.is_symlink():raise ValueError('symlink runtime forbidden')
+    _reject_symlink_ancestors(target)
     target=target.resolve()
     if not target.is_relative_to(root/'work') or target==root/'work':raise ValueError('runtime must be isolated under work/')
     if target.exists():
         hashes(target)
+        _validate_source_root(target/'src')
         if not (target/'NATIVE_RUNTIME_PROVENANCE.json').exists():raise ValueError('refusing to replace unowned runtime directory')
         shutil.rmtree(target)
     files=expected(root)
@@ -62,9 +98,10 @@ def prepare_runtime(repo_root,target=None):
 
 def verify_runtime(repo_root,runtime):
     root=Path(repo_root).resolve();runtime=Path(runtime)
-    if runtime.is_symlink():raise ValueError('symlink runtime forbidden')
+    _reject_symlink_ancestors(runtime)
     runtime=runtime.resolve()
     if not runtime.is_relative_to(root/'work'):raise ValueError('runtime must be isolated under work/')
+    _validate_source_root(runtime/'src')
     manifest=json.loads((runtime/'NATIVE_RUNTIME_PROVENANCE.json').read_text())
     wanted={name.removeprefix('src/historiansim/'):digest(data) for name,data in expected(root).items() if name.startswith('src/historiansim/')}
     if manifest.get('kind')!='native_reference' or manifest.get('upstream_commit')!=PIN:raise ValueError('reference runtime identity mismatch')

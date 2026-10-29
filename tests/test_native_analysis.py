@@ -28,6 +28,19 @@ def test_tools_reject_arbitrary_sources_and_options(challenge):
         with pytest.raises(ValueError):tools.call(name,args)
 
 
+def test_evidence_namespace_uses_selected_interpreter_without_site_packages(challenge,tmp_path):
+    import sysconfig
+    cmd=evidence_command(challenge,tmp_path/'abi-audit',ROOT)
+    assert cmd[cmd.index('-I')-1]=='/runtime/bin/python3'
+    assert '-S' in cmd
+    assert 'EVIDENCE_ABI_MISMATCH' in cmd[-1]
+    mounts=[(cmd[i+1],cmd[i+2]) for i,v in enumerate(cmd) if v=='--ro-bind']
+    assert (str(Path(sys.executable).resolve()),'/runtime/bin/python3') in mounts
+    assert any(dst.startswith('/runtime/lib/python') and dst.endswith('/encodings') for _,dst in mounts)
+    assert all(not dst.startswith('/runtime/') or 'site-packages' not in dst for _,dst in mounts)
+    assert not any(src==sysconfig.get_path('stdlib') for src,_ in mounts)
+
+
 def test_actual_sandbox_rpc_transport_and_negative_access(challenge,tmp_path):
     audit=tmp_path/'audit.jsonl';audit.touch()
     cmd=evidence_command(challenge,audit,ROOT)
@@ -40,6 +53,12 @@ def test_actual_sandbox_rpc_transport_and_negative_access(challenge,tmp_path):
     assert json.loads(responses[3]['result']['content'][0]['text'])['rows'][1]['quality']==2
     assert set(t['name'] for t in responses[1]['result']['tools'])=={'metadata','tags','samples','read_document','public_files','window_statistics','events'}
     assert audit.read_text()
+    probe=cmd[:-1]+["import sys,json;sys.path.insert(0,'/dependencies');import numpy,pandas,pyarrow;print(json.dumps({'version':list(sys.version_info[:2]),'prefix':sys.prefix,'paths':sys.path}))"]
+    checked=subprocess.run(probe,text=True,capture_output=True,timeout=30)
+    assert checked.returncode==0,checked.stderr
+    runtime=json.loads(checked.stdout)
+    assert runtime['version']==list(sys.version_info[:2]) and runtime['prefix']=='/runtime'
+    assert all('site-packages' not in p and 'dist-packages' not in p for p in runtime['paths'])
 
 
 def test_frozen_claims_cannot_self_adjudicate():
@@ -90,7 +109,13 @@ def test_private_or_symlink_challenge_is_rejected(challenge,tmp_path):
         evidence_command(challenge,tmp_path/'audit',ROOT)
 
 
-def test_provider_errors_remain_typed_and_no_claims_frozen(challenge,tmp_path,monkeypatch):
+@pytest.fixture
+def mocked_analysis_executable(monkeypatch):
+    # This test replaces preflight and run_broker: the placeholder is never run.
+    monkeypatch.setenv('EKAS_CLAUDE_EXECUTABLE',sys.executable)
+
+
+def test_provider_errors_remain_typed_and_no_claims_frozen(challenge,tmp_path,monkeypatch,mocked_analysis_executable):
     import ekas_press_intelligence.native.analysis as analysis
     profile=tmp_path/'profile';profile.mkdir();(profile/'.credentials.json').write_text('{"accessToken":"qualification-only","refreshToken":"never-copy"}')
     monkeypatch.setattr(analysis,'_provider_preflight',lambda *_:('qualification fake-cli',str(profile)))
@@ -218,3 +243,17 @@ def test_analysis_binds_provider_snapshot_not_later_origin(challenge,tmp_path,mo
         provenance=json.loads((target/'analysis_provenance.json').read_text())
         assert provenance['input_files']==before
         assert provenance['input_files']!=analysis.public_files(challenge)
+
+
+def test_evidence_stdlib_excludes_customization_and_rejects_external_symlinks(challenge,tmp_path,monkeypatch):
+    import ekas_press_intelligence.native.analysis as analysis
+    stdlib=tmp_path/'selected-stdlib';stdlib.mkdir()
+    outside=tmp_path/'private-code';outside.write_text('private sentinel')
+    for name in ('sitecustomize.py','usercustomize.pyc'):
+        (stdlib/name).symlink_to(outside)
+    monkeypatch.setattr(analysis.sysconfig,'get_path',lambda name:str(stdlib))
+    cmd=evidence_command(challenge,tmp_path/'customization-audit',ROOT)
+    assert str(outside) not in cmd
+    (stdlib/'unexpected.py').symlink_to(outside)
+    with pytest.raises(AnalysisUnavailable,match='ISOLATION_UNAVAILABLE'):
+        evidence_command(challenge,tmp_path/'escape-audit',ROOT)

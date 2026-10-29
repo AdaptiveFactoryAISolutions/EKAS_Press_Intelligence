@@ -61,7 +61,14 @@ def native_private_key(tmp_path):
     return folder
 
 
-def test_native_pairing_feeds_only_matched_immutable_claim_to_fresh_evaluator(tmp_path,monkeypatch):
+@pytest.fixture
+def mocked_evaluator_executable(monkeypatch):
+    # These contracts mock preflight and run_broker; no provider is executed.
+    # Use an explicit local placeholder instead of depending on host Claude.
+    monkeypatch.setenv('EKAS_CLAUDE_EXECUTABLE',sys.executable)
+
+
+def test_native_pairing_feeds_only_matched_immutable_claim_to_fresh_evaluator(tmp_path,monkeypatch,mocked_evaluator_executable):
     import ekas_press_intelligence.native.evaluation as evaluation
     folder=native_private_key(tmp_path)
     text='start_utc,end_utc,kind,root_cause,evidence_tags,notes\n2024-01-02T00:00:00Z,2024-01-03T00:00:00Z,fault,P-101 bearing wear causes high current,JI-101,Frozen claim\n2024-01-10T00:00:00Z,2024-01-11T00:00:00Z,fault,Unmatched alternative,JI-101,False positive\n'
@@ -111,7 +118,7 @@ def test_no_matched_claims_never_fabricates_provider_or_judgments(tmp_path,monke
 
 
 @pytest.mark.parametrize('optional_extra',[False,True])
-def test_human_native_five_columns_optional_extra_and_discarded_rows(tmp_path,monkeypatch,optional_extra):
+def test_human_native_five_columns_optional_extra_and_discarded_rows(tmp_path,monkeypatch,optional_extra,mocked_evaluator_executable):
     import ekas_press_intelligence.native.evaluation as evaluation
     folder=native_private_key(tmp_path)
     text='start_utc,end_utc,kind,root_cause,evidence_tags,human_comment\nnot-a-time,2024-01-03T00:00:00Z,fault,Invalid timestamp,JI-101,Native parser discards this row\n2024-01-02T00:00:00Z,2024-01-03T00:00:00Z,fault,P-101 bearing wear raises motor current,JI-101,Valid human claim without notes\n'

@@ -15,6 +15,7 @@ import re
 import shutil
 import subprocess
 import sys
+import sysconfig
 import tempfile
 import time
 from .data import public_files, resolve_public_file
@@ -87,6 +88,27 @@ def _sandbox_base(challenge,audit,repo_root):
     for p in ['/lib','/lib64']:
         if Path(p).exists():cmd+=['--ro-bind',p,p]
     cmd+=['--proc','/proc','--dev','/dev','--tmpfs','/tmp','--dir','/app','--dir','/challenge','--dir','/dependencies','--bind',str(audit.resolve()),'/audit.jsonl']
+    # The selected interpreter must match the numerical extension ABI. Recreate
+    # its prefix from explicit stdlib children, excluding every package tree;
+    # mounting the whole venv/stdlib would expose unrelated installed code.
+    version=f'python{sys.version_info.major}.{sys.version_info.minor}'
+    stdlib=Path(sysconfig.get_path('stdlib')).resolve()
+    cmd+=['--dir','/runtime','--dir','/runtime/bin','--dir','/runtime/lib',
+          '--dir','/runtime/lib/'+version,'--ro-bind',str(Path(sys.executable).resolve()),'/runtime/bin/python3']
+    for child in sorted(stdlib.iterdir()):
+        if child.name in {'site-packages','dist-packages','__pycache__'} or child.name.split('.',1)[0] in {'sitecustomize','usercustomize'}:continue
+        resolved=child.resolve()
+        if not resolved.is_relative_to(stdlib):
+            raise AnalysisUnavailable('ISOLATION_UNAVAILABLE','Standard library entry escapes selected runtime: '+child.name)
+        cmd+=['--ro-bind',str(resolved),'/runtime/lib/'+version+'/'+child.name]
+    library=sysconfig.get_config_var('LDLIBRARY')
+    library_dir=sysconfig.get_config_var('LIBDIR')
+    if library and library_dir:
+        shared=Path(library_dir)/library
+        if shared.is_file():
+            for filename in sorted({library,shared.resolve().name}):
+                cmd+=['--ro-bind',str(shared.resolve()),'/runtime/lib/'+filename]
+            cmd+=['--setenv','LD_LIBRARY_PATH','/runtime/lib']
     # Namespace packages avoid reading either repository package initializer.
     native=Path(repo_root)/'src/ekas_press_intelligence/native'
     cmd+=['--dir','/app/ekas_press_intelligence','--dir','/app/ekas_press_intelligence/native']
@@ -115,8 +137,8 @@ def _sandbox_base(challenge,audit,repo_root):
 
 
 def evidence_command(challenge,audit,repo_root):
-    code="import sys;sys.path[:0]=['/app','/dependencies'];from ekas_press_intelligence.native.evidence_tools import serve;serve('/challenge','/audit.jsonl')"
-    return _sandbox_base(challenge,audit,repo_root)+['/usr/bin/python3','-I','-c',code]
+    code=f"import sys;assert sys.version_info[:2]=={sys.version_info[:2]!r},'EVIDENCE_ABI_MISMATCH';sys.path[:0]=['/app','/dependencies'];from ekas_press_intelligence.native.evidence_tools import serve;serve('/challenge','/audit.jsonl')"
+    return _sandbox_base(challenge,audit,repo_root)+['/runtime/bin/python3','-I','-S','-c',code]
 
 
 def verify_isolation(challenge,audit,repo_root):
@@ -130,7 +152,7 @@ except OSError:result['network_denied']=True
 print(json.dumps(result))
 """
     try:
-        p=subprocess.run(_sandbox_base(challenge,audit,repo_root)+['/usr/bin/python3','-I','-c',code],capture_output=True,text=True,timeout=20)
+        p=subprocess.run(_sandbox_base(challenge,audit,repo_root)+['/runtime/bin/python3','-I','-S','-c',code],capture_output=True,text=True,timeout=20)
         proof=json.loads(p.stdout)
     except (OSError,ValueError,subprocess.TimeoutExpired):raise AnalysisUnavailable('ISOLATION_UNAVAILABLE','Evidence namespace negative-access proof failed') from None
     if p.returncode or not all(proof['denied_paths'].values()) or not proof['environment_clear'] or not proof['network_denied']:raise AnalysisUnavailable('ISOLATION_UNAVAILABLE','Evidence namespace permitted a forbidden resource')

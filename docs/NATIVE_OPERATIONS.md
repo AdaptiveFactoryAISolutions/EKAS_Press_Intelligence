@@ -40,6 +40,12 @@ Optional `EKAS_NATIVE_MAX_RSS_BYTES` and `EKAS_NATIVE_MIN_AVAILABLE_BYTES` enabl
 
 The protected stock HistorianSim suite remains unmodified and its173-test result is recorded separately. The prepared-runtime suite is identified as `native_patched_upstream_compatibility`; it includes the press's native catalog parameterizations. Patch0010 changes exactly two layout-test assertions to account for upstream's documented optional PFD files and additionally verify their exact source→dataset→challenge bytes. It retains key-leakage and native audit checks and changes no physical, noise, solvability or scoring threshold. The source/test/pytest-configuration digests and patch application changes are bound in the runtime manifest. A passing patched suite must not be described as an unmodified stock-suite result.
 
+Default upstream activation compares package files with pinned committed blobs, including files Git would ignore. It rejects unknown executable files and source-root siblings; only declared editable-install metadata and non-symlink package caches are permitted. A new private import-cache prefix prevents reuse of those runtime caches. Prepared reference and hybrid modes independently verify their derived package contents and source-root boundaries. A clean Git status alone is insufficient source authentication.
+
+## Evidence runtime
+
+The evidence namespace uses the selected interpreter and matching standard library, rather than assuming `/usr/bin/python3` has the same ABI as installed numerical extensions. Startup uses `-I -S`, an explicit dependency allowlist and read-only standard-library children; site/dist-packages and customization modules are excluded, and escaping standard-library symlinks fail closed. Actual transport verifies the Python major/minor ABI and imports NumPy, Pandas and PyArrow under the namespace. Existing read-only system loader/library mounts remain; this is not a claim that the namespace contains only the listed Python files. Home, repository, generated keys, provider credentials and network access remain denied by the tested boundary.
+
 ## Backup and restore
 
 Stop accepting new work and wait for jobs to finish or explicitly cancel them. Run `python -m ekas_press_intelligence.native.backup create /absolute/state /absolute/new-snapshot`. The snapshot transaction blocks database writers and refuses active jobs. It includes private evidence, keys, frozen submissions and an integrity manifest; protect it like the live state.
