@@ -1,0 +1,13 @@
+{
+  "duration_s": 600,
+  "initial_buffer_m": 0.01,
+  "mean_buffer_m": 5.872259012285308,
+  "actual_ledger_buffer_m": 6.0100000000016855,
+  "phase": 0.3774098775851445,
+  "in_process_feed": false,
+  "completed_strokes": 540,
+  "expected_phase_inventory_difference_m": 0.03774098775851445,
+  "unexplained_mean_vs_discrete_inventory_difference_m": 0.09999999995786266,
+  "exact_discrete_mass_residual_kg": -6.298961352513288e-12,
+  "finding": "Discrete mass ledger closes, but stopped/restarted cycles violate the mean/event inventory projection. This blocks hybrid qualification."
+}

@@ -1,0 +1,134 @@
+--- a/src/historiansim/pipeline.py
++++ b/src/historiansim/pipeline.py
+@@ -286,6 +286,7 @@
+     from historiansim import layout
+     from historiansim.truth.labels import build_labels
+ 
++    grid_name = layout.grid_filename(resample_s)
+     out_dir = Path(out_dir)
+     meta_dir = out_dir / layout.METADATA
+     out_dir.mkdir(parents=True, exist_ok=True)
+@@ -295,7 +296,10 @@
+     long.to_parquet(out_dir / layout.HISTORIAN_FULL, index=False)
+ 
+     grid = build_regular_grid(dataset.measured, dataset.index, resample_s)
+-    grid.to_parquet(out_dir / f"historian_{int(resample_s)}s.parquet", index=False)
++    grid.to_parquet(out_dir / grid_name, index=False)
++    if resample_s != 60:
++        canonical_grid = build_regular_grid(dataset.measured, dataset.index, 60.0)
++        canonical_grid.to_parquet(out_dir / layout.HISTORIAN_GRID, index=False)
+ 
+     if dataset.truth.events:
+         event_tags = [tag.name for tag in get_plant(dataset.cfg.unit).tags() if tag.instrument == "status" and tag.role in ("IND", "STATUS") and tag.name in dataset.measured.values]
+@@ -309,8 +313,12 @@
+     labels = build_labels(dataset.index, dataset.plan, dataset.cfg.time.dt_scan)
+     stride = max(1, int(round(resample_s / dataset.cfg.time.dt_scan)))
+     labels.iloc[::stride].reset_index(drop=True).to_parquet(
+-        meta_dir / f"labels_{int(resample_s)}s.parquet", index=False
+-    )
++        meta_dir / f"labels_{layout.period_label(resample_s)}s.parquet", index=False
++    )
++    if not np.isclose(resample_s / dataset.cfg.time.dt_scan, round(resample_s / dataset.cfg.time.dt_scan), rtol=0, atol=1e-12):
++        build_labels(pd.DatetimeIndex(grid["timestamp"]), dataset.plan, resample_s).to_parquet(meta_dir / f"labels_{layout.period_label(resample_s)}s.parquet", index=False)
++    if resample_s != 60:
++        build_labels(pd.DatetimeIndex(canonical_grid["timestamp"]), dataset.plan, 60.0).to_parquet(meta_dir / "labels_60s.parquet", index=False)
+ 
+     layout.ground_truth_path(out_dir).write_text(
+         json.dumps(dataset.manifest, indent=2), encoding="utf-8"
+@@ -329,6 +337,8 @@
+             len(long) / max(dataset.measured.n * len(dataset.measured.tags), 1), 4
+         ),
+     }
++    if resample_s != 60:
++        manifest["resample_seconds"] = resample_s
+     layout.manifest_path(out_dir).write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+ 
+     from historiansim.process_doc import write_process_description
+--- a/src/historiansim/layout.py
++++ b/src/historiansim/layout.py
+@@ -62,3 +62,32 @@
+ 
+ def labels_path(dataset_dir: Path) -> Path:
+     return metadata_file(dataset_dir, "labels_60s.parquet")
++
++
++def period_label(seconds: float) -> str:
++    """Filesystem-safe exact decimal seconds at the timestamp's ns resolution."""
++    import math
++    from decimal import Decimal
++    if isinstance(seconds, bool) or not math.isfinite(seconds) or seconds <= 0:
++        raise ValueError("resample seconds must be positive and finite")
++    nanos = seconds * 1e9
++    if not math.isfinite(nanos) or nanos > 9223372036854775807 or round(nanos) < 1 or not math.isclose(nanos, round(nanos), rel_tol=0, abs_tol=1e-6):
++        raise ValueError("resample seconds must be representable at nanosecond resolution")
++    return format(Decimal(str(seconds)).normalize(), "f").replace(".", "p")
++
++
++def grid_filename(seconds: float) -> str:
++    """Keep the primary irregular historian separate from every regular grid."""
++    suffix = period_label(seconds)
++    return "historian_grid_10s.parquet" if seconds == 10 else f"historian_{suffix}s.parquet"
++
++
++def extra_grid_files(dataset_dir: Path) -> tuple[str, ...]:
++    """Only the exact grid declared by the private export manifest is optional."""
++    import json
++    if not manifest_path(dataset_dir).exists():
++        return ()
++    manifest = json.loads(manifest_path(dataset_dir).read_text(encoding="utf-8"))
++    seconds = manifest.get("resample_seconds", 60)
++    name = grid_filename(seconds)
++    return () if name == HISTORIAN_GRID else (name,)
+--- a/src/historiansim/challenge.py
++++ b/src/historiansim/challenge.py
+@@ -216,7 +216,7 @@
+     plant = get_plant(truth["unit"])
+ 
+     out_dir.mkdir(parents=True, exist_ok=True)
+-    for name in (layout.HISTORIAN_FULL, layout.HISTORIAN_GRID, layout.TAGS):
++    for name in (layout.HISTORIAN_FULL, layout.HISTORIAN_GRID, layout.TAGS, *layout.extra_grid_files(dataset_dir)):
+         shutil.copy2(dataset_dir / name, out_dir / name)
+     for name in (*layout.PFD_FILES, *layout.OPTIONAL_PUBLIC_FILES):
+         if (dataset_dir / name).exists():
+--- a/src/historiansim/validation/recipe.py
++++ b/src/historiansim/validation/recipe.py
+@@ -143,6 +143,7 @@
+ 
+     present = {p.name for p in dataset_dir.iterdir() if p.is_file()}
+     expected = set(files.DATASET_FILES)
++    expected.update(files.extra_grid_files(dataset_dir))
+     extra = sorted(present - expected - set(files.PFD_FILES) - set(files.OPTIONAL_PUBLIC_FILES))
+     missing = sorted(expected - present)
+     if not (dataset_dir / files.METADATA).is_dir():
+--- a/src/historiansim/historian/export.py
++++ b/src/historiansim/historian/export.py
+@@ -110,9 +110,20 @@
+     not one this function should make on anyone's behalf.
+     """
+     seconds = np.arange(data.n, dtype=float) * data.dt
++    import os
++    requested_rows = int(np.floor(seconds[-1] / period_s)) + 1
++    if requested_rows > int(os.environ.get("HISTORIANSIM_MAX_GRID_ROWS", "10000000")):
++        raise ValueError("GRID_CAPACITY_EXCEEDED: requested grid exceeds configured row capacity; period unchanged")
+     stride = max(1, int(round(period_s / data.dt)))
+     target_idx = np.arange(0, data.n, stride)
+     target_t = seconds[target_idx]
++    target_index = index[target_idx]
++    if not np.isclose(period_s / data.dt, round(period_s / data.dt), rtol=0, atol=1e-12):
++        # Preserve the existing exact scan-grid path byte for byte; otherwise
++        # reconstruct on the requested clock rather than silently rounding it.
++        target_t = np.arange(0.0, seconds[-1] + 1e-9, period_s)
++        target_idx = np.searchsorted(seconds, target_t, side="right") - 1
++        target_index = index[0] + pd.to_timedelta(target_t, unit="s")
+ 
+     columns: dict[str, np.ndarray] = {}
+     for name, values in data.values.items():
+@@ -131,7 +142,7 @@
+         resampled[bad] = np.nan
+         columns[name] = resampled
+ 
+-    frame = pd.DataFrame(columns, index=index[target_idx])
++    frame = pd.DataFrame(columns, index=target_index)
+     frame.index.name = "timestamp"
+     return frame.reset_index()
+ 

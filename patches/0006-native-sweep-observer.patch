@@ -1,0 +1,53 @@
+--- a/src/historiansim/validation/catalog.py
++++ b/src/historiansim/validation/catalog.py
+@@ -66,8 +66,15 @@
+     dt_scan: float = 20.0,
+     seed: int = 99,
+     causes: list[str] | None = None,
++    observer=None,
+ ) -> dict[str, dict[str, Effect]]:
+-    """Inject each cause alone; return its effect on every evidence tag."""
++    """Inject each cause alone; return its effect on every evidence tag.
++
++    Optional observer(cid, measured, twin, cfg, truth, truth_twin) receives the actual native
++    measured pair after native effect computation, without a second simulation.
++    It must treat these inputs as read-only. This supports independent
++    observability/masking qualification without changing the default sweep.
++    """
+     from historiansim.core.rng import SeedBank
+     from historiansim.core.sim import apply_disturbance_faults, simulate
+     from historiansim.disturbances import build_disturbances
+@@ -108,19 +115,21 @@
+             faults=[f for f in faults if getattr(f, "layer", 0) in (3, 6)],
+             sensor_fn=sensor_fn,
+         )
+-        return measure(
++        measured = measure(
+             res, specs, SeedBank(cfg.seed),
+             instrument_faults=[f for f in faults if getattr(f, "layer", 0) == 7],
+             unit_params=unit_params, calcs=plant.recompute_calcs,
+         )
+ 
+-    twin = run()
++        return measured, res
++
++    twin, truth_twin = run()
+     out: dict[str, dict[str, Effect]] = {}
+     for cid, cause in plant.catalog.causes.items():
+         if causes is not None and cid not in causes:
+             continue
+         fault = cause.make(onset_s, severity)
+-        measured = run(fault)
++        measured, truth = run(fault)
+ 
+         # Measure inside the episode only. Several causes are repaired part way
+         # through, and the recovery transient afterwards is large -- counting it
+@@ -153,6 +162,8 @@
+                 floors.get(ev.tag, 0.0), sustained,
+             )
+         out[cid] = effects
++        if observer is not None:
++            observer(cid, measured, twin, cfg, truth, truth_twin)
+     return out
+ 
+ 

@@ -1,56 +1,55 @@
-# EKAS Press Intelligence
+# EKAS Native Historian Platform
 
-Independent synthetic press-line engineering prototype. It runs without EKAS_Demo_UI and integrates only through a versioned HTTP contract.
+The full-stack rebuild uses the actual complete [HistorianSim](https://github.com/ScottDuncanAI/HistorianSim) and [HistorianRCA](https://github.com/ScottDuncanAI/HistorianRCA) repositories. HistorianSim owns simulation, instruments, controllers, compression, native validation and scoring. This checkout adds durable jobs, authenticated role boundaries, a browser workspace and an independently installable EKAS HTTP client. The press extension evolves inside the native simulation pipeline.
 
-**Acceptance status:** see [MILESTONE_1_ACCEPTANCE.md](MILESTONE_1_ACCEPTANCE.md). Patrick's manual acceptance is the final gate. All displayed manufacturing data is synthetic; no SmartPAC, PLC or plant historian is connected.
+**Qualification is in progress.** The press is not yet qualified for EKAS deployment. The [execution ledger](docs/FULL_STACK_EXECUTION_LEDGER.md) records passing checks, adverse results and outstanding gates. All process data is synthetic; no physical press, SmartPAC, PLC or customer historian is connected.
 
-## Run locally
+## Start the native reference workspace
 
-Linux with Python 3.11+ and Bubblewrap is required for enforced diagnostic isolation. Install Bubblewrap through the host package manager. Do not disable the sandbox or expose this local service publicly.
+Use Linux, Python3.12, Bubblewrap, g++ and OpenSSL. Bubblewrap must support the required namespaces; the blind workflow fails closed if isolation is unavailable. Use a complete recursive clone, preserving both submodules and their history.
 
 ```bash
 git clone --recurse-submodules https://github.com/AdaptiveFactoryAISolutions/EKAS_Press_Intelligence.git
 cd EKAS_Press_Intelligence
-bash scripts/verify_upstreams.sh
 python3 -m venv .venv
 .venv/bin/python -m pip install -r requirements-lock.txt
 .venv/bin/python -m pip install --no-deps -e 'vendor/HistorianSim[dev]' -e '.[dev]'
-.venv/bin/python -m uvicorn ekas_press_intelligence.api:create_app --factory --host 127.0.0.1 --port 18727
+bash scripts/verify_upstreams.sh
+.venv/bin/python scripts/prepare_reference_runtime.py
+export EKAS_NATIVE_RUNTIME="$PWD/work/reference-runtime"
+export EKAS_NATIVE_STATE_DIR="$PWD/work/native-service"
+export EKAS_NATIVE_BLAS_THREADS=1
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1
+.venv/bin/python -m uvicorn ekas_press_intelligence.native.api:create_native_app \
+  --factory --host 127.0.0.1 --port 18728
 ```
 
-Open http://127.0.0.1:18727 . Generate a campaign, choose an observed window and ask why production was lost. Inspect evidence and alternatives, compare instrumentation, freeze a benchmark submission, then reveal truth after scoring. Apply a synthetic action and compare controlled windows. INCONCLUSIVE and unresolved causes are supported results.
+Open [the native workspace](http://127.0.0.1:18728). It exposes the original published historian, both native reference plants, full configuration choices, actual asynchronous native operations, raw/grid observations, process diagrams, frozen submissions and evaluator scoring. Missing provider access and unavailable keys produce explicit failures. The original HistorianRCA private key was not published; its score remains `EXTERNAL_SCORING_REQUIRED`.
 
-The default campaign is 86,400 seconds with a two-hour normal baseline, 16 event classes and recovery periods. Sparse and enhanced profiles observe identical underlying physics. A single-window UI claim intentionally leaves other campaign events missed; it is not the complete automated blind evaluation.
+The separate press runtime is prepared with `scripts/prepare_native_runtime.py`. It includes the documented generic patches and press model while preserving the vendor trees. It must pass the approved engineering gates, 513-case matrix and six full90-day runs before press qualification can be claimed. Changing source requires a newly verified runtime and process restart; imported native source is never hot-swapped.
 
-## Tests and retained evidence
+## EKAS and deployment
+
+[EKAS client integration](docs/EKAS_CLIENT_INTEGRATION.md) describes the standalone `ekas-historian-client` distribution in `sdk/`, which depends only on httpx. EKAS connects through HTTP; it does not receive the simulator or private answer keys. [Native operations](docs/NATIVE_OPERATIONS.md) covers role credentials, HTTPS, resource limits, durable state, cancellation, immutable claims and backup/restore.
+
+Sparse/enhanced exports derive from the same physical run. Retained observations, acquisition quality and source hashes remain auditable. Sparse evidence may leave causes unresolved; the application does not fabricate missing evidence or a confident diagnosis.
+
+## Verify
 
 ```bash
 .venv/bin/python -m playwright install chromium
-PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python -m pytest tests -q
-bash scripts/run_upstream_baseline.sh
-.venv/bin/python scripts/validate_campaign.py
+.venv/bin/python scripts/run_native_tests.py core
+.venv/bin/python scripts/run_native_tests.py browser
+.venv/bin/python scripts/run_native_tests.py physics
+.venv/bin/python scripts/run_native_tests.py upstream
 ```
 
-The upstream baseline helper must run in the activated environment (or set PATH to its bin directory). It requires exactly 173 upstream tests with no skips. CI separates preservation, upstream regression and eight EKAS test layers. On hosts that forbid user namespaces, diagnosis fails closed; there is no in-process fallback.
+The native CI runs these layers without accepting empty or skipped required layers. Full-duration physics, data-solvability and independent blind evaluation are separate qualification evidence; ordinary unit-test success does not substitute for them. Preserve adverse findings when repairing a source epoch.
 
-[VALIDATION_REPORT.md](VALIDATION_REPORT.md) links test, browser and full-duration artifacts. [validation/CAMPAIGN.md](validation/CAMPAIGN.md) records genuine evidence-only detection and diagnosis before evaluator truth is read. Previous adverse results remain under validation/history/. Raw historian data, private simulation truth, local state databases and installed runtimes remain in ignored work/.
+## Upstream preservation and historical work
 
-## Engineering boundaries
+HistorianSim is pinned to `14e616c382a9db8026cbb4ab86bdd803d56ca72e` (MIT); HistorianRCA to `8d12a821395ce5f72e464dc78cc2c10d05cbb9ed` (CC BY4.0). Complete repositories, history, data, tests, documentation, attribution and licenses remain preserved. Authored process diagrams are explicitly identified as engineering overlays.
 
-- Integer stroke/feed/count transitions with continuous lubrication/load dynamics; unmodified HistorianSim RNG, colored noise, PID, RK4 and historian compression primitives.
-- Public pairwise discrimination requirements and conditional sensor gains. Availability is structural diagnostic capacity, not a probability of real-world accuracy.
-- OS-isolated evidence-only RCA; public physical priors and maintenance/quality/PFMEA context do not establish a cause by themselves.
-- Temporal one-to-one scoring with failed-item/mechanism and relevant measured evidence requirements, false-positive and unsupported-certainty penalties.
-- Controlled before/after verification with explicit significance thresholds and uncertainty. A recorded repair is not success.
-- SQLite cases, evidence, transitions, actions, assessments and immutable scored submissions.
-- API-backed UI; no RCA, coverage, scoring or verification logic in JavaScript.
-- Financial opportunity estimates preserve assumptions; opportunity never becomes verified savings.
-- Vendor-neutral optional source-observation contract. No advanced sensor, camera or NVIDIA hardware is required or connected.
+[Upstream provenance](UPSTREAM_PROVENANCE.md) · [Licenses](LICENSES.md) · [Approved native design](docs/superpowers/specs/2026-10-28-upstream-full-stack-design.md) · [Press design](docs/superpowers/specs/press-line/DESIGN.md)
 
-This is a single-user local prototype, not an authenticated multi-tenant production deployment. Mechanics are idealized and uncalibrated; one-second scans do not constitute waveform acquisition. Synthetic benchmark results do not prove performance at a real plant. See architecture, fault catalog and acceptance limitations.
-
-## Provenance
-
-HistorianSim is pinned to 14e616c382a9db8026cbb4ab86bdd803d56ca72e (MIT); HistorianRCA to 8d12a821395ce5f72e464dc78cc2c10d05cbb9ed (CC BY 4.0). Scott Duncan's full repositories, histories, attribution, licenses, data, tests and validation documents remain preserved.
-
-[UPSTREAM_PROVENANCE.md](UPSTREAM_PROVENANCE.md) · [LICENSES.md](LICENSES.md) · [PRESERVATION_ADAPTATION_MATRIX.md](PRESERVATION_ADAPTATION_MATRIX.md) · [API_CONTRACT.md](API_CONTRACT.md)
+The earlier shallow prototype remains available as [historical work](LEGACY_PROTOTYPE.md). Its service on18727 and its acceptance evidence are separate from this native rebuild. No merge, production activation or final acceptance has occurred.

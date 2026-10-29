@@ -1,0 +1,339 @@
+{
+  "console_errors": [
+    "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+  ],
+  "page_errors": [],
+  "requests": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/native/app.css"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/native/app.js"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/health"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/health"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/capabilities"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/datasets"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/datasets/historianrca"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/datasets/historianrca/tags"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/datasets/historianrca/files"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/jobs"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/jobs/22ef0227-adaf-498c-aec8-7d1a7f9e70ea/files"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/jobs/2dba2ae2-d70b-4819-82f5-9ba153193c34/files"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/jobs/4b63e84f-19ae-482e-84b1-eb14ca6a67d6/files"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/jobs/22ef0227-adaf-498c-aec8-7d1a7f9e70ea/files"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/datasets/36a3e170-589b-4f1c-84ed-61b64f1deff0"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/datasets/36a3e170-589b-4f1c-84ed-61b64f1deff0/tags"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/datasets/36a3e170-589b-4f1c-84ed-61b64f1deff0/files"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/datasets/36a3e170-589b-4f1c-84ed-61b64f1deff0/events?source=journal&max_points=2"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/datasets/36a3e170-589b-4f1c-84ed-61b64f1deff0/events?source=journal&max_points=10"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/datasets/36a3e170-589b-4f1c-84ed-61b64f1deff0/events?source=journal&max_points=10&start=2024-01-01T00%3A00%3A00.002000001Z&end=2024-01-01T00%3A00%3A00.004Z"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/datasets/36a3e170-589b-4f1c-84ed-61b64f1deff0/events?source=status&max_points=10"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/datasets/historianrca"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/datasets/historianrca/tags"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/datasets/historianrca/files"
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:37565/v2/jobs"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/jobs"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/jobs"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/jobs"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/jobs/1bbfde76-2ba9-4f7f-a2e2-df3abc1f02d3/files"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/datasets"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/datasets"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/datasets/1bbfde76-2ba9-4f7f-a2e2-df3abc1f02d3"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/datasets/1bbfde76-2ba9-4f7f-a2e2-df3abc1f02d3/tags"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/datasets/1bbfde76-2ba9-4f7f-a2e2-df3abc1f02d3/files"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/datasets/1bbfde76-2ba9-4f7f-a2e2-df3abc1f02d3/files/SOURCE_AVAILABILITY.json"
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:37565/v2/jobs"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/jobs"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/jobs"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/jobs/1a8744d4-e3f8-4f07-ab4a-06c538c9ac8b/files"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:37565/v2/datasets"
+    }
+  ],
+  "responses": [
+    {
+      "url": "http://127.0.0.1:37565/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/native/app.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/native/app.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/health",
+      "status": 401
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/health",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/capabilities",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/datasets",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/datasets/historianrca/tags",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/datasets/historianrca",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/datasets/historianrca/files",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/jobs",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/jobs/22ef0227-adaf-498c-aec8-7d1a7f9e70ea/files",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/jobs/22ef0227-adaf-498c-aec8-7d1a7f9e70ea/files",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/jobs/4b63e84f-19ae-482e-84b1-eb14ca6a67d6/files",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/jobs/2dba2ae2-d70b-4819-82f5-9ba153193c34/files",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/datasets/36a3e170-589b-4f1c-84ed-61b64f1deff0/tags",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/datasets/36a3e170-589b-4f1c-84ed-61b64f1deff0",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/datasets/36a3e170-589b-4f1c-84ed-61b64f1deff0/files",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/datasets/36a3e170-589b-4f1c-84ed-61b64f1deff0/events?source=journal&max_points=2",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/datasets/36a3e170-589b-4f1c-84ed-61b64f1deff0/events?source=journal&max_points=10",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/datasets/36a3e170-589b-4f1c-84ed-61b64f1deff0/events?source=journal&max_points=10&start=2024-01-01T00%3A00%3A00.002000001Z&end=2024-01-01T00%3A00%3A00.004Z",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/datasets/36a3e170-589b-4f1c-84ed-61b64f1deff0/events?source=status&max_points=10",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/datasets/historianrca",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/datasets/historianrca/tags",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/datasets/historianrca/files",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/jobs",
+      "status": 201
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/jobs",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/jobs",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/jobs",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/datasets",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/jobs/1bbfde76-2ba9-4f7f-a2e2-df3abc1f02d3/files",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/datasets",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/datasets/1bbfde76-2ba9-4f7f-a2e2-df3abc1f02d3",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/datasets/1bbfde76-2ba9-4f7f-a2e2-df3abc1f02d3/tags",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/datasets/1bbfde76-2ba9-4f7f-a2e2-df3abc1f02d3/files",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/datasets/1bbfde76-2ba9-4f7f-a2e2-df3abc1f02d3/files/SOURCE_AVAILABILITY.json",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/jobs",
+      "status": 201
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/jobs",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/jobs",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/datasets",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:37565/v2/jobs/1a8744d4-e3f8-4f07-ab4a-06c538c9ac8b/files",
+      "status": 200
+    }
+  ],
+  "request_failures": []
+}

@@ -1,0 +1,573 @@
+{
+  "id": "585131f5-2d76-4951-9977-3436b6625086",
+  "operation": "generate",
+  "parameters": {
+    "profile": "campaign",
+    "scenario": "exchanger-fouling",
+    "seed": 19,
+    "validate": true
+  },
+  "state": "failed",
+  "created_at": "2026-10-29T02:40:15.821009+00:00",
+  "updated_at": "2026-10-29T03:05:17.341310+00:00",
+  "error": {
+    "code": "NATIVE_VALIDATION_FAILED",
+    "message": "Actual native validation did not pass; artifacts remain unqualified"
+  },
+  "audit_failures": [],
+  "result": {
+    "capacity": {
+      "configured_limit_bytes": 22000000000,
+      "duration_days": 365.0,
+      "estimated_bytes": 20183040000,
+      "requested_grid_rows": 525600,
+      "steps": 1051200
+    },
+    "evaluator_only": false,
+    "files": [
+      {
+        "name": "CHALLENGE.md",
+        "sha256": "aecdce06889fd2da1228913a872e0a6327d2b5b784e2b1e9b0fafbe5e87236cf",
+        "size_bytes": 4866
+      },
+      {
+        "name": "PFD.png",
+        "sha256": "ce864da7edcf178b243951dac6ec2b625c973e1ec82297bb159285c651a5c0b3",
+        "size_bytes": 365470
+      },
+      {
+        "name": "PFD.svg",
+        "sha256": "2ec05560eb76f9c5afd6da9b4dadc882f2a26a027894ffc2c0554efb1939cefe",
+        "size_bytes": 23490
+      },
+      {
+        "name": "PROCESS_DESCRIPTION.md",
+        "sha256": "3f7826de6ffe6c0ccab14abede054875518442b8bd06403a0db9ce2886ff39fb",
+        "size_bytes": 24670
+      },
+      {
+        "name": "historian_10s.parquet",
+        "sha256": "62b5affa6d091537b3768ae537623499b407f7b08f004095588bca4b07a406fe",
+        "size_bytes": 57609139
+      },
+      {
+        "name": "historian_60s.parquet",
+        "sha256": "f9c4008e3262b4c0de96a9e3cedb0687d6c8a377734a810814b03dcb8040b4f2",
+        "size_bytes": 73109243
+      },
+      {
+        "name": "submission_template.csv",
+        "sha256": "ad02936675facab9c445f37be99338887c8061f18fd1dc07cbd5a9b8ef191d58",
+        "size_bytes": 215
+      },
+      {
+        "name": "tags.csv",
+        "sha256": "9a78fc955f230179a4a7415f2f7ce003ae27a4727c485df5d24f7d401621efa2",
+        "size_bytes": 10050
+      }
+    ],
+    "operation": "generate",
+    "passed": false,
+    "provenance": {
+      "pipeline_sha256": "6699c718af23cb144585c480d1536e5c6df1993c2b265f54713b93903a621b96",
+      "runtime": "actual historiansim"
+    },
+    "resample": {
+      "native_challenge_canonical_60s_added": false,
+      "requested_seconds": 60.0
+    },
+    "validation": [
+      {
+        "name": "not_trivially_detectable",
+        "passed": true,
+        "severity": "error"
+      },
+      {
+        "name": "solvable",
+        "passed": true,
+        "severity": "error"
+      },
+      {
+        "name": "physical_bounds",
+        "passed": true,
+        "severity": "error"
+      },
+      {
+        "name": "no_range_clamping",
+        "passed": false,
+        "severity": "error"
+      },
+      {
+        "name": "mass_balance",
+        "passed": true,
+        "severity": "error"
+      },
+      {
+        "name": "control_variance_ratio",
+        "passed": true,
+        "severity": "error"
+      },
+      {
+        "name": "noise_is_colored",
+        "passed": false,
+        "severity": "error"
+      },
+      {
+        "name": "transport_lag",
+        "passed": true,
+        "severity": "warn"
+      },
+      {
+        "name": "pca_dimensionality",
+        "passed": true,
+        "severity": "error"
+      },
+      {
+        "name": "historian_irregularity",
+        "passed": true,
+        "severity": "error"
+      },
+      {
+        "name": "frozen_values",
+        "passed": false,
+        "severity": "error"
+      },
+      {
+        "name": "correlated_dropouts",
+        "passed": true,
+        "severity": "error"
+      },
+      {
+        "name": "no_fault_twin",
+        "passed": true,
+        "severity": "error"
+      },
+      {
+        "name": "baseline_settled",
+        "passed": true,
+        "severity": "error"
+      },
+      {
+        "name": "recipe",
+        "passed": true,
+        "severity": "warn"
+      },
+      {
+        "name": "dataset_layout",
+        "passed": true,
+        "severity": "error"
+      },
+      {
+        "name": "no_answer_leak",
+        "passed": true,
+        "severity": "error"
+      }
+    ],
+    "validation_performed": true,
+    "worker_configuration": {
+      "blas_environment": {
+        "MKL_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      },
+      "requested_blas_threads": "1"
+    }
+  },
+  "dataset_summary": {
+    "start": "2024-03-01T06:00:00Z",
+    "end": "2025-03-01T05:59:30Z",
+    "rows": 13853480,
+    "raw": {
+      "columns": [
+        "tag",
+        "timestamp",
+        "value",
+        "quality"
+      ],
+      "end": "2025-03-01T05:59:30Z",
+      "file": "historian_10s.parquet",
+      "rows": 13853480,
+      "size_bytes": 57609139,
+      "start": "2024-03-01T06:00:00Z"
+    },
+    "grid": {
+      "columns": [
+        "timestamp",
+        "TIC-101.PV",
+        "TIC-101.SP",
+        "TIC-101.OP",
+        "TIC-101.MODE",
+        "FIC-201.PV",
+        "FIC-201.SP",
+        "FIC-201.OP",
+        "FIC-201.MODE",
+        "LIC-101.PV",
+        "LIC-101.SP",
+        "LIC-101.OP",
+        "LIC-101.MODE",
+        "TV-101.POS",
+        "LV-101.POS",
+        "FI-101",
+        "TI-100",
+        "FI-102",
+        "TI-102",
+        "LI-102",
+        "PI-201",
+        "TI-201",
+        "TI-202",
+        "TI-901",
+        "AI-101",
+        "CALC-DUTY",
+        "CALC-DUTY-PROC",
+        "CALC-EBAL",
+        "CALC-UA",
+        "CALC-APPROACH",
+        "CALC-MBAL",
+        "CW-FIC-201.PV",
+        "CW-FIC-201.SP",
+        "CW-FIC-201.OP",
+        "CW-FIC-201.MODE",
+        "CW-TIC-202.PV",
+        "CW-TIC-202.SP",
+        "CW-TIC-202.OP",
+        "CW-TIC-202.MODE",
+        "CW-PIC-203.PV",
+        "CW-PIC-203.SP",
+        "CW-PIC-203.OP",
+        "CW-PIC-203.MODE",
+        "CW-LIC-204.PV",
+        "CW-LIC-204.SP",
+        "CW-LIC-204.OP",
+        "CW-LIC-204.MODE",
+        "CW-FIC-205.PV",
+        "CW-FIC-205.SP",
+        "CW-FIC-205.OP",
+        "CW-FIC-205.MODE",
+        "N2-TIC-201.PV",
+        "N2-TIC-201.SP",
+        "N2-TIC-201.OP",
+        "N2-TIC-201.MODE",
+        "N2-PIC-202.PV",
+        "N2-PIC-202.SP",
+        "N2-PIC-202.OP",
+        "N2-PIC-202.MODE",
+        "N2-LIC-203.PV",
+        "N2-LIC-203.SP",
+        "N2-LIC-203.OP",
+        "N2-LIC-203.MODE",
+        "N2-FIC-204.PV",
+        "N2-FIC-204.SP",
+        "N2-FIC-204.OP",
+        "N2-FIC-204.MODE",
+        "SD-TIC-201.PV",
+        "SD-TIC-201.SP",
+        "SD-TIC-201.OP",
+        "SD-TIC-201.MODE",
+        "SD-PIC-202.PV",
+        "SD-PIC-202.SP",
+        "SD-PIC-202.OP",
+        "SD-PIC-202.MODE",
+        "SD-LIC-203.PV",
+        "SD-LIC-203.SP",
+        "SD-LIC-203.OP",
+        "SD-LIC-203.MODE",
+        "SD-FIC-204.PV",
+        "SD-FIC-204.SP",
+        "SD-FIC-204.OP",
+        "SD-FIC-204.MODE",
+        "AIR-TIC-201.PV",
+        "AIR-TIC-201.SP",
+        "AIR-TIC-201.OP",
+        "AIR-TIC-201.MODE",
+        "AIR-PIC-202.PV",
+        "AIR-PIC-202.SP",
+        "AIR-PIC-202.OP",
+        "AIR-PIC-202.MODE",
+        "AIR-LIC-203.PV",
+        "AIR-LIC-203.SP",
+        "AIR-LIC-203.OP",
+        "AIR-LIC-203.MODE"
+      ],
+      "end": "2025-03-01T05:59:00Z",
+      "file": "historian_60s.parquet",
+      "rows": 525600,
+      "size_bytes": 73109243,
+      "start": "2024-03-01T06:00:00Z"
+    },
+    "disclosure": {
+      "grid": "Native derived regular grid reconstructed from compressed samples; bad quality becomes null; no gap filling performed by this service.",
+      "raw": "Primary irregular compressed recorded samples; quality retained."
+    }
+  },
+  "verified_public_files": [
+    {
+      "name": "CHALLENGE.md",
+      "size_bytes": 4866,
+      "sha256": "aecdce06889fd2da1228913a872e0a6327d2b5b784e2b1e9b0fafbe5e87236cf"
+    },
+    {
+      "name": "PFD.png",
+      "size_bytes": 365470,
+      "sha256": "ce864da7edcf178b243951dac6ec2b625c973e1ec82297bb159285c651a5c0b3"
+    },
+    {
+      "name": "PFD.svg",
+      "size_bytes": 23490,
+      "sha256": "2ec05560eb76f9c5afd6da9b4dadc882f2a26a027894ffc2c0554efb1939cefe"
+    },
+    {
+      "name": "PROCESS_DESCRIPTION.md",
+      "size_bytes": 24670,
+      "sha256": "3f7826de6ffe6c0ccab14abede054875518442b8bd06403a0db9ce2886ff39fb"
+    },
+    {
+      "name": "historian_10s.parquet",
+      "size_bytes": 57609139,
+      "sha256": "62b5affa6d091537b3768ae537623499b407f7b08f004095588bca4b07a406fe"
+    },
+    {
+      "name": "historian_60s.parquet",
+      "size_bytes": 73109243,
+      "sha256": "f9c4008e3262b4c0de96a9e3cedb0687d6c8a377734a810814b03dcb8040b4f2"
+    },
+    {
+      "name": "submission_template.csv",
+      "size_bytes": 215,
+      "sha256": "ad02936675facab9c445f37be99338887c8061f18fd1dc07cbd5a9b8ef191d58"
+    },
+    {
+      "name": "tags.csv",
+      "size_bytes": 10050,
+      "sha256": "9a78fc955f230179a4a7415f2f7ce003ae27a4727c485df5d24f7d401621efa2"
+    }
+  ],
+  "actual_native_validation_report": [
+    {
+      "name": "not_trivially_detectable",
+      "passed": true,
+      "detail": "7 subtle episodes checked; none beaten by a 3-sigma threshold",
+      "rationale": "If a moving-window variance one-liner finds the fault instantly, the dataset is too easy and every downstream result is worthless.",
+      "data": {
+        "checked": 7,
+        "offenders": []
+      },
+      "severity": "error"
+    },
+    {
+      "name": "solvable",
+      "passed": true,
+      "detail": "18 episodes assessed; all have discriminating evidence that moves",
+      "rationale": "Guarantees the diagnosis is reachable. Without it the dataset can fail by being impossible rather than hard, and a wrong answer is the data's fault rather than the method's.",
+      "data": {
+        "checked": 18,
+        "skipped": 0,
+        "unsolvable": []
+      },
+      "severity": "error"
+    },
+    {
+      "name": "physical_bounds",
+      "passed": true,
+      "detail": "all tags inside their declared range",
+      "rationale": "A transmitter clamps at its range; values outside it are impossible.",
+      "data": {
+        "violations": []
+      },
+      "severity": "error"
+    },
+    {
+      "name": "no_range_clamping",
+      "passed": false,
+      "detail": "[('FIC-201.PV', '0.016 % of samples at a range limit'), ('AI-101', '50.600 % of samples at a range limit')]",
+      "rationale": "A clamped reading hides the excursion; size the range to the duty.",
+      "data": {
+        "offenders": [
+          [
+            "FIC-201.PV",
+            "0.016 % of samples at a range limit"
+          ],
+          [
+            "AI-101",
+            "50.600 % of samples at a range limit"
+          ]
+        ]
+      },
+      "severity": "error"
+    },
+    {
+      "name": "mass_balance",
+      "passed": true,
+      "detail": "clean-baseline bias +0.001 % of feed, residual sd 0.1548",
+      "rationale": "Real balances nearly close but not quite. Exact closure is a tell; gross non-closure is an error.",
+      "data": {
+        "bias_pct": 0.000745171952901688
+      },
+      "severity": "error"
+    },
+    {
+      "name": "control_variance_ratio",
+      "passed": true,
+      "detail": "TIC-101: OP/PV span-normalised sd ratio 15.0; LIC-101: OP/PV span-normalised sd ratio 4.2",
+      "rationale": "Information lives in the manipulated variable. Fouling shows as a valve slowly opening while the temperature stays perfect. A loop whose PV stays within 0.5 % of span is holding whatever its output does.",
+      "data": {
+        "rows": [
+          [
+            "TIC-101",
+            0.0015186256888012942,
+            0.02273376022507692,
+            14.969956318216568
+          ],
+          [
+            "LIC-101",
+            0.0023750814531827546,
+            0.010079131619585487,
+            4.243699350217582
+          ]
+        ]
+      },
+      "severity": "error"
+    },
+    {
+      "name": "noise_is_colored",
+      "passed": false,
+      "detail": "median 1/e autocorrelation time by class: flow 45s, level 120s, pressure 30s, temperature 240s, temperature_slow 390s; WHITE: ['pressure']",
+      "rationale": "A thermowell low-passes the process, a DP cell does not. One noise model across all tags is a giveaway.",
+      "data": {
+        "medians": {
+          "temperature_slow": 390.0,
+          "flow": 45.0,
+          "level": 120.0,
+          "temperature": 240.0,
+          "pressure": 30.0
+        }
+      },
+      "severity": "error"
+    },
+    {
+      "name": "transport_lag",
+      "passed": true,
+      "detail": "FI-102: declared 120s, measured 120s; TI-102: declared 180s, measured 210s; TI-202: declared 240s, measured 270s; AI-101: declared 480s, measured 690s",
+      "rationale": "Synthetic data usually correlates instantaneously; real data does not.",
+      "data": {
+        "rows": [
+          [
+            "FI-102",
+            120.0,
+            120.0
+          ],
+          [
+            "TI-102",
+            180.0,
+            210.0
+          ],
+          [
+            "TI-202",
+            240.0,
+            270.0
+          ],
+          [
+            "AI-101",
+            480.0,
+            690.0
+          ]
+        ]
+      },
+      "severity": "warn"
+    },
+    {
+      "name": "pca_dimensionality",
+      "passed": true,
+      "detail": "10 components explain 95 % of clean-baseline variance across 24 tags",
+      "rationale": "Effective dimensionality far below or above the tag count is a tell.",
+      "data": {
+        "n_components": 10,
+        "n_tags": 24
+      },
+      "severity": "error"
+    },
+    {
+      "name": "historian_irregularity",
+      "passed": true,
+      "detail": "overall retention 23.5 %, worst pairwise timestamp overlap 52 %",
+      "rationale": "Per-tag deadbands give every tag a different timestamp set, which is what forces explicit resampling and reproduces real exports.",
+      "data": {
+        "retention": 0.23454621588932376,
+        "worst_overlap": 0.5234201514994293
+      },
+      "severity": "error"
+    },
+    {
+      "name": "frozen_values",
+      "passed": false,
+      "detail": "43 tags contain frozen stretches over 1144 tag-months; 483 frozen samples carry a bad-quality flag (must be 0)",
+      "rationale": "A stuck transmitter reports good quality. Finding it is part of the exercise, so nothing may mark it.",
+      "data": {
+        "frozen_tags": 43,
+        "flagged": 483
+      },
+      "severity": "error"
+    },
+    {
+      "name": "correlated_dropouts",
+      "passed": true,
+      "detail": "6 nodes fail as a group, 0 fail tag-by-tag (109.5 outages expected)",
+      "rationale": "Instruments do not fail independently. A DCS node drops and every tag on it goes bad at the same instant.",
+      "data": {
+        "grouped": 6,
+        "independent": 0
+      },
+      "severity": "error"
+    },
+    {
+      "name": "no_fault_twin",
+      "passed": true,
+      "detail": "26 real tags diverge after the first onset; ballast differing: 0; pre-onset differing: 0",
+      "rationale": "Ballast and the pre-onset period share everything with the twin, so they must match bit for bit. Anything else means the RNG is coupled and the twin is not a controlled comparison.",
+      "data": {
+        "real": 26,
+        "ballast": [],
+        "pre_onset": []
+      },
+      "severity": "error"
+    },
+    {
+      "name": "baseline_settled",
+      "passed": true,
+      "detail": "every loop PV opens at its steady value",
+      "rationale": "A transient at the head of the training window is learned as normal.",
+      "data": {
+        "offenders": []
+      },
+      "severity": "error"
+    },
+    {
+      "name": "recipe",
+      "passed": true,
+      "detail": "no recipe declared; nothing to enforce",
+      "rationale": "",
+      "data": {},
+      "severity": "warn"
+    },
+    {
+      "name": "dataset_layout",
+      "passed": true,
+      "detail": "folder holds exactly the documented files",
+      "rationale": "The dataset is the historian files, tag list, process description and answer key.",
+      "data": {},
+      "severity": "error"
+    },
+    {
+      "name": "no_answer_leak",
+      "passed": true,
+      "detail": "process description and tag list name no cause or event",
+      "rationale": "A list of things that can go wrong is half an answer. The process description and tag list describe the plant, never what goes wrong.",
+      "data": {
+        "hits": []
+      },
+      "severity": "error"
+    }
+  ],
+  "actual_native_validation_sha256": "da0a2df4164e9d400e7218eb1d6e1e2171a339611e8413d46f1577ad77a073ef",
+  "registration": null,
+  "scope": "Actual completed native job, unchanged pass/fail findings and public hashes. No press qualification or EKAS deployment readiness is inferred; private answer keys are omitted."
+}

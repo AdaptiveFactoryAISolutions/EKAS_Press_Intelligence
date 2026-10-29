@@ -1,0 +1,48 @@
+--- a/src/historiansim/pipeline.py
++++ b/src/historiansim/pipeline.py
+@@ -297,6 +297,12 @@
+     grid = build_regular_grid(dataset.measured, dataset.index, resample_s)
+     grid.to_parquet(out_dir / f"historian_{int(resample_s)}s.parquet", index=False)
+ 
++    if dataset.truth.events:
++        event_tags = [tag.name for tag in get_plant(dataset.cfg.unit).tags() if tag.instrument == "status" and tag.role in ("IND", "STATUS") and tag.name in dataset.measured.values]
++        if event_tags:
++            public = pd.DataFrame({"timestamp": dataset.index, **{tag: dataset.measured.values[tag] for tag in event_tags}})
++            public.to_parquet(out_dir / layout.CYCLE_EVENTS, index=False)
++
+     equipment = get_plant(dataset.cfg.unit).equipment
+     build_tag_master(dataset.measured, equipment).to_csv(out_dir / layout.TAGS, index=False)
+ 
+--- a/src/historiansim/layout.py
++++ b/src/historiansim/layout.py
+@@ -44,6 +44,8 @@
+ #: The process flow diagram, copied from ``plants/<name>/pfd/`` when the plant
+ #: has one. It shows the plant only, so it also goes into a challenge folder.
+ PFD_FILES = ("PFD.svg", "PFD.png")
++CYCLE_EVENTS = "cycle_events.parquet"
++OPTIONAL_PUBLIC_FILES = (CYCLE_EVENTS,)
+ 
+ 
+ def metadata_file(dataset_dir: Path, name: str) -> Path:
+--- a/src/historiansim/challenge.py
++++ b/src/historiansim/challenge.py
+@@ -218,7 +218,7 @@
+     out_dir.mkdir(parents=True, exist_ok=True)
+     for name in (layout.HISTORIAN_FULL, layout.HISTORIAN_GRID, layout.TAGS):
+         shutil.copy2(dataset_dir / name, out_dir / name)
+-    for name in layout.PFD_FILES:
++    for name in (*layout.PFD_FILES, *layout.OPTIONAL_PUBLIC_FILES):
+         if (dataset_dir / name).exists():
+             shutil.copy2(dataset_dir / name, out_dir / name)
+     # The description points at the answer key, which the challenge leaves out.
+--- a/src/historiansim/validation/recipe.py
++++ b/src/historiansim/validation/recipe.py
+@@ -143,7 +143,7 @@
+ 
+     present = {p.name for p in dataset_dir.iterdir() if p.is_file()}
+     expected = set(files.DATASET_FILES)
+-    extra = sorted(present - expected - set(files.PFD_FILES))
++    extra = sorted(present - expected - set(files.PFD_FILES) - set(files.OPTIONAL_PUBLIC_FILES))
+     missing = sorted(expected - present)
+     if not (dataset_dir / files.METADATA).is_dir():
+         missing.append(files.METADATA + "/")

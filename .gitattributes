@@ -1,0 +1,3 @@
+# Unified diff context lines require a literal space even for blank source lines.
+# Preserve patch bytes; ordinary source files retain normal whitespace checks.
+patches/*.patch -whitespace

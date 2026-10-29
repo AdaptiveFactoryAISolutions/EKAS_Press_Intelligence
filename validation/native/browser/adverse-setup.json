@@ -1,0 +1,41 @@
+{
+  "status": "initial acceptance blocked before browser launch",
+  "observed_failures": [
+    {
+      "check": "sandbox local TCP fixture",
+      "result": "PermissionError [Errno 1] Operation not permitted",
+      "response": "Rerun isolated local HTTP acceptance with approved elevated execution"
+    },
+    {
+      "check": "default Chromium launch",
+      "result": "Playwright chromium_headless_shell-1248 absent",
+      "response": "Installed matching official Chromium under project work/browsers"
+    },
+    {
+      "check": "real API browser fixture",
+      "result": "Could not import ekas_press_intelligence.native.api (API implementation not yet available)",
+      "response": "Await API implementation, then rerun actual acceptance"
+    },
+    {
+      "check": "real measurement table visibility",
+      "result": "Table collapsed in details; acceptance asserted visible before opening it",
+      "response": "Test now opens Returned measurements before checking actual table"
+    },
+    {
+      "check": "native select accessible name",
+      "result": "Wrapping label included descendant option text; exact Sample source lookup failed",
+      "response": "Added explicit accessible names to native form controls"
+    },
+    {
+      "check": "PFD preview under service CSP",
+      "result": "Browser rejected blob image source under img-src self data; naturalWidth remained0",
+      "response": "Recorded pfd-adverse-network.json; render original image bytes through allowed data URLs"
+    },
+    {
+      "check": "evaluator authorization browser test",
+      "result": "CSV row0 invalid schema; request validation422 before role check",
+      "response": "UI example and negative authorization test use actual native CSV row2"
+    }
+  ],
+  "substitution": false
+}

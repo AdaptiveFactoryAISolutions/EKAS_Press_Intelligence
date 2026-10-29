@@ -1,0 +1,93 @@
+--- a/src/historiansim/core/sim.py
++++ b/src/historiansim/core/sim.py
+@@ -28,6 +28,7 @@
+ 
+ __all__ = [
+     "SimResult",
++    "CycleEventSource",
+     "simulate",
+     "ConstantDisturbance",
+     "MODE_CODES",
+@@ -51,6 +52,24 @@
+     def apply(self, p: dict[str, float], t: float) -> None: ...
+ 
+     def touched_params(self) -> tuple[str, ...]: ...
++
++
++class CycleEventSource(Protocol):
++    """Optional hybrid source owned independently by each native simulation.
++
++    Observations are true physical signals before the native transmitter
++    feedback and measurement paths. Advance integrates the same UnitModel,
++    subdividing at physical event boundaries. Events remain private truth;
++    only native measured status tags enter the optional public artifact.
++    """
++
++    events: Sequence[dict]
++
++    def on_controls(self, controllers: dict) -> None: ...
++
++    def observations(self, t: float, x: np.ndarray, u: dict, d: dict, p: dict) -> dict[str, float]: ...
++
++    def advance(self, t: float, x: np.ndarray, u: dict, d: dict, p: dict, dt_sim: float, n_sub: int) -> np.ndarray: ...
+ 
+ 
+ def _map_setpoint(output: float, limits: tuple[float, float] | None) -> float:
+@@ -149,6 +168,7 @@
+     disturbances: dict[str, np.ndarray]
+     params: dict[str, np.ndarray] = field(default_factory=dict)
+     dt_scan: float = 1.0
++    events: list[dict] = field(default_factory=list)
+ 
+     @property
+     def n(self) -> int:
+@@ -236,7 +256,11 @@
+     x = np.asarray(x0, dtype=float).copy()
+ 
+     # -- controllers -------------------------------------------------------
++    event_factory = getattr(unit, "cycle_event_source", None)
++    event_source = event_factory(x, u, d0, base_params) if event_factory is not None else None
+     sig0 = unit.signals(0.0, x, u, d0, base_params)
++    if event_source is not None:
++        sig0.update(event_source.observations(0.0, x, u, d0, base_params))
+     controllers: list[PID] = []
+     for loop in cfg.loops:
+         if loop.ratio_to is not None and loop.ratio_to not in sig0:
+@@ -307,8 +331,15 @@
+         if on_scan is not None:
+             on_scan(k, t, by_name)
+ 
++        if event_source is not None:
++            controls_hook = getattr(event_source, "on_controls", None)
++            if controls_hook is not None:
++                controls_hook(by_name)
++
+         # layer 3: controllers see instruments, not truth
+         true_sig = unit.signals(t, x, u, d, p)
++        if event_source is not None:
++            true_sig.update(event_source.observations(t, x, u, d, p))
+         seen = sensor_fn(true_sig, k) if sensor_fn is not None else true_sig
+         for ctrl in controllers:
+             # A ratio station follows the measured wild flow while it is in
+@@ -354,9 +385,12 @@
+             param_out[f"PARAM-{key}"][k] = p[key]
+ 
+         # layer 2: integrate with u held constant across the scan
+-        x = integrate_scan(
+-            lambda tt, xx: unit.derivatives(tt, xx, u, d, p), t, x, dt_sim, n_sub
+-        )
++        if event_source is None:
++            x = integrate_scan(
++                lambda tt, xx: unit.derivatives(tt, xx, u, d, p), t, x, dt_sim, n_sub
++            )
++        else:
++            x = event_source.advance(t, x, u, d, p, dt_sim, n_sub)
+ 
+         if progress and n_steps >= 20 and k % (n_steps // 20) == 0:
+             print(f"  {100 * k / n_steps:3.0f}%", end="\r", flush=True)
+@@ -374,4 +408,5 @@
+         disturbances=dist_out,
+         params=param_out,
+         dt_scan=dt_scan,
++        events=event_source.events if event_source is not None else [],
+     )
