@@ -28,6 +28,18 @@ Administrator operation `observability_export` accepts a registered dataset_id a
 
 GET `/v2/datasets/{id}/events` distinguishes measured journal edges (`source=journal`) from native historian scan status (`source=status`). Journal timestamps are quantized to1ms; unavailable acquisitions retain masked code/count and their recorded quality. No private conservation ledger, pitch truth or rejection detail is exposed by this route.
 
+## Capacity and numerical threads
+
+`EKAS_NATIVE_BLAS_THREADS` is an explicit integer1..64, default1. Workers set OPENBLAS_NUM_THREADS, OMP_NUM_THREADS and MKL_NUM_THREADS before numerical imports. A single thread avoids severe native autocorrelation oversubscription; it does not replace the original numerical checks. Set the same numerical environment before starting the server.
+
+`EKAS_NATIVE_MAX_ESTIMATED_BYTES` defaults to12000000000 and bounds the native preflight memory estimate. Requests above it fail with CAPACITY_EXCEEDED; the server never silently shortens duration or changes scan/resampling periods. An explicitly larger limit may be required for the full365-day profile. Patched resampling separately bounds requested grid rows with HISTORIANSIM_MAX_GRID_ROWS, default10000000.
+
+Optional `EKAS_NATIVE_MAX_RSS_BYTES` and `EKAS_NATIVE_MIN_AVAILABLE_BYTES` enable positive-byte Linux worker-memory and host-reserve checks. Unavailable telemetry or exceeded limits fail the job and retain partial, unqualified artifacts. These are monitored process safeguards, not an exclusive kernel memory reservation. Choose limits for the host's other workloads; never reclaim or stop unrelated processes to make a run fit.
+
+## Verification identities
+
+The protected stock HistorianSim suite remains unmodified and its173-test result is recorded separately. The prepared-runtime suite is identified as `native_patched_upstream_compatibility`; it includes the press's native catalog parameterizations. Patch0010 changes exactly two layout-test assertions to account for upstream's documented optional PFD files and additionally verify their exact source→dataset→challenge bytes. It retains key-leakage and native audit checks and changes no physical, noise, solvability or scoring threshold. The source/test/pytest-configuration digests and patch application changes are bound in the runtime manifest. A passing patched suite must not be described as an unmodified stock-suite result.
+
 ## Backup and restore
 
 Stop accepting new work and wait for jobs to finish or explicitly cancel them. Run `python -m ekas_press_intelligence.native.backup create /absolute/state /absolute/new-snapshot`. The snapshot transaction blocks database writers and refuses active jobs. It includes private evidence, keys, frozen submissions and an integrity manifest; protect it like the live state.

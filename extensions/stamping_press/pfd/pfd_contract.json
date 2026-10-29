@@ -1,6 +1,6 @@
 {
   "plant": "stamping_press",
-  "revision": "R6",
+  "revision": "R7",
   "tags": [
     {
       "name": "SIC-271.PV",
@@ -1362,16 +1362,18 @@
     }
   ],
   "source_sha256": {
+    "__init__.py": "526cb4ab72da9f246f572dae6474ad7709827269eba6becaa6791d252890218c",
     "tags.py": "5415c47fe26c33f3bfb370d7dbcc5a6a28da7a7fa2d275a550023aacdf0062e4",
     "loops.py": "0108347958cb65415a4c42efed3e0dc6b5843b488acd36f3498657477f86dc12",
-    "model.py": "b0fea64ca8d7e74b43255cc9cf2bebb57813bd33562a9ca5096da033aa0a399c",
-    "cycles.py": "9a64960d162e6aa9d8f922ad46c9959c05991b7e45bcd52d5d37fcc4267cb399",
-    "compiled_backend.py": "dfbcaa18c7a9061408f014418e7dad157141ffcf0fa52d38bce67fa9f2575e06",
-    "cycle_kernel.cpp": "0610b3a0da9343bc3d70a3e6152e0b34c4f4b73bc5ad7d21af494e3b6e2b64ae",
-    "description.py": "77ca454649e4e5774804fbeef96c749c8663e139bcfd074586d46852125de79c",
+    "model.py": "e139d52ef28c4a573a1e0e4940682188a58c45df2db965c199323aec02e17255",
+    "cycles.py": "37b50d73f1e3fa6932581858b6e2d75a4166e7188785f646037d3b7a77bf32f4",
+    "compiled_backend.py": "fcc81b4246864d9170aa9ca3af0477d93b0f9edd3489a0b70473918cd4a57788",
+    "cycle_kernel.cpp": "a2ce1c4f8dfb5fc439a63e5199def2e587e0482470ae4138f71d4c411753ef27",
+    "description.py": "905459948a9f4987a3f46b33c50054b5ea7fda1468c71776c226493899661be4",
     "instruments.py": "b017867ccfdc97de10bacbac4f85571c7d264c71c73202ec4bb244f20af723d2",
     "../../patches/0007-native-event-instrument-acquisition.patch": "00c7efba4636ba866bebcfe20e047e723a6dd039370a58440ac066c949f4159a",
-    "../../patches/0008-native-digital-feedback-quantization.patch": "8fe6a00350c41d14395418e599e704bdcac39ce00d8ac6ff510391a627067221"
+    "../../patches/0008-native-digital-feedback-quantization.patch": "8fe6a00350c41d14395418e599e704bdcac39ce00d8ac6ff510391a627067221",
+    "../../patches/0009-native-config-aware-benign-events.patch": "5726d2a5b1aa6a563aa7e390df6b88ae5d7669b6613885a34e98e9c9c932ce76"
   },
   "assumptions": [
     "Conceptual equipment and pipe geometry; no sizing or safety certification.",
@@ -1380,6 +1382,11 @@
   ],
   "excluded_public_signals": [
     "CALC-MATERIAL-RESIDUAL",
-    "CALC-ENERGY-RESIDUAL"
+    "CALC-ENERGY-RESIDUAL",
+    "AUDIT-ENERGY-RELATIVE-RESIDUAL",
+    "AUDIT-MATERIAL-RELATIVE-RESIDUAL",
+    "AUDIT-COUNTER-RESIDUAL",
+    "AUDIT-MOTOR-ENERGY-J",
+    "AUDIT-SUPPLIED-MASS-KG"
   ]
 }

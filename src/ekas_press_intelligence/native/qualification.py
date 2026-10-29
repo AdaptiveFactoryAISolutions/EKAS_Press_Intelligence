@@ -5,6 +5,37 @@ This module does not simulate, infer physical causes or change native limits.
 import numpy as np
 
 
+def engineering_acceptance(truth):
+    """Check private physical ledgers; these are never analyst measurements."""
+    names=('CALC-ENERGY-RESIDUAL','AUDIT-MOTOR-ENERGY-J','CALC-MATERIAL-RESIDUAL',
+           'AUDIT-SUPPLIED-MASS-KG','AUDIT-ENERGY-RELATIVE-RESIDUAL',
+           'AUDIT-MATERIAL-RELATIVE-RESIDUAL','AUDIT-COUNTER-RESIDUAL',
+           'COUNT-271','COUNT-272','COUNT-273','COUNT-274')
+    if set(names)-set(truth.signals):raise ValueError('PRIVATE_ENGINEERING_AUDIT_REQUIRED: actual native ledger series missing')
+    values={name:np.asarray(truth.signals[name],dtype=float) for name in names}
+    shape=values[names[0]].shape
+    if len(shape)!=1 or not shape[0] or any(v.shape!=shape or not np.all(np.isfinite(v)) for v in values.values()):
+        raise ValueError('INVALID_PRIVATE_ENGINEERING_AUDIT: complete finite matched ledger series required')
+    if np.any(values['AUDIT-MOTOR-ENERGY-J']<0) or np.any(values['AUDIT-SUPPLIED-MASS-KG']<0):
+        raise ValueError('INVALID_PRIVATE_ENGINEERING_AUDIT: negative accumulated input')
+    energy=np.abs(values['CALC-ENERGY-RESIDUAL'])/np.maximum(values['AUDIT-MOTOR-ENERGY-J'],1.)
+    material=np.abs(values['CALC-MATERIAL-RESIDUAL'])/np.maximum(values['AUDIT-SUPPLIED-MASS-KG'],1.)
+    counters=[values[name] for name in ('COUNT-271','COUNT-272','COUNT-273','COUNT-274')]
+    balance=counters[0]-counters[1]-counters[2]-counters[3]
+    for computed,name in [(energy,'AUDIT-ENERGY-RELATIVE-RESIDUAL'),(material,'AUDIT-MATERIAL-RELATIVE-RESIDUAL'),(balance,'AUDIT-COUNTER-RESIDUAL')]:
+        if not np.allclose(computed,values[name],rtol=1e-12,atol=1e-15):raise ValueError('AUDIT_ARITHMETIC_MISMATCH: '+name)
+    integer=all(bool(np.all((series>=0)&(series==np.floor(series)))) for series in counters)
+    checks={'energy_relative_residual':{'maximum':float(np.max(energy)),'limit':.001},
+            'material_relative_residual':{'maximum':float(np.max(material)),'limit':1e-6},
+            'counter_reconciliation':{'maximum':float(np.max(np.abs(balance))),'limit':0.}}
+    for check in checks.values():check['passed']=check['maximum']<=check['limit']
+    checks['integer_nonnegative_counters']={'passed':integer}
+    return {'passed':all(check['passed'] for check in checks.values()),'checks':checks,'samples':shape[0],
+            'final_motor_input_energy_j':float(values['AUDIT-MOTOR-ENERGY-J'][-1]),
+            'final_supplied_mass_kg':float(values['AUDIT-SUPPLIED-MASS-KG'][-1]),
+            'scope':'Actual private within-model mechanical energy/material ledgers and physical completed/inspected/pending counters. Not public measurements or independent validation of rigid-crank kinematics.'}
+
+
 def envelope_metrics(values,twin,nominal,dt):
     values=np.asarray(values,dtype=float);twin=np.asarray(twin,dtype=float)
     if values.shape!=twin.shape or values.ndim!=1 or not len(values) or nominal==0 or dt<=0:

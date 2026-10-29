@@ -22,6 +22,30 @@ def _git_env():
     return result
 
 
+def apply_runtime_patch(target:Path,patch:Path)->dict:
+    """Apply inside the isolated tree, never the enclosing workspace Git root."""
+    target=Path(target).resolve();patch=Path(patch).resolve()
+    if (target/'.git').exists():raise ValueError('runtime patch target must not contain Git metadata')
+    paths=set()
+    for line in patch.read_text().splitlines():
+        if line.startswith(('--- a/','+++ b/')):
+            name=line[6:].split('\t',1)[0]
+            relative=Path(name)
+            if relative.is_absolute() or '..' in relative.parts or relative.parts[0] not in ('src','tests'):
+                raise ValueError('unsupported runtime patch path')
+            paths.add(name)
+    if not paths:raise ValueError('runtime patch has no declared files')
+    before={name:hashlib.sha256((target/name).read_bytes()).hexdigest() if (target/name).is_file() else None for name in paths}
+    env=_git_env();env['GIT_CEILING_DIRECTORIES']=str(target.parent);env['LC_ALL']='C'
+    for flags in (['--check'],[]):
+        result=subprocess.run(['/usr/bin/git','apply','--verbose',*flags,str(patch)],cwd=target,check=True,env=env,capture_output=True,text=True)
+        if 'Skipped patch' in result.stderr:raise ValueError('runtime patch was silently skipped')
+    after={name:hashlib.sha256((target/name).read_bytes()).hexdigest() if (target/name).is_file() else None for name in paths}
+    if any(before[name]==after[name] for name in paths):raise ValueError('runtime patch did not change every declared file')
+    subprocess.run(['/usr/bin/git','apply','--reverse','--check',str(patch)],cwd=target,check=True,env=env,capture_output=True)
+    return after
+
+
 def prepare_runtime(repo_root:Path,target:Path|None=None)->Path:
     repo_root=Path(repo_root).resolve()
     vendor=repo_root/'vendor/HistorianSim'
@@ -32,6 +56,7 @@ def prepare_runtime(repo_root:Path,target:Path|None=None)->Path:
     target=Path(target or repo_root/'work/native-runtime')
     _reject_symlink_ancestors(target)
     target=target.resolve()
+    if (target/'.git').exists():raise ValueError('runtime target must not contain Git metadata')
     if target==vendor.resolve() or target==source.resolve() or not target.is_relative_to(repo_root/'work'):
         raise ValueError('runtime target must be a separate directory beneath work/')
     tracked=git(source,'ls-tree','-r','--name-only',expected).splitlines()
@@ -41,12 +66,15 @@ def prepare_runtime(repo_root:Path,target:Path|None=None)->Path:
     if (target/'src').exists(): _validate_source_root(target/'src')
     package=target/'src/historiansim'
     if package.exists(): shutil.rmtree(package)
+    if (target/'tests').exists(): shutil.rmtree(target/'tests')
+    source_tests={}
     for name in tracked:
         obj=subprocess.check_output(['/usr/bin/git','-C',str(source),'show',f'{expected}:{name}'],env=_git_env())
         dest=target/name;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(obj)
+        if name.startswith('tests/'):source_tests[name[6:]]=hashlib.sha256(obj).hexdigest()
+    applied_patches={}
     for patch in sorted((repo_root/'patches').glob('*.patch')):
-        subprocess.run(['/usr/bin/git','apply','--check',str(patch)],cwd=target,check=True,env=_git_env())
-        subprocess.run(['/usr/bin/git','apply',str(patch)],cwd=target,check=True,env=_git_env())
+        applied_patches[patch.name]=apply_runtime_patch(target,patch)
     extension_target=target/'src/historiansim/plants/stamping_press'
     if extension_target.exists(): shutil.rmtree(extension_target)
     shutil.copytree(repo_root/'extensions/stamping_press',extension_target,ignore=shutil.ignore_patterns('__pycache__'))
@@ -70,6 +98,12 @@ def prepare_runtime(repo_root:Path,target:Path|None=None)->Path:
         kernel_build={'compiler':str(compiler.resolve()),'compiler_sha256':hashlib.sha256(compiler.read_bytes()).hexdigest(),'flags':flags,'source_sha256':hashlib.sha256(kernel_source.read_bytes()).hexdigest(),'artifact_sha256':hashlib.sha256(artifact.read_bytes()).hexdigest()}
     provenance={'upstream_commit':expected,'source':'committed full source blobs','patches':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((repo_root/'patches').glob('*.patch'))},
                 'extension':{str(p.relative_to(repo_root/'extensions')):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((repo_root/'extensions/stamping_press').rglob('*')) if p.is_file() and '__pycache__' not in str(p)}}
+    provenance['patch_application_sha256']=applied_patches
+    provenance['source_tests_sha256']=source_tests
+    provenance['runtime_tests_sha256']=_file_hashes(target/'tests')
+    provenance['test_configuration_sha256']=_test_configuration_hashes(target)
+    provenance['test_suite_kind']='native_patched_upstream_compatibility'
+    provenance['test_compatibility_changes']={'0010-native-optional-pfd-layout-tests.patch':['tests/test_pipeline.py::test_write_dataset_emits_the_documented_layout','tests/test_pipeline.py::test_make_challenge_leaves_the_answers_behind']}
     provenance['compiled_kernel_build']=kernel_build
     provenance['reference_pfd_overlay_sha256']=reference_hashes
     provenance['reference_pfd_origin']='authored engineering overlay; no upstream PFD assets exist at pinned commit'
@@ -103,6 +137,11 @@ def _file_hashes(root:Path)->dict:
         elif not path.is_dir(): raise ValueError('runtime contains unsupported file type')
     return out
 
+def _test_configuration_hashes(runtime):
+    return {name:hashlib.sha256((runtime/name).read_bytes()).hexdigest()
+            for name in ('pyproject.toml','pytest.ini','.pytest.ini','tox.ini','setup.cfg','conftest.py') if (runtime/name).is_file()}
+
+
 def verify_runtime(repo_root:Path,runtime:Path)->dict:
     repo_root=Path(repo_root).resolve();runtime=Path(runtime)
     if runtime.is_symlink(): raise ValueError('runtime must not be a symbolic link')
@@ -122,6 +161,8 @@ def verify_runtime(repo_root:Path,runtime:Path)->dict:
     overlay=repo_root/'extensions/reference_pfd'
     overlay_hashes=_file_hashes(overlay) if overlay.exists() else {}
     if manifest['reference_pfd_overlay_sha256']!=overlay_hashes: raise ValueError('reference PFD overlay hashes mismatch')
+    if manifest.get('test_configuration_sha256')!=_test_configuration_hashes(runtime):raise ValueError('runtime test configuration hashes mismatch')
+    if manifest.get('runtime_tests_sha256')!=_file_hashes(runtime/'tests'):raise ValueError('runtime test source file hashes mismatch')
     _validate_source_root(runtime/'src')
     actual=_file_hashes(runtime/'src/historiansim')
     if manifest['runtime_sha256']!=actual: raise ValueError('runtime source file hashes mismatch')

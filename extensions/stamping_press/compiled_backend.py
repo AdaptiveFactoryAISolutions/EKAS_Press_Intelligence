@@ -22,7 +22,7 @@ def library():
         if not path.is_file():raise RuntimeError('COMPILED_PRESS_KERNEL_MISSING: rebuild the verified native runtime')
         lib=C.CDLL(str(path))
         lib.press_state_size.restype=C.c_uint64;lib.press_event_size.restype=C.c_uint64;lib.press_abi_version.restype=C.c_int
-        if lib.press_abi_version()!=6 or lib.press_state_size()!=C.sizeof(State) or lib.press_event_size()!=C.sizeof(Event):
+        if lib.press_abi_version()!=7 or lib.press_state_size()!=C.sizeof(State) or lib.press_event_size()!=C.sizeof(Event):
             raise RuntimeError('PRESS_KERNEL_ABI_MISMATCH')
         pointer=C.POINTER(C.c_double)
         lib.press_advance.argtypes=[C.c_double,pointer,pointer,pointer,pointer,C.POINTER(State),C.c_double,C.c_int,C.POINTER(Event),C.c_int,C.POINTER(C.c_int)]

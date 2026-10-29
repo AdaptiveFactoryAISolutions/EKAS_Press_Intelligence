@@ -413,7 +413,7 @@ def test_independent_shaft_and_strip_measurements_separate_physical_slip():
     from historiansim.plants.stamping_press.tags import recompute_dcs_calculations
     unit,u,x,_=design_point()
     p={**unit.params,'traction':.8}
-    x[1]=80.
+    x[1]=100.
     event=unit.cycle_event_source(x,u,DESIGN_D,p)
     event.phase=.25
     observed=event.observations(0,x,u,DESIGN_D,p)
@@ -530,3 +530,83 @@ def test_latched_feed_plan_has_finite_acceleration_in_both_backends():
         assert np.max(velocities)<401.
         assert np.max(np.abs(accelerations))<1601.
         assert abs(positions[-1]-100)<1e-8
+
+def test_roll_losses_cannot_reinterpret_shaft_history_or_drive_command():
+    from historiansim.plants.stamping_press.loops import design_point,DESIGN_D
+    from historiansim.plants.stamping_press.cycles import PressCycleEvents
+    from historiansim.plants.stamping_press.compiled_backend import CompiledPressCycleEvents
+    unit,u,x,_=design_point()
+    for changes,expected_strip in (({'traction':.8},80.),({'backlash':4.},96.),({'obstruction':5.},95.)):
+        p={**unit.params,**changes}
+        q=unit.quantities(x,u,DESIGN_D,p)
+        assert q['encoder_pitch']==100.
+        assert q['pitch_target']==100.
+        assert q['strip_pitch']==expected_strip
+        assert unit.derivatives(0,x,u,DESIGN_D,p)[1]==0.
+        for backend in (PressCycleEvents,CompiledPressCycleEvents):
+            event=backend(unit,x,u,DESIGN_D,p)
+            actual=event.advance(0,x.copy(),u,DESIGN_D,p,.1,6)
+            observed=event.observations(.6,actual,u,DESIGN_D,p)
+            assert observed['ZI-276']==100.
+            assert observed['ZI-272']==expected_strip
+            expected_mass=expected_strip*.001*p['strip_width']*DESIGN_D['thickness']*p['strip_density']
+            assert abs(event.withdrawn_mass-expected_mass)<1e-12
+
+def test_scheduled_speed_reduction_uses_actual_nominal_and_restores_it():
+    from historiansim.scenarios import build_scenario
+    from historiansim.faults.scheduler import build_episode_plan
+    from historiansim.core.rng import SeedBank
+    from historiansim.core.pid import PID
+    for rate in (45.,60.,75.):
+        cfg=build_scenario('stamping-press-rca',profile='standard',seed=7)
+        loop=next(loop for loop in cfg.loops if loop.name=='SIC-271');loop.sp=rate
+        plan=build_episode_plan(cfg,SeedBank(7))
+        episodes=[ep for ep in plan.episodes if ep.benign_kind=='speed_reduction']
+        assert len(episodes)==1
+        fault=episodes[0].fault
+        assert fault.value==.9*rate
+        ctrl=PID(loop,pv0=rate,out0=.4)
+        fault.apply_controls(fault.onset_s,{'SIC-271':ctrl})
+        assert ctrl.sp==.9*rate
+        fault.apply_controls(fault.end_s,{'SIC-271':ctrl})
+        assert ctrl.sp==rate
+
+
+def test_private_normalized_ledger_series_are_actual_and_never_public(tmp_path):
+    import pandas as pd
+    from historiansim.scenarios import build_scenario
+    from historiansim.pipeline import generate,write_dataset
+    from historiansim.challenge import make_challenge
+    from historiansim.plants import get_plant
+    from historiansim.plants.stamping_press.cycles import PressCycleEvents
+    from historiansim.plants.stamping_press.compiled_backend import CompiledPressCycleEvents
+    from historiansim.plants.stamping_press.loops import design_point,DESIGN_D
+    audit={'AUDIT-ENERGY-RELATIVE-RESIDUAL','AUDIT-MATERIAL-RELATIVE-RESIDUAL',
+           'AUDIT-COUNTER-RESIDUAL','AUDIT-MOTOR-ENERGY-J','AUDIT-SUPPLIED-MASS-KG'}
+    for backend in (PressCycleEvents,CompiledPressCycleEvents):
+        unit,u,x,_=design_point(); event=backend(unit,x,u,DESIGN_D,unit.params)
+        for k in range(200):
+            x=event.advance(k*.1,x,u,DESIGN_D,unit.params,.1,1)
+        observed=event.observations(20.,x,u,DESIGN_D,unit.params)
+        assert audit<=observed.keys()
+        assert observed['AUDIT-ENERGY-RELATIVE-RESIDUAL']==event.energy_relative_residual
+        assert observed['AUDIT-MATERIAL-RELATIVE-RESIDUAL']==abs(event.supplied_mass-event.withdrawn_mass-event.buffer_mass)/max(event.supplied_mass,1.)
+        assert observed['AUDIT-COUNTER-RESIDUAL']==event.completed-event.good-event.reject-len(event.pending)==0
+        assert observed['AUDIT-MOTOR-ENERGY-J']==event.motor_energy>0
+        assert observed['AUDIT-SUPPLIED-MASS-KG']==event.supplied_mass>0
+    cfg=build_scenario('stamping-press-rca',profile='quick',seed=7,days=300/86400)
+    cfg.episodes.n_faults=0;cfg.episodes.n_benign=0;cfg.episodes.baseline_days=0
+    dataset=generate(cfg)
+    assert audit<=dataset.truth.signals.keys()
+    assert max(dataset.truth.signals['AUDIT-ENERGY-RELATIVE-RESIDUAL'])<.001
+    assert max(dataset.truth.signals['AUDIT-MATERIAL-RELATIVE-RESIDUAL'])<1e-6
+    assert np.all(dataset.truth.signals['AUDIT-COUNTER-RESIDUAL']==0)
+    assert audit.isdisjoint({tag.name for tag in get_plant('stamping_press').tags()})
+    out=tmp_path/'private';public=tmp_path/'public'
+    write_dataset(dataset,out);make_challenge(out,public)
+    assert audit.isdisjoint(set(pd.read_csv(public/'tags.csv')['tag']))
+    for parquet in public.glob('*.parquet'):
+        frame=pd.read_parquet(parquet)
+        assert audit.isdisjoint(frame.columns)
+        if 'tag' in frame.columns:
+            assert audit.isdisjoint(set(frame['tag']))

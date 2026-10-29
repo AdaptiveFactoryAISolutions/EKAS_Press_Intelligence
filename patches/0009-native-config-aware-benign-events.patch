@@ -1,0 +1,29 @@
+diff --git a/src/historiansim/plants/base.py b/src/historiansim/plants/base.py
+--- a/src/historiansim/plants/base.py
++++ b/src/historiansim/plants/base.py
+@@ -39,6 +39,11 @@ class BenignEvent:
+     build: Callable[[str, float, float], "ControlFault"] = field(repr=False)
+     note: str
+     why: str = ""
++    # Optional operating-point-aware construction. Existing plants retain the
++    # original builder and exact scheduling/RNG behaviour when this is absent.
++    build_for_config: Callable[
++        [str, float, float, "ScenarioConfig"], "ControlFault"
++    ] | None = field(default=None, repr=False)
+ 
+ 
+ @dataclass(frozen=True)
+diff --git a/src/historiansim/faults/scheduler.py b/src/historiansim/faults/scheduler.py
+--- a/src/historiansim/faults/scheduler.py
++++ b/src/historiansim/faults/scheduler.py
+@@ -340,7 +340,9 @@
+             duration = rng.uniform(lo_d, hi_d) * DAY
+         bid = f"BEN-{i + 1:03d}"
+         event = plant.benign_events[kind]
+-        fault = event.build(bid, onset, onset + duration)
++        fault = (event.build_for_config(bid, onset, onset + duration, cfg)
++                 if event.build_for_config is not None
++                 else event.build(bid, onset, onset + duration))
+         note = event.note
+ 
+         episodes.append(

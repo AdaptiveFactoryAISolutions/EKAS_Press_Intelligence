@@ -143,7 +143,9 @@ def run_job(directory,ident):
                                         'blas_environment':{name:os.environ.get(name) for name in THREAD_VARIABLES}}
         if store.get(ident)['state']=='cancel_requested':store.cancelled(ident);return 130
         if result.get('passed') is False:
-            store.fail(ident,'NATIVE_VALIDATION_FAILED','Actual native validation did not pass; artifacts remain unqualified',result)
+            engineering_failed=(result.get('engineering_acceptance') or {}).get('passed') is False
+            store.fail(ident,'PHYSICS_VALIDATION_FAILED' if engineering_failed else 'NATIVE_VALIDATION_FAILED',
+                       'Native or private engineering validation did not pass; artifacts remain unqualified',result)
             return 1
         dataset=None
         if result.get('public_directory') and result.get('dataset'):

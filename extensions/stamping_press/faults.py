@@ -15,7 +15,7 @@ ROWS=[
  ('RC-A4','S1','Die-insert wear','die insert','die_wear',-.20,'WI-271','rises'),
  ('RC-A5','S1','Die-guide misalignment','die guide','guide_drag',-.20,'WI-272','rises'),
  ('RC-B1','S2','Encoder gain failure','feeder encoder','i:FDC-271.PV',.03,'ZI-272','falls'),
- ('RC-B2','S2','Feed-roll traction loss','feed roll','traction',.20,'FDC-271.OP','rises'),
+ ('RC-B2','S2','Feed-roll traction loss','feed roll','traction',.20,'CALC-TRAVEL-GAP','rises'),
  ('RC-B3','S2','Coupling backlash','feed coupling','o:backlash',4.,'ZI-273','rises'),
  ('RC-B4','S2','Strip-guide obstruction','strip guide','o:obstruction',5.,'PI-271','rises'),
  ('RC-B5','S2','Decoiler brake drag','decoiler brake','brake_drag',-.30,'LIC-271.OP','rises'),
@@ -64,12 +64,6 @@ EVIDENCE={
  'RC-D2':[('AI-272','rises'),('QI-271','rises'),('QI-272','rises'),('FI-273','flat')],
  'RC-D3':[('FI-273','falls'),('TIC-271.OP','rises'),('AI-272','flat')],
  'RC-D4':[('QI-271','rises'),('QI-272','flat'),('TIC-271.OP','flat'),('AI-272','flat'),('FI-273','flat')]}
-# Controlled-variable evidence makes the masking promise measurable.
-for _cid in ('RC-A1','RC-A2','RC-A3','RC-A4','RC-A5'):
-    EVIDENCE[_cid].append(('SIC-271.PV','flat'))
-for _cid in ('RC-C1','RC-C2','RC-C3','RC-C4'):
-    EVIDENCE[_cid].append(('PIC-272.PV','flat'))
-EVIDENCE['RC-D1'].append(('TIC-271.PV','flat'))
 causes=[]
 for row in ROWS:
     cid,symptom,name,component,handle,mag,tag,direction=row

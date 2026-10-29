@@ -28,13 +28,13 @@ PID, esc, render = _pid.PID, _pid.esc, _pid.render
 from extensions.stamping_press.tags import plant_tags
 from extensions.stamping_press.loops import plant_loops, design_point
 
-REV = 'R6'
+REV = 'R7'
 OUT = Path(__file__).resolve().parent
 METAL = '#3c5872'
 OIL = '#9b6a24'
 ENERGY = '#936049'
 SEMANTICS = {
-    'FI-275': 'Decoiler strip delivery speed', 'SI-272': 'Independent instantaneous flywheel speed',
+    'FI-275': 'Decoiler strip delivery speed', 'SI-272': 'Independent energy-reconstructed flywheel speed',
     'ZI-272': 'Independent last completed feed pitch', 'ZI-274': 'Independent within-cycle shaft encoder travel',
     'ZI-276': 'Independent latched shaft-travel cross-check', 'CALC-TRAVEL-GAP': 'Measured latched shaft travel minus strip pitch',
     'ZI-275': 'Within-cycle independent strip progression', 'LI-272': 'Independent buffer inventory',
@@ -47,7 +47,7 @@ SEMANTICS = {
     'AI-271': 'Incoming strip strength ratio', 'AI-272': 'Incoming strip thickness',
     'EI-271': 'Drive/pump electrical supply voltage', 'FI-273': 'Die-guide lubricating-film branch flow',
     'DI-271': 'Permissive AND clutch engaged AND no stop', 'DI-272': 'Feed-complete latch; clears after stroke',
-    'PHASE-271': 'Physical crank phase, 0 to 1 revolution', 'COUNT-271': 'Completed permitted strokes',
+    'PHASE-271': 'Mean-speed reconstructed crank phase, 0 to 1 revolution', 'COUNT-271': 'Completed permitted strokes',
     'COUNT-272': 'Accepted measured deliveries', 'COUNT-273': 'Rejected measured deliveries',
     'COUNT-274': 'Pending transported-part inspections',
     'CALC-WORK': 'DCS work estimate from measured peak force',
@@ -228,16 +228,16 @@ def build():
       'DI-271 = gate enabled AND clutch engaged AND no operator stop. DI-272 is the feed-complete latch, not an inspection status.',
       'SIC-271.SP = 0 requests an operator stop; restoring the speed setpoint permits physical spinup and clutch reengagement.',
       'An open clutch preserves partial crank work and any feed token. The flywheel coasts; no production tag is forced to zero.',
-      'Active feed holds its admitted shaft/strip plan through completion; travel coordinates reset at completed stroke, not a position jump.',
+      'Shaft envelope drives the encoder; traction and physical losses derive strip travel. Both admitted feed endpoints remain held.',
       'COUN T reconciliation: completed strokes = accepted + rejected + pending inspections; geometric trim is a separate material outlet.',
       'Drive electrical power -> efficiency -> motor torque -> flywheel storage / forming work / bearing, guide and other losses.',
       'Forming energy partitions to part energy and die heat. Oil rejects pump/bearing heat to ambient; water removes die heat.',
       'CALC-WORK, CALC-SUPPLY and CALC-CONSUMPTION use measured instruments and retain their measurement uncertainty.',
-      'Design: 60 SPM, 100 mm pitch, 100 mm strip width, 1.2 mm thickness, density7850 kg/m3, 1000 J forming work/cycle.',
+      'Mean-speed phase and energy-reconstructed tach are averaged approximations; energy-coordinate closure is not rigid-crank proof.',
       'Exact 10 s delivery: classify each part from primary MEASURED QI-271 including gain/error/ADC; QI-272 is an independent check.',
       'Journal code 3 records delivery / cumulative inspected count. Pulse position/speed: 16-bit acquisition, no level/flow dynamics.',
       'Optical gauges: 10 um output increments, independent 50 um / 600 s thermal error; synthetic acquisition assumptions.',
-      'Operator .SP/.OP/.MODE are separate records; 0 MAN / 1 AUTO / 2 CAS. No separate manual reset tag is modeled.',
+      'Operator .SP/.OP/.MODE: 0 MAN / 1 AUTO / 2 CAS. Speed-reduction event requests 90% of configured SIC setpoint, then restores it.',
       'Conceptual only: no safety certification, relief/isolating/drain devices, line numbers, wiring, equipment or pipe sizing.',
     ]
     for index,line in enumerate(notes):
@@ -271,13 +271,14 @@ def build():
                   loops=[loop.model_dump(mode='json') for loop in loops],control_pathways=pathways,
                   sensor_symbols=symbols,signal_paths=signal_paths,process_paths=process_paths,
                   source_sha256={name:hashlib.sha256((OUT.parent/name).read_bytes()).hexdigest()
-                                 for name in ['tags.py','loops.py','model.py','cycles.py','compiled_backend.py','cycle_kernel.cpp','description.py','instruments.py',
+                                 for name in ['__init__.py','tags.py','loops.py','model.py','cycles.py','compiled_backend.py','cycle_kernel.cpp','description.py','instruments.py',
                                               '../../patches/0007-native-event-instrument-acquisition.patch',
-                                              '../../patches/0008-native-digital-feedback-quantization.patch']},
+                                              '../../patches/0008-native-digital-feedback-quantization.patch',
+                                              '../../patches/0009-native-config-aware-benign-events.patch']},
                   assumptions=['Conceptual equipment and pipe geometry; no sizing or safety certification.',
                                'Oil branches show lumped model relationships; no resolved reservoir or piping inventory.',
                                'Native actuator keys are equipment labels, not additional historian tags.'],
-                  excluded_public_signals=['CALC-MATERIAL-RESIDUAL','CALC-ENERGY-RESIDUAL'])
+                  excluded_public_signals=['CALC-MATERIAL-RESIDUAL','CALC-ENERGY-RESIDUAL','AUDIT-ENERGY-RELATIVE-RESIDUAL','AUDIT-MATERIAL-RELATIVE-RESIDUAL','AUDIT-COUNTER-RESIDUAL','AUDIT-MOTOR-ENERGY-J','AUDIT-SUPPLIED-MASS-KG'])
     (OUT/'pfd_contract.json').write_text(json.dumps(contract,indent=2)+'\n')
     check_contract(svg,contract)
     render(str(svg),str(OUT/'PFD.png'),width=3200)

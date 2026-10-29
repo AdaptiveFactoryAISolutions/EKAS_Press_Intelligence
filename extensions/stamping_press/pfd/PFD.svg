@@ -364,16 +364,16 @@
 <text x="60" y="2344" font-size="12" font-weight="normal" fill="#111418" text-anchor="start">DI-271 = gate enabled AND clutch engaged AND no operator stop. DI-272 is the feed-complete latch, not an inspection status.</text>
 <text x="60" y="2366" font-size="12" font-weight="normal" fill="#111418" text-anchor="start">SIC-271.SP = 0 requests an operator stop; restoring the speed setpoint permits physical spinup and clutch reengagement.</text>
 <text x="60" y="2388" font-size="12" font-weight="normal" fill="#111418" text-anchor="start">An open clutch preserves partial crank work and any feed token. The flywheel coasts; no production tag is forced to zero.</text>
-<text x="60" y="2410" font-size="12" font-weight="normal" fill="#111418" text-anchor="start">Active feed holds its admitted shaft/strip plan through completion; travel coordinates reset at completed stroke, not a position jump.</text>
+<text x="60" y="2410" font-size="12" font-weight="normal" fill="#111418" text-anchor="start">Shaft envelope drives the encoder; traction and physical losses derive strip travel. Both admitted feed endpoints remain held.</text>
 <text x="60" y="2432" font-size="12" font-weight="normal" fill="#111418" text-anchor="start">Counter reconciliation: completed strokes = accepted + rejected + pending inspections; geometric trim is a separate material outlet.</text>
 <text x="60" y="2454" font-size="12" font-weight="normal" fill="#111418" text-anchor="start">Drive electrical power -&gt; efficiency -&gt; motor torque -&gt; flywheel storage / forming work / bearing, guide and other losses.</text>
 <text x="60" y="2476" font-size="12" font-weight="normal" fill="#111418" text-anchor="start">Forming energy partitions to part energy and die heat. Oil rejects pump/bearing heat to ambient; water removes die heat.</text>
 <text x="60" y="2498" font-size="12" font-weight="normal" fill="#111418" text-anchor="start">CALC-WORK, CALC-SUPPLY and CALC-CONSUMPTION use measured instruments and retain their measurement uncertainty.</text>
-<text x="60" y="2520" font-size="12" font-weight="normal" fill="#111418" text-anchor="start">Design: 60 SPM, 100 mm pitch, 100 mm strip width, 1.2 mm thickness, density7850 kg/m3, 1000 J forming work/cycle.</text>
+<text x="60" y="2520" font-size="12" font-weight="normal" fill="#111418" text-anchor="start">Mean-speed phase and energy-reconstructed tach are averaged approximations; energy-coordinate closure is not rigid-crank proof.</text>
 <text x="60" y="2542" font-size="12" font-weight="normal" fill="#111418" text-anchor="start">Exact 10 s delivery: classify each part from primary MEASURED QI-271 including gain/error/ADC; QI-272 is an independent check.</text>
 <text x="60" y="2564" font-size="12" font-weight="normal" fill="#111418" text-anchor="start">Journal code 3 records delivery / cumulative inspected count. Pulse position/speed: 16-bit acquisition, no level/flow dynamics.</text>
 <text x="60" y="2586" font-size="12" font-weight="normal" fill="#111418" text-anchor="start">Optical gauges: 10 um output increments, independent 50 um / 600 s thermal error; synthetic acquisition assumptions.</text>
-<text x="60" y="2608" font-size="12" font-weight="normal" fill="#111418" text-anchor="start">Operator .SP/.OP/.MODE are separate records; 0 MAN / 1 AUTO / 2 CAS. No separate manual reset tag is modeled.</text>
+<text x="60" y="2608" font-size="12" font-weight="normal" fill="#111418" text-anchor="start">Operator .SP/.OP/.MODE: 0 MAN / 1 AUTO / 2 CAS. Speed-reduction event requests 90% of configured SIC setpoint, then restores it.</text>
 <text x="60" y="2630" font-size="12" font-weight="normal" fill="#111418" text-anchor="start">Conceptual only: no safety certification, relief/isolating/drain devices, line numbers, wiring, equipment or pipe sizing.</text>
 <line x1="60" y1="2660" x2="105" y2="2660" stroke="#3c5872" stroke-width="2.8"/>
 <text x="115" y="2665" font-size="11.5" font-weight="normal" fill="#5a6472" text-anchor="start">Metal / parts</text>
@@ -387,7 +387,7 @@
 <text x="1435" y="2665" font-size="11.5" font-weight="normal" fill="#5a6472" text-anchor="start">Instrument / control signal</text>
 <text x="60" y="2700" font-size="11.5" font-weight="normal" fill="#111418" text-anchor="start">Circles: field/recorded observations. Rectangles: equipment and shared DCS controls. Internal MV names are actuator keys, not extra tags.</text>
 <text x="60" y="2720" font-size="11.5" font-weight="normal" fill="#111418" text-anchor="start">Thin solid gray leads attach observations to physical sources; equipment geometry and line routes are conceptual.</text>
-<text x="2945" y="2760" font-size="9" font-weight="normal" fill="#5a6472" text-anchor="end">R6 | conceptual native press | verify against current source contracts</text>
+<text x="2945" y="2760" font-size="9" font-weight="normal" fill="#5a6472" text-anchor="end">R7 | conceptual native press | verify against current source contracts</text>
 <path d="M 1910,120 L 1910,2730" fill="none" stroke="#cbd5df"/>
 <text x="1950" y="145" font-size="16" font-weight="bold" fill="#111418" text-anchor="start">EXACT NATIVE RECORDED-TAG REGISTER</text>
 <text x="1950" y="172" font-size="12" font-weight="normal" fill="#111418" text-anchor="start">Units / range / signal meaning; no neighbouring-equipment tags</text>
@@ -461,7 +461,7 @@
 <text x="2170" y="1112" font-size="11.5" font-weight="normal" fill="#111418" text-anchor="start">m/s | 0..0.3 | Decoiler strip delivery speed</text>
 <text x="2170" y="1128" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">source=FI-275 | IND | node=NODE-A | flow</text>
 <text x="1950" y="1153" font-size="13" font-weight="bold" fill="#111418" text-anchor="start">SI-272</text>
-<text x="2170" y="1153" font-size="11.5" font-weight="normal" fill="#111418" text-anchor="start">SPM | -5..150 | Independent instantaneous flywheel speed</text>
+<text x="2170" y="1153" font-size="11.5" font-weight="normal" fill="#111418" text-anchor="start">SPM | -5..150 | Independent energy-reconstructed flywheel speed</text>
 <text x="2170" y="1169" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">source=SI-272 | IND | node=NODE-B | pulse_speed</text>
 <text x="1950" y="1194" font-size="13" font-weight="bold" fill="#111418" text-anchor="start">ZI-272</text>
 <text x="2170" y="1194" font-size="11.5" font-weight="normal" fill="#111418" text-anchor="start">mm | 0..250 | Independent last completed feed pitch</text>
@@ -530,7 +530,7 @@
 <text x="2170" y="2055" font-size="11.5" font-weight="normal" fill="#111418" text-anchor="start">- | 0..1 | Feed-complete latch; clears after stroke</text>
 <text x="2170" y="2071" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">source=DI-272 | IND | node=NODE-B | status</text>
 <text x="1950" y="2096" font-size="13" font-weight="bold" fill="#111418" text-anchor="start">PHASE-271</text>
-<text x="2170" y="2096" font-size="11.5" font-weight="normal" fill="#111418" text-anchor="start">rev | 0..1 | Physical crank phase, 0 to 1 revolution</text>
+<text x="2170" y="2096" font-size="11.5" font-weight="normal" fill="#111418" text-anchor="start">rev | 0..1 | Mean-speed reconstructed crank phase, 0 to 1 revolution</text>
 <text x="2170" y="2112" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">source=PHASE-271 | IND | node=NODE-A | status</text>
 <text x="1950" y="2137" font-size="13" font-weight="bold" fill="#111418" text-anchor="start">COUNT-271</text>
 <text x="2170" y="2137" font-size="11.5" font-weight="normal" fill="#111418" text-anchor="start">pieces | 0..1e+08 | Completed permitted strokes</text>

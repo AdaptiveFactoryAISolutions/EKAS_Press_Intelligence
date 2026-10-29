@@ -11,7 +11,7 @@ from historiansim.plants.unit import UnitModel
 
 class StampingPress(UnitModel):
     name='stamping_press'
-    state_names=('omega','pitch','buffer','pressure','oil_temperature','die_temperature')
+    state_names=('omega','shaft_pitch','buffer','pressure','oil_temperature','die_temperature')
     mv_names=('DRIVE-271','FEED-271','DECOIL-271','PUMP-272','COOL-271')
     disturbance_names=('T_amb','T_cw','strength','thickness','voltage','cooling')
     stiction_params={}
@@ -47,13 +47,23 @@ class StampingPress(UnitModel):
     def force_work(cls,p,d):
         return .5*cls.peak_force(p,d)*p['forming_travel']
 
+    @staticmethod
+    def strip_travel(shaft_pitch,d,p):
+        traction=min(1.,p['traction']/max(.85+d['strength']*.15,1e-6))
+        return max(0.,shaft_pitch*traction-p['backlash']-p['obstruction'])
+
+    @staticmethod
+    def part_dimension(strip_pitch,die,stock_thickness,p):
+        return 100+.012*(die-50)+8*(stock_thickness/.0012-1)+.2*(strip_pitch-100)+.1*(1-p['film_delivery'])
+
     def quantities(self,x,u,d,p):
         w,pitch,buf,pressure,oil,die=x
         rate=max(w,0)/(2*math.pi)
         work=self.force_work(p,d)
         visc=p['viscosity']*math.exp(-.015*(oil-40))
         bearing=p['bearing_drag']*visc*(max(w,0)/(2*math.pi))**2
-        permitted=pressure>=2. and buf>=.15 and die<=80. and work<=2500. and 50<pitch<150
+        strip_pitch=self.strip_travel(pitch,d,p)
+        permitted=pressure>=2. and buf>=.15 and die<=80. and work<=2500. and 50<strip_pitch<150
         permitted=bool(p.get('_cycle_enabled',permitted)) and not bool(p.get('_cycle_stop',False))
         clutch=bool(p.get('_cycle_clutch',permitted)) and permitted
         forming=p.get('_cycle_work',work)*rate if clutch else 0.
@@ -67,9 +77,9 @@ class StampingPress(UnitModel):
         pump=10*u['PUMP-272']*p['pump_efficiency']*d['voltage']/p['filter_resistance']**.2
         demand=pressure/visc + p['leakage']*math.sqrt(max(pressure,0))
         traction=min(1.,p['traction']/max(.85+d['strength']*.15,1e-6))
-        pitch_target=max(0,p['feed_gain']*u['FEED-271']*traction-p['backlash']-p['obstruction'])
-        encoder_pitch=(pitch+p['backlash']+p['obstruction'])/max(traction,1e-6)
-        consumed=p.get('_cycle_pitch_m',max(pitch,0)*.001)*rate if clutch else 0.
+        pitch_target=max(0,p['feed_gain']*u['FEED-271'])
+        encoder_pitch=pitch
+        consumed=p.get('_cycle_pitch_m',strip_pitch*.001)*rate if clutch else 0.
         delivery=.2*u['DECOIL-271']/p['brake_drag']
         cooling=p['coolant_ua']*u['COOL-271']*d['cooling']*(die-d['T_cw'])
         pump_input=(pressure*pump*100000/60000+100*u['PUMP-272'])/max(p['pump_efficiency'],.05)
@@ -78,8 +88,8 @@ class StampingPress(UnitModel):
         die_heat=.3*forming+die_friction
         part_energy=.7*forming
         film=.02*p['film_delivery']*pump
-        dim=100+.012*(die-50)+8*(d['thickness']/.0012-1)+.2*(pitch-100)+.1*(1-p['film_delivery'])
-        return dict(motor_torque=motor_torque,forming_torque=forming_torque,clutch=float(clutch),pump_input=pump_input,oil_cooling=oil_cooling,die_ambient=die_ambient,die_heat=die_heat,part_energy=part_energy,other_ambient=other_ambient,encoder_pitch=encoder_pitch,traction=traction,rate=rate,work=work,brake=brake,other=other,permitted=float(permitted),bearing=bearing,forming=forming,motor=motor,pump=pump,demand=demand,
+        dim=self.part_dimension(strip_pitch,die,d['thickness'],p)
+        return dict(strip_pitch=strip_pitch,motor_torque=motor_torque,forming_torque=forming_torque,clutch=float(clutch),pump_input=pump_input,oil_cooling=oil_cooling,die_ambient=die_ambient,die_heat=die_heat,part_energy=part_energy,other_ambient=other_ambient,encoder_pitch=encoder_pitch,traction=traction,rate=rate,work=work,brake=brake,other=other,permitted=float(permitted),bearing=bearing,forming=forming,motor=motor,pump=pump,demand=demand,
                     pitch_target=pitch_target,consumed=consumed,delivery=delivery,cooling=cooling,film=film,dimension=dim)
 
     def derivatives(self,t,x,u,d,p):
@@ -92,7 +102,7 @@ class StampingPress(UnitModel):
 
     def signals(self,t,x,u,d,p):
         q=self.quantities(x,u,d,p); w,pitch,buf,pressure,oil,die=x
-        return {'SI-271':w*60/(2*math.pi),'SI-272':w*60/(2*math.pi),'ZI-271':q['encoder_pitch'],'ZI-276':q['encoder_pitch'],'ZI-272':pitch,
+        return {'SI-271':w*60/(2*math.pi),'SI-272':w*60/(2*math.pi),'ZI-271':q['encoder_pitch'],'ZI-276':q['encoder_pitch'],'ZI-272':q['strip_pitch'],
                 'LI-271':buf,'LI-272':buf,'PI-272':pressure,'PI-273':pressure,'TI-272':oil,'TI-271':die,
                 'JI-271':q['motor']/p['efficiency']/1000,'WI-271':2*q['work']/p['forming_travel']/1000,
                 'FI-275':q['delivery'],'FI-271':q['pump'],'DPI-271':.1*p['filter_resistance']*q['pump'],
@@ -102,7 +112,7 @@ class StampingPress(UnitModel):
                 'PI-271':100*p['brake_drag']+10*p['obstruction'],'FI-272':10*u['COOL-271']*d['cooling'],
                 'TI-273':d['T_cw'],'QI-271':q['dimension'],'QI-272':q['dimension'],
                 'AI-271':d['strength'],'AI-272':d['thickness']*1000,'EI-271':d['voltage']*400,
-                'FI-273':q['film'],'CALC-TRAVEL-GAP':q['encoder_pitch']-pitch,'CALC-WORK':q['work'],'CALC-SUPPLY':q['delivery'],
+                'FI-273':q['film'],'CALC-TRAVEL-GAP':q['encoder_pitch']-q['strip_pitch'],'CALC-WORK':q['work'],'CALC-SUPPLY':q['delivery'],
                 'CALC-CONSUMPTION':q['consumed']}
 
     def steady_inputs(self,targets,d,p):
@@ -124,8 +134,8 @@ class StampingPress(UnitModel):
         visc=p['viscosity']*math.exp(-.015*(oil-40))
         work=self.force_work(p,d)
         return {'DRIVE-271':(work*rate+p['bearing_drag']*visc*rate**2+p['other_loss']*rate**2*(.25+.75/max(p['film_delivery'],.1)))/(p['efficiency']*p['torque']*w*d['voltage']),
-                'FEED-271':(pitch+p['backlash']+p['obstruction'])/p['feed_gain'],
-                'DECOIL-271':pitch*.001*rate*p['brake_drag']/.2,'PUMP-272':float(pump),
+                'FEED-271':pitch/p['feed_gain'],
+                'DECOIL-271':self.strip_travel(pitch,d,p)*.001*rate*p['brake_drag']/.2,'PUMP-272':float(pump),
                 'COOL-271':(.3*work*rate+.75*p['other_loss']*rate**2/max(p['film_delivery'],.1)-2*(die-d['T_amb']))/(p['coolant_ua']*d['cooling']*(die-d['T_cw']))}
 
     def steady_state(self,u,d,p):

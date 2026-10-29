@@ -225,3 +225,14 @@ def test_verified_signal_rejects_mismatched_process_identity():
         assert process.wait(timeout=5)==-signal.SIGTERM
     finally:
         if process.poll() is None:process.terminate();process.wait(timeout=5)
+
+
+def test_explicit_unvalidated_physics_output_keeps_unvalidated_status(tmp_path,monkeypatch):
+    from ekas_press_intelligence.native.jobs import JobStore
+    from ekas_press_intelligence.native.worker import run_job
+    import ekas_press_intelligence.native.engine as engine
+    store=JobStore(tmp_path);job=store.create('generate',{'validate':False});store.claim('test')
+    monkeypatch.setattr(engine,'execute',lambda *a,**k:{'public_directory':'public','dataset':{'name':'unvalidated'},'passed':None,'validation_performed':False,'engineering_acceptance':{'passed':False}})
+    assert run_job(tmp_path,job['id'])==0
+    assert store.dataset(job['id'])['status']=='UNVALIDATED'
+    assert store.get(job['id'])['result']['passed'] is None

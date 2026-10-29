@@ -19,7 +19,7 @@ def assess_report(path,code,layer):
     if code:return code,None,cases
     if not cases or any(any(c.find(tag) is not None for tag in ('skipped','failure','error')) for c in cases):
         return 1,'EMPTY_OR_UNSUCCESSFUL_REQUIRED_LAYER',cases
-    if layer=='upstream' and len(cases)<173:return 1,'UPSTREAM_TESTS_MISSING',cases
+    if layer=='upstream' and len(cases)<181:return 1,'UPSTREAM_TESTS_MISSING',cases
     return 0,None,cases
 
 
@@ -35,8 +35,9 @@ def main():
                  'EKAS_NATIVE_LOCAL_ONLY','EKAS_NATIVE_TEST_REFERENCE_RUNTIME','EKAS_NATIVE_MAX_ESTIMATED_BYTES',
                  'EKAS_NATIVE_MAX_RSS_BYTES','EKAS_NATIVE_MIN_AVAILABLE_BYTES'):
         env.pop(name,None)
+    for name in ('PYTEST_ADDOPTS','PYTEST_PLUGINS'):env.pop(name,None)
     env['PYTHONPYCACHEPREFIX']=str(report/'import-cache')
-    cwd=ROOT;runtime_manifest=None
+    cwd=ROOT;runtime_manifest=None;test_identity=None
     if args.layer=='core':
         targets=[str(p.relative_to(ROOT)) for p in sorted((ROOT/'tests').glob('test_native_*.py')) if p.name!='test_native_browser.py']
         targets+=['tests/test_reference_runtime.py']
@@ -54,7 +55,12 @@ def main():
         runtime=report/'native-runtime'
         subprocess.run([sys.executable,str(ROOT/'scripts/prepare_native_runtime.py'),'--target',str(runtime)],check=True,cwd=ROOT,env=env)
         runtime_manifest=hashlib.sha256((runtime/'NATIVE_RUNTIME_PROVENANCE.json').read_bytes()).hexdigest()
-        cwd=ROOT/'vendor/HistorianSim';targets=['tests']
+        manifest=json.loads((runtime/'NATIVE_RUNTIME_PROVENANCE.json').read_text())
+        test_identity={'kind':manifest['test_suite_kind'],'upstream_commit':manifest['upstream_commit'],
+                       'source_tests_sha256':hashlib.sha256(json.dumps(manifest['source_tests_sha256'],sort_keys=True).encode()).hexdigest(),
+                       'runtime_tests_sha256':hashlib.sha256(json.dumps(manifest['runtime_tests_sha256'],sort_keys=True).encode()).hexdigest(),
+                       'configuration_sha256':manifest['test_configuration_sha256'],'patches':manifest['patches'],'compatibility_changes':manifest['test_compatibility_changes']}
+        cwd=runtime;targets=['tests']
         env['PYTHONPATH']=str(runtime/'src')+os.pathsep+str(cwd)
     if not targets:raise SystemExit('No native test targets')
     command=[sys.executable,'-B','-m','pytest','-q',*targets,'--junitxml='+str(report/'tests.xml')]
@@ -68,7 +74,7 @@ def main():
             terminate_owned(process)
     code,report_reason,cases=assess_report(report/'tests.xml',code,args.layer)
     reason=reason or report_reason
-    result={'layer':args.layer,'returncode':code,'reason':reason,'cases':len(cases),'skipped':sum(c.find('skipped') is not None for c in cases),'elapsed_seconds':time.time()-started,'runtime_manifest_sha256':runtime_manifest,'command':command,'report_directory':str(report)}
+    result={'layer':args.layer,'returncode':code,'reason':reason,'cases':len(cases),'skipped':sum(c.find('skipped') is not None for c in cases),'elapsed_seconds':time.time()-started,'test_suite_identity':test_identity,'runtime_manifest_sha256':runtime_manifest,'command':command,'report_directory':str(report)}
     (report/'result.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(result))
     return code

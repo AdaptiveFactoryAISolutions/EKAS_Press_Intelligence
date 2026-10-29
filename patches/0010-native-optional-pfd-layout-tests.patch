@@ -1,0 +1,44 @@
+--- a/tests/test_pipeline.py
++++ b/tests/test_pipeline.py
+@@ -129,10 +129,15 @@
+ 
+ 
+ def test_write_dataset_emits_the_documented_layout(dataset, tmp_path):
+-    from historiansim import layout
+-
++    from pathlib import Path
++    from historiansim import layout, plants
++
++    source_pfd = Path(plants.__file__).parent / dataset.cfg.unit / "pfd"
++    source_assets = {name for name in layout.PFD_FILES if (source_pfd / name).is_file()}
+     out = write_dataset(dataset, tmp_path / "ds")
+-    assert {p.name for p in out.iterdir() if p.is_file()} == set(layout.DATASET_FILES)
++    assert {p.name for p in out.iterdir() if p.is_file()} == set(layout.DATASET_FILES) | source_assets
++    for name in source_assets:
++        assert (out / name).read_bytes() == (source_pfd / name).read_bytes()
+     for name in ("ground_truth.json", "manifest.json", "labels_60s.parquet"):
+         assert (out / "metadata" / name).exists(), f"missing metadata/{name}"
+     key = (out / layout.ANSWER_KEY).read_text(encoding="utf-8")
+@@ -140,14 +145,21 @@
+ 
+ 
+ def test_make_challenge_leaves_the_answers_behind(dataset, tmp_path):
++    from pathlib import Path
++    from historiansim import layout, plants
+     from historiansim.challenge import make_challenge
+     from historiansim.validation.recipe import audit_dataset_dir
+ 
++    source_pfd = Path(plants.__file__).parent / dataset.cfg.unit / "pfd"
++    source_assets = {name for name in layout.PFD_FILES if (source_pfd / name).is_file()}
+     out = write_dataset(dataset, tmp_path / "ds2")
+     challenge = make_challenge(out, tmp_path / "ch")
+     names = {p.name for p in challenge.iterdir()}
+     assert names == {"historian_10s.parquet", "historian_60s.parquet", "tags.csv",
+-                     "PROCESS_DESCRIPTION.md", "CHALLENGE.md", "submission_template.csv"}
++                     "PROCESS_DESCRIPTION.md", "CHALLENGE.md", "submission_template.csv"} | source_assets
++    for name in source_assets:
++        assert (out / name).read_bytes() == (source_pfd / name).read_bytes()
++        assert (challenge / name).read_bytes() == (source_pfd / name).read_bytes()
+     assert "FAULT_ANSWER_KEY" not in (challenge / "PROCESS_DESCRIPTION.md").read_text(encoding="utf-8")
+     assert all(c.passed for c in audit_dataset_dir(out))
+ 

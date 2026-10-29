@@ -46,7 +46,7 @@ def batch(args):
     from ekas_press_intelligence.native.bootstrap import activate
     verified=activate()
     epoch_hash=verify_epoch(args.epoch)
-    from ekas_press_intelligence.native.qualification import envelope_metrics,measured_effects,masking_gate,validate_matrix_config
+    from ekas_press_intelligence.native.qualification import envelope_metrics,measured_effects,masking_gate,validate_matrix_config,engineering_acceptance
     import numpy as np
     from historiansim.plants import get_plant
     from historiansim.measurement.instrument import INSTRUMENT_CLASSES
@@ -91,9 +91,10 @@ def batch(args):
             masks.append({'loop':loop.name,'physical_envelope':physical,'measured_pv':observed,
                           'measured_actuator_effect':load,**gate})
         residuals={name:float(np.max(np.abs(values))) for name,values in truth.signals.items() if name in ('CALC-MATERIAL-RESIDUAL','CALC-ENERGY-RESIDUAL')}
+        engineering={'faulted':engineering_acceptance(truth),'twin':engineering_acceptance(truth_twin)}
         case={**binding,'cause_id':cid,'symptom':cause.symptom,'actual_config':cfg.model_dump(mode='json'),
               'episode_scan_interval':[onset,end],'central_eighty_percent_scan_interval':[lo,hi],
-              'fully_measured_symptom_union':actual,'masking':masks,'physical_residual_maxima':residuals,
+              'fully_measured_symptom_union':actual,'masking':masks,'physical_residual_maxima':residuals,'engineering_acceptance':engineering,
               'disclosure':'Raw measured PV fractions and one-hour envelope metrics are reported separately. Physical envelope masking uses the actual mean-state signal, not a fault-minus-twin surrogate. Residual maxima are diagnostics; independent energy/material qualification remains required.'}
         write_once(out/(cid+'.json'),case);cases[cid]=case
         print(json.dumps({'case':cid,**binding,'completed':len(cases)}),flush=True)
@@ -104,6 +105,7 @@ def batch(args):
                   'direction_mismatches':direction_mismatches(native),'dangling_tags':dangling_tags(plant),
                   'native_indistinguishable':indistinguishable(plant,native),
                   'fully_measured_union_indistinguishable':indistinguishable(plant,full)}
+        findings['engineering_ledger_failures']=[cid for cid,case in cases.items() if not all(value['passed'] for value in case['engineering_acceptance'].values())]
         # Native SNR alone can resolve a tiny same-noise difference. Require a
         # public measured separation above instrument resolution as well.
         observable={cid:{tag:Effect(**{**asdict(e),'snr':e.snr if max(abs(e.peak),abs(e.sustained))>e.noise_floor else 0.}) for tag,e in effects.items()} for cid,effects in full.items()}

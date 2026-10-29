@@ -48,10 +48,10 @@ from historiansim.core.integrator import rk4_step
 class PressCycleEvents:
     def __init__(self,unit,x,u,d,p):
         self.stop_requested=False
-        self.gate_enabled=bool(unit.quantities(x,u,d,p)['permitted']); self.unit=unit; self.cycle_work=unit.force_work(p,d); self.cycle_pitch_m=float(x[1])*.001; self.phase=0.; self.clutch_closed=self.gate_enabled and x[0]>=1.; self.paused_work=self.cycle_work
+        self.gate_enabled=bool(unit.quantities(x,u,d,p)['permitted']); self.unit=unit; self.cycle_work=unit.force_work(p,d); self.cycle_pitch_m=unit.strip_travel(float(x[1]),d,p)*.001; self.phase=0.; self.clutch_closed=self.gate_enabled and x[0]>=1.; self.paused_work=self.cycle_work
         if not self.clutch_closed: self.cycle_work=0.
         self.completed=0; self.good=0; self.reject=0
-        self.pitch=float(x[1]); self.encoder_pitch=unit.quantities(x,u,d,p)['encoder_pitch']; self.cycle_encoder_pitch=self.encoder_pitch; self.feed_complete=0.; self.running=1.; self.feed_token=None
+        self.pitch=unit.strip_travel(float(x[1]),d,p); self.encoder_pitch=unit.quantities(x,u,d,p)['encoder_pitch']; self.cycle_encoder_pitch=self.encoder_pitch; self.feed_complete=0.; self.running=1.; self.feed_token=None
         self.buffer_mass=x[2]*p['strip_width']*d['thickness']*p['strip_density']
         self.supplied_mass=self.buffer_mass; self.withdrawn_mass=0.; self.trim_mass=0.; self.product_mass=0.
         self.events=EventLog(); self.pending=[]; self.inspection=100.; self.checked=100.
@@ -96,12 +96,18 @@ class PressCycleEvents:
                 'ZI-276':self.encoder_pitch,'ZI-274':self.cycle_encoder_pitch*self.feed_fraction(self.phase), 'ZI-275':self.cycle_pitch_m*1000*self.feed_fraction(self.phase),'SI-272':math.sqrt(max(0,2*kinetic/p['inertia']))*60/(2*math.pi),
                 'QI-271':self.inspection,'QI-272':self.checked,
                 'CALC-MATERIAL-RESIDUAL':self.supplied_mass-self.withdrawn_mass-self.buffer_mass,
-                'CALC-ENERGY-RESIDUAL':self.energy_residual}
+                'CALC-ENERGY-RESIDUAL':self.energy_residual,
+                # Private native truth only: no TagSpec or acquisition path.
+                'AUDIT-ENERGY-RELATIVE-RESIDUAL':self.energy_relative_residual,
+                'AUDIT-MATERIAL-RELATIVE-RESIDUAL':abs(self.supplied_mass-self.withdrawn_mass-self.buffer_mass)/max(self.supplied_mass,1.),
+                'AUDIT-COUNTER-RESIDUAL':float(self.completed-self.good-self.reject-len(self.pending)),
+                'AUDIT-MOTOR-ENERGY-J':self.motor_energy,
+                'AUDIT-SUPPLIED-MASS-KG':self.supplied_mass}
 
     def gate_margin(self,x,d,p):
         if self.gate_enabled:
-            return min(float(x[3])-2.,float(x[2])-.15,80-float(x[5]),2500-self.unit.force_work(p,d),float(x[1])-50.,150-float(x[1]))
-        return min(float(x[3])-2.5,float(x[2])-.25,75-float(x[5]),2200-self.unit.force_work(p,d),float(x[1])-55.,145-float(x[1]))
+            return min(float(x[3])-2.,float(x[2])-.15,80-float(x[5]),2500-self.unit.force_work(p,d),self.unit.strip_travel(float(x[1]),d,p)-50.,150-self.unit.strip_travel(float(x[1]),d,p))
+        return min(float(x[3])-2.5,float(x[2])-.25,75-float(x[5]),2200-self.unit.force_work(p,d),self.unit.strip_travel(float(x[1]),d,p)-55.,145-self.unit.strip_travel(float(x[1]),d,p))
 
     def clutch_margin(self,x,p):
         required=self.paused_work*(self.phase-self.forming_fraction(self.phase))+.5*p['inertia']
@@ -123,7 +129,7 @@ class PressCycleEvents:
                     self.set_cycle_work(x,self.paused_work,p)
                     self.clutch_closed=True
                 if self.clutch_closed and self.phase<=1e-12:
-                    self.cycle_pitch_m=max(float(x[1]),0.)*.001
+                    self.cycle_pitch_m=self.unit.strip_travel(float(x[1]),d,p)*.001
                     self.cycle_encoder_pitch=self.unit.quantities(x,u,d,p)['encoder_pitch']
                 effective={**p,'_cycle_work':self.cycle_work,'_cycle_pitch_m':self.cycle_pitch_m,'_cycle_enabled':self.gate_enabled,'_cycle_stop':self.stop_requested,'_cycle_clutch':self.clutch_closed}
                 q=self.unit.quantities(x,u,d,effective)
@@ -202,17 +208,17 @@ class PressCycleEvents:
                         self.events.append({'time_s':now,'kind':'feed_complete','pitch_mm':pitch,'count':self.completed})
                 if self.phase>=1-1e-10:
                     self.phase=0.
-                    self.cycle_pitch_m=float(x[1])*.001 if self.feed_token is None else 0.
+                    self.cycle_pitch_m=self.unit.strip_travel(float(x[1]),d,p)*.001 if self.feed_token is None else 0.
                     self.cycle_encoder_pitch=self.unit.quantities(x,u,d,p)['encoder_pitch']
                     permitted=self.feed_token is not None and x[3]>=2. and x[0]>1
                     self.running=float(permitted)
                     if permitted:
                         pitch,mass,stock_thickness=self.feed_token;self.feed_token=None
                         self.completed+=1
-                        self.cycle_pitch_m=float(x[1])*.001
+                        self.cycle_pitch_m=self.unit.strip_travel(float(x[1]),d,p)*.001
                         self.trim_mass+=mass*p['trim_fraction']; self.product_mass+=mass*(1-p['trim_fraction'])
                         part_state=x.copy();part_state[1]=pitch
-                        dimension=self.unit.quantities(part_state,u,{**d,'thickness':stock_thickness},p)['dimension']
+                        dimension=self.unit.part_dimension(pitch,float(x[5]),stock_thickness,p)
                         reject=abs(dimension-100)>.25
                         self.pending.append((now+10.,dimension))
                         self.events.append({'time_s':now,'kind':'stroke_complete','pitch_mm':pitch,'rejected':bool(reject),'count':self.completed})

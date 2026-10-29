@@ -80,6 +80,18 @@ def _write_checks(checks, private):
 def _passed(checks):
     return all(c.passed or c.severity!='error' for c in checks)
 
+
+def _press_engineering(data):
+    if data.cfg.unit!='stamping_press':return None
+    from .qualification import engineering_acceptance
+    reports={}
+    for name,truth in [('faulted',data.truth),('twin',data.twin)]:
+        try:reports[name]=engineering_acceptance(truth)
+        except (ValueError,TypeError) as exc:
+            reports[name]={'passed':False,'checks':{'ledger_integrity':{'passed':False}},
+                           'error':{'code':str(exc).split(':',1)[0],'message':str(exc)}}
+    return {'passed':all(value['passed'] for value in reports.values()),**reports}
+
 def execute(operation:str,parameters:dict,target:Path,repo_root:Path,progress=None)->dict:
     if operation not in OPS: raise ValueError('INVALID_OPERATION: '+str(operation))
     if not isinstance(parameters,dict) or set(parameters)-OPS[operation]: raise ValueError('INVALID_PARAMETERS: unknown operation option')
@@ -133,8 +145,11 @@ def execute(operation:str,parameters:dict,target:Path,repo_root:Path,progress=No
         limit=int(os.environ.get('EKAS_NATIVE_MAX_ESTIMATED_BYTES','12000000000'))
         if estimate>limit: raise ValueError(f'CAPACITY_EXCEEDED: estimated {estimate} bytes exceeds configured {limit}; duration unchanged')
         phase('native_generate'); data=pipeline.generate(cfg)
+        engineering=_press_engineering(data)
         private=target/'private'; public=target/'public'
         phase('native_export'); pipeline.write_dataset(data,private,resample_s=resample)
+        if engineering is not None:
+            (private/'metadata'/'engineering_validation.json').write_text(json.dumps(engineering,indent=2,allow_nan=False)+'\n',encoding='utf-8')
         compatibility=False
         if resample!=60 and not safe_grids:
             # Native make_challenge and plotting require canonical 60 s export.
@@ -161,6 +176,9 @@ def execute(operation:str,parameters:dict,target:Path,repo_root:Path,progress=No
                 if file.is_file(): modules[name]={'origin':str(file.resolve()),'sha256':hashlib.sha256(file.read_bytes()).hexdigest()}
         (private/'metadata'/'execution_provenance.json').write_text(json.dumps({'modules':modules,'config':cfg.model_dump(mode='json')},indent=2),encoding='utf-8')
         result.update(dataset=dataset_info(public),public_directory='public',private_directory='private',validation=_checks(checks),passed=_passed(checks) if p.get('validate',True) else None,validation_performed=p.get('validate',True),capacity={'estimated_bytes':estimate,'configured_limit_bytes':limit,'steps':n,'duration_days':cfg.time.days,'requested_grid_rows':requested_grid_rows},resample={'requested_seconds':resample,'native_challenge_canonical_60s_added':compatibility},files=public_files(public))
+        if engineering is not None:
+            result['engineering_acceptance']=engineering
+            if p.get('validate',True):result['passed']=result['passed'] and engineering['passed']
     elif operation=='plant_check':
         from historiansim.validation.plant_checks import run_plant_checks
         if 'plant' not in p: raise ValueError('INVALID_PARAMETERS: plant required')
@@ -184,9 +202,15 @@ def execute(operation:str,parameters:dict,target:Path,repo_root:Path,progress=No
             from historiansim.config.schema import ScenarioConfig
             manifest=json.loads(pipeline.manifest_path(folder).read_text())
             cfg=ScenarioConfig.model_validate(manifest['config'])
-            phase('native_regenerate'); checks=run_battery(pipeline.generate(cfg))+audit_dataset_dir(folder)
+            phase('native_regenerate'); regenerated=pipeline.generate(cfg)
+            engineering=_press_engineering(regenerated)
+            checks=run_battery(regenerated)+audit_dataset_dir(folder)
             _write_checks(checks,target/'private')
             result.update(validation=_checks(checks),passed=_passed(checks))
+            if engineering is not None:
+                (target/'private'/'engineering_validation.json').write_text(json.dumps(engineering,indent=2,allow_nan=False)+'\n',encoding='utf-8')
+                result.update(engineering_acceptance=engineering,passed=result['passed'] and engineering['passed'])
+            result['validation_scope']='Native current-runtime replay from recorded configuration plus original folder audit; this operation does not rewrite or promote the registered dataset.'
         elif operation=='make_challenge':
             from historiansim.challenge import make_challenge
             make_challenge(folder,target/'public')

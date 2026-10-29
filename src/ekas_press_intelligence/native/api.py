@@ -255,8 +255,10 @@ def create_native_app(state_dir=None,start_worker=True,tokens=None,local_only=No
         if (root/'public').is_dir():
             for value in public_files(root/'public'):allowed[value['name']]=resolve_public_file(root/'public',value['name'])
         if request.state.role in ('admin','evaluator'):
-            path=root/'private'/'metadata'/'validation.json'
-            if path.is_file() and not path.is_symlink():allowed['validation.json']=path
+            for name in ('validation.json','engineering_validation.json'):
+                for folder in (root/'private'/'metadata',root/'private'):
+                    path=folder/name
+                    if path.is_file() and not path.is_symlink():allowed[name]=path;break
         for name,path in allowed.items():
             if not path.resolve().is_relative_to(root.resolve()) or any(p.is_symlink() for p in (path,*path.parents)):
                 forbidden('ARTIFACT_PATH_FORBIDDEN','Unsafe artifact path')

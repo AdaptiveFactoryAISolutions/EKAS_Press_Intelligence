@@ -4,6 +4,23 @@ from types import SimpleNamespace
 from ekas_press_intelligence.native.qualification import envelope_metrics, measured_effects
 
 
+def test_engineering_ledger_checks_use_actual_denominators_and_reconcile_counters():
+    from ekas_press_intelligence.native.qualification import engineering_acceptance
+    signals={'CALC-ENERGY-RESIDUAL':np.array([.001,.1]),'AUDIT-MOTOR-ENERGY-J':np.array([10.,1000.]),
+             'CALC-MATERIAL-RESIDUAL':np.array([1e-8,1e-7]),'AUDIT-SUPPLIED-MASS-KG':np.array([10.,100.]),
+             'AUDIT-ENERGY-RELATIVE-RESIDUAL':np.full(2,1e-4),'AUDIT-MATERIAL-RELATIVE-RESIDUAL':np.full(2,1e-9),
+             'AUDIT-COUNTER-RESIDUAL':np.zeros(2),'COUNT-271':np.array([0.,3.]),
+             'COUNT-272':np.array([0.,2.]),'COUNT-273':np.zeros(2),'COUNT-274':np.array([0.,1.])}
+    truth=SimpleNamespace(signals=signals)
+    assert engineering_acceptance(truth)['passed']
+    signals['CALC-ENERGY-RESIDUAL'][1]=2.
+    signals['AUDIT-ENERGY-RELATIVE-RESIDUAL'][1]=.002
+    assert not engineering_acceptance(truth)['passed']
+    signals['AUDIT-ENERGY-RELATIVE-RESIDUAL'][1]=0.
+    import pytest
+    with pytest.raises(ValueError,match='AUDIT_ARITHMETIC_MISMATCH'):engineering_acceptance(truth)
+
+
 def test_masking_uses_absolute_nominal_setpoint_not_twin_difference_or_tag_span():
     bad=envelope_metrics(np.full(100,102.),np.full(100,102.),100.,1.)
     assert bad['fault_minus_twin_peak']==0 and not bad['within_one_percent']
@@ -143,3 +160,25 @@ def test_distribution_verifier_rejects_divergent_canonical_clients():
     with wheel('one') as sdk,wheel('two') as server:
         with pytest.raises(ValueError,match='different canonical'):module.verify_shared_client(sdk,server)
     with wheel('one') as sdk,wheel('one') as server:module.verify_shared_client(sdk,server)
+
+
+def test_engineering_acceptance_exact_limits_and_counter_boundaries():
+    from ekas_press_intelligence.native.qualification import engineering_acceptance
+    signals={'CALC-ENERGY-RESIDUAL':np.array([.001]),'AUDIT-MOTOR-ENERGY-J':np.array([1.]),
+             'CALC-MATERIAL-RESIDUAL':np.array([1e-6]),'AUDIT-SUPPLIED-MASS-KG':np.array([1.]),
+             'AUDIT-ENERGY-RELATIVE-RESIDUAL':np.array([.001]),'AUDIT-MATERIAL-RELATIVE-RESIDUAL':np.array([1e-6]),
+             'AUDIT-COUNTER-RESIDUAL':np.array([0.]),'COUNT-271':np.array([3.]),
+             'COUNT-272':np.array([1.]),'COUNT-273':np.array([1.]),'COUNT-274':np.array([1.])}
+    truth=SimpleNamespace(signals=signals)
+    assert engineering_acceptance(truth)['passed']
+    for absolute,relative,limit in [('CALC-ENERGY-RESIDUAL','AUDIT-ENERGY-RELATIVE-RESIDUAL',.001),('CALC-MATERIAL-RESIDUAL','AUDIT-MATERIAL-RELATIVE-RESIDUAL',1e-6)]:
+        signals[absolute][0]=signals[relative][0]=np.nextafter(limit,np.inf)
+        assert not engineering_acceptance(truth)['passed']
+        signals[absolute][0]=signals[relative][0]=limit
+    signals['COUNT-271'][0]=4;signals['AUDIT-COUNTER-RESIDUAL'][0]=1
+    assert not engineering_acceptance(truth)['passed']
+    signals['COUNT-271'][0]=3;signals['AUDIT-COUNTER-RESIDUAL'][0]=0
+    signals['COUNT-272'][0]=.5;signals['COUNT-274'][0]=1.5
+    result=engineering_acceptance(truth)
+    assert result['checks']['counter_reconciliation']['passed']
+    assert not result['checks']['integer_nonnegative_counters']['passed']
