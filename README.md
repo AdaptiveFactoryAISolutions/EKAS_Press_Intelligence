@@ -4,6 +4,10 @@ The full-stack rebuild uses the actual complete [HistorianSim](https://github.co
 
 **Qualification is in progress.** The press is not yet qualified for EKAS deployment. The [execution ledger](docs/FULL_STACK_EXECUTION_LEDGER.md) records passing checks, adverse results and outstanding gates. All process data is synthetic; no physical press, SmartPAC, PLC or customer historian is connected.
 
+## Start here: plain-language wiki
+
+The [user wiki](docs/wiki/Home.md) explains installation, the current workspace, configuration, testing and EKAS integration. The [guided 1,500-ton line design](docs/superpowers/specs/2026-10-29-guided-1500t-line-design.md) specifies the requested one-screen-per-step setup. That wizard and complete line are planned work, not controls already available in the current workspace.
+
 ## Start the native reference workspace
 
 Use Linux, Python3.12, Bubblewrap, g++ and OpenSSL. Bubblewrap must support the required namespaces; the blind workflow fails closed if isolation is unavailable. Use the `full-stack-foundation` candidate branch in [draft PR2](https://github.com/AdaptiveFactoryAISolutions/EKAS_Press_Intelligence/pull/2), with both complete submodules. The public default branch still contains the earlier prototype.
