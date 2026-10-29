@@ -41,7 +41,9 @@ def main():
     if args.layer=='core':
         targets=[str(p.relative_to(ROOT)) for p in sorted((ROOT/'tests').glob('test_native_*.py')) if p.name!='test_native_browser.py']
         targets+=['tests/test_reference_runtime.py']
-    elif args.layer=='browser':targets=['tests/test_native_browser.py']
+    elif args.layer=='browser':
+        targets=['tests/test_native_browser.py']
+        env['EKAS_NATIVE_BROWSER_ARTIFACTS']=str(report/'browser-artifacts')
     elif args.layer=='physics':
         runtime=report/'native-runtime';reference=report/'reference-runtime'
         for script,target in [('prepare_native_runtime.py',runtime),('prepare_reference_runtime.py',reference)]:

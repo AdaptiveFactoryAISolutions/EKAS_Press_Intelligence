@@ -1,0 +1,33 @@
+{
+  "scope": "Software concurrency repair; not full press qualification.",
+  "adverse_commit": "db1aa2cc6a7a1c3a26be680e4165764c73baf77f",
+  "adverse_browser_ci": {"run": 40822264040, "job": 123277201549, "passed": 5, "failed": 3},
+  "codeql_at_adverse_commit": {"aggregate_check": 123277328252, "conclusion": "success", "annotations": 0, "analysis_ids": [2051256912,2051256363], "results": 0, "suppressed_or_dismissed": false},
+  "diagnosis": "An outer job-row reader opened a second audit-reader connection while a writer waited to commit. The second reader waited for that writer, whose commit waited for the outer reader. A deterministic regression reproduced this lock inversion. The startup-heartbeat hypothesis was disproved.",
+  "repair": "Reuse one connection and snapshot for job/audit reads and the existing transaction for idempotent creation. No worker, timeout or journal-mode workaround.",
+  "local_core": {
+    "passed": 155, "skipped": 0, "returncode": 0,
+    "elapsed_seconds": 156.09594988822937,
+    "provider_invoked": false,
+    "report": "work/native-test-reports/core/8acb58da-e121-4393-8bbb-572271e70dd2/result.json",
+    "report_sha256": "fb65acac053879972727973c360482309e7440d8860010e38930ea571e1bf486"
+  },
+  "local_browser": {
+    "passed": 8, "skipped": 0, "returncode": 0,
+    "elapsed_seconds": 62.14917039871216,
+    "report": "work/native-test-reports/browser/8e5f714f-b571-4d7e-9ffd-81243d0424e8/result.json",
+    "report_sha256": "303f1d0d7aff64d244b7a02584a700a20aecd5d8097e2c6d66a614b7ecbcd0fb",
+    "state_snapshots": 59, "worker_logs": 6,
+    "api_errors_or_tracebacks_or_locks": 0,
+    "scope": "Real reference/job and explicitly labelled event-contract fixture flows; no provider invocation or press qualification."
+  },
+  "source_sha256": {
+    "src/ekas_press_intelligence/native/jobs.py": "11d952357d1a1b762a32878f66e01f9166e0d8c82652c5b5e314e4307da5278a",
+    "scripts/run_native_tests.py": "b5227692c068ad01f594553e9f504fb5d593910068b0cc9a97848a1c59c5ef7e",
+    "tests/test_native_browser.py": "12f5aac2936dbe2d1240c450cae6786ab7aa5194fcc9d87028e70f0a6612a08e",
+    "tests/test_native_jobs.py": "12d5e4739be9da9ff9506b7d0027ce315afdc2725b78cf0d81454fe54f8e2d31"
+  },
+  "press_qualified": false,
+  "press_gate_evidence": "press/v36-gates.json",
+  "repaired_head_remote_ci": "pending"
+}

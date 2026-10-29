@@ -14,13 +14,14 @@ import socket
 import subprocess
 import sys
 import time
+import threading
 from pathlib import Path
 
 import httpx
 import pytest
 from playwright.sync_api import expect, sync_playwright
 
-ARTIFACTS = Path('validation/native/browser')
+ARTIFACTS = Path(os.environ.get('EKAS_NATIVE_BROWSER_ARTIFACTS','validation/native/browser'))
 
 
 EVENT_FIXTURE_ID = '36a3e170-589b-4f1c-84ed-61b64f1deff0'
@@ -67,15 +68,41 @@ def native_web(tmp_path_factory, native_state):
         port = sock.getsockname()[1]
     env = dict(os.environ, EKAS_NATIVE_STATE_DIR=str(native_state),
                EKAS_NATIVE_TOKENS=json.dumps({'browser-admin': 'admin', 'browser-analyst': 'analyst'}))
+    ARTIFACTS.mkdir(parents=True, exist_ok=True)
+    service_log=(ARTIFACTS/'native-api-service.log').open('w')
     process = subprocess.Popen([sys.executable, '-m', 'uvicorn',
         'ekas_press_intelligence.native.api:create_native_app', '--factory',
         '--host', '127.0.0.1', '--port', str(port)], env=env,
-        stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+        stdout=service_log, stderr=subprocess.STDOUT)
+    diagnostic_stop=threading.Event()
+    def capture_worker_state():
+        import sqlite3
+        from contextlib import closing
+        with (ARTIFACTS/'native-worker-states.jsonl').open('w') as stream:
+            while not diagnostic_stop.is_set():
+                try:
+                    with closing(sqlite3.connect('file:'+str(native_state/'native.sqlite')+'?mode=ro',uri=True,timeout=.2)) as db:
+                        db.row_factory=sqlite3.Row
+                        jobs=[dict(row) for row in db.execute('SELECT id,operation,state,phase,pid,process_start,error,updated_at FROM jobs ORDER BY created_at DESC').fetchall()]
+                    pids={process.pid}|{j['pid'] for j in jobs if j.get('pid')}
+                    processes=[]
+                    for pid in sorted(pids):
+                        base=Path('/proc')/str(pid)
+                        try:
+                            tasks={t.name:(t/'wchan').read_text().strip() for t in (base/'task').iterdir()}
+                            processes.append({'pid':pid,'stat':(base/'stat').read_text(),'tasks':tasks})
+                        except (OSError,ProcessLookupError):processes.append({'pid':pid,'exited':True})
+                    stream.write(json.dumps({'time':time.time(),'api_returncode':process.poll(),'jobs':jobs,'processes':processes})+'\n');stream.flush()
+                except Exception as exc:
+                    stream.write(json.dumps({'time':time.time(),'capture_error':str(exc)})+'\n');stream.flush()
+                diagnostic_stop.wait(1)
+    diagnostic_thread=threading.Thread(target=capture_worker_state,daemon=True)
+    diagnostic_thread.start()
     url = f'http://127.0.0.1:{port}'
     try:
         for _ in range(150):
             if process.poll() is not None:
-                raise RuntimeError(process.stderr.read().decode())
+                raise RuntimeError((ARTIFACTS/'native-api-service.log').read_text())
             try:
                 if httpx.get(url+'/v2/health', headers={'Authorization':'Bearer browser-admin'}).status_code == 200:
                     break
@@ -90,12 +117,17 @@ def native_web(tmp_path_factory, native_state):
             yield browser, url
             browser.close()
     finally:
+        diagnostic_stop.set();diagnostic_thread.join(timeout=3)
         process.terminate()
         try:
             process.wait(timeout=8)
         except subprocess.TimeoutExpired:
             process.kill()
             process.wait()
+        service_log.close()
+        import shutil
+        if (native_state/'logs').is_dir():
+            shutil.copytree(native_state/'logs',ARTIFACTS/'native-worker-logs',dirs_exist_ok=True)
 
 
 def sign_in(page, url, token='browser-admin'):

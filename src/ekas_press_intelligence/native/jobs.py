@@ -81,13 +81,14 @@ class JobStore:
         db.execute('INSERT INTO events(job_id,timestamp,operation,payload) VALUES(?,?,?,?)',
                    (ident,utc(),operation,encode(payload)))
 
-    def _job(self,row):
+    def _job(self,row,db):
         if row is None:raise KeyError('Job unavailable')
         result=dict(row)
         for field in ('parameters','result','error'):
             result[field]=json.loads(result[field]) if result[field] is not None else None
-        with self.connect() as db:
-            failures=db.execute("SELECT payload FROM events WHERE job_id=? AND operation='log_capture_failed' ORDER BY sequence",(result['id'],)).fetchall()
+        # Reuse the caller's transaction. A second reader can block behind a
+        # pending writer whose commit is waiting for this job-row read lock.
+        failures=db.execute("SELECT payload FROM events WHERE job_id=? AND operation='log_capture_failed' ORDER BY sequence",(result['id'],)).fetchall()
         result['audit_failures']=[json.loads(r[0]) for r in failures]
         return result
 
@@ -102,17 +103,21 @@ class JobStore:
                 existing=db.execute('SELECT * FROM jobs WHERE idempotency_key=?',(idempotency_key,)).fetchone()
                 if existing:
                     if existing['fingerprint']!=fingerprint:raise JobConflict('Idempotency key has different parameters')
-                    return self._job(existing)
+                    return self._job(existing,db)
             db.execute('INSERT INTO jobs(id,operation,parameters,state,phase,created_at,updated_at,idempotency_key,fingerprint) VALUES(?,?,?,?,?,?,?,?,?)',
                        (ident,operation,payload,'queued','Queued',now,now,idempotency_key,fingerprint))
             self._event(db,ident,'queued',{'operation':operation,'fingerprint':fingerprint})
         return self.get(ident)
 
     def get(self,ident):
-        with self.connect() as db:return self._job(db.execute('SELECT * FROM jobs WHERE id=?',(ident,)).fetchone())
+        with self.connect() as db:
+            db.execute('BEGIN')
+            return self._job(db.execute('SELECT * FROM jobs WHERE id=?',(ident,)).fetchone(),db)
 
     def list(self):
-        with self.connect() as db:return [self._job(r) for r in db.execute('SELECT * FROM jobs ORDER BY created_at DESC')]
+        with self.connect() as db:
+            db.execute('BEGIN')
+            return [self._job(r,db) for r in db.execute('SELECT * FROM jobs ORDER BY created_at DESC')]
 
     def claim(self,worker):
         with self.connect() as db:
