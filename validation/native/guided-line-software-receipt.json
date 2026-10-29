@@ -1,0 +1,183 @@
+{
+  "software_source_commit": "b314e3a4c705279e8bd0a3b026f2d7699f40e1ec",
+  "scope": "Local software verification, not production or diagnostic qualification; docs-only receipt publication does not change tested source.",
+  "qualified": false,
+  "live_runtime_manifest_sha256": "d4fec6156a82d1d97825cf2fd88aa81fe6d8259f369cc910aeea7b7baa20ebc3",
+  "upstream_pins": {
+    "HistorianSim": "14e616c382a9db8026cbb4ab86bdd803d56ca72e",
+    "HistorianRCA": "8d12a821395ce5f72e464dc78cc2c10d05cbb9ed"
+  },
+  "local_final_R7": {
+    "upstream": {
+      "returncode": 0,
+      "reason": null,
+      "cases": 187,
+      "skipped": 0,
+      "elapsed_seconds": 1536.7441637516022,
+      "runtime_manifest_sha256": "f7a89da42ac17e97c763a938361ea8340421ca5ef4dbbd743f51f69d548acaa8",
+      "report": "work/native-test-reports/upstream/87367683-f70a-43c4-992f-fc6808c82ec9",
+      "result_sha256": "144e57430f26068e79288df2a435cfa6a4bf307c1dcf2d38866ff9999ee75847"
+    },
+    "physics": {
+      "returncode": 0,
+      "reason": null,
+      "cases": 65,
+      "skipped": 0,
+      "elapsed_seconds": 116.92149186134338,
+      "runtime_manifest_sha256": "77807081b23acaa61674ba1e23f27abe008d528d63cfe4da8a9848d2587e4092",
+      "report": "work/native-test-reports/physics/cdc4d532-e34a-4e46-8595-678d4fc63181",
+      "result_sha256": "d0f413e9ddc8bfc799f314ea904e34030334745465acea69ee00bcc16295109e"
+    },
+    "browser": {
+      "returncode": 0,
+      "reason": null,
+      "cases": 27,
+      "skipped": 0,
+      "elapsed_seconds": 137.42281031608582,
+      "runtime_manifest_sha256": null,
+      "report": "work/native-test-reports/browser/c569ea44-378f-4b85-8574-66e34d8fcce8",
+      "result_sha256": "cefb888f3ae994272ed86704ddd3b54b1682584cd242a2b7a2a13935a1d4f3f1"
+    },
+    "recipe_file": {
+      "passed": 14,
+      "skipped": 0,
+      "elapsed_seconds": 2.04,
+      "scope": "Entire unchanged upstream recipe file"
+    },
+    "worker_timeout_rerun": {
+      "passed": 3,
+      "skipped": 0,
+      "elapsed_seconds": 23.0,
+      "scope": "Unchanged deadlines after freeing owned duplicate core process"
+    }
+  },
+  "prior_complete_application_core": {
+    "returncode": 0,
+    "reason": null,
+    "cases": 190,
+    "skipped": 0,
+    "elapsed_seconds": 252.39453268051147,
+    "runtime_manifest_sha256": null,
+    "report": "work/native-test-reports/core/76a8966f-3a2e-45fc-b6a5-1441e2334cdb",
+    "result_sha256": "1f44b759dc9205ee4fc4cd364e772850ce2a3630a46864e8964a491525a1e12d"
+  },
+  "retained_adverse_final_core_pressure_run": {
+    "returncode": 1,
+    "reason": "TEST_INTERRUPTED",
+    "cases": 190,
+    "skipped": 0,
+    "elapsed_seconds": 568.9146773815155,
+    "runtime_manifest_sha256": null,
+    "report": "work/native-test-reports/core/88c596eb-7fad-4883-9fac-c483e69dc093",
+    "result_sha256": "51121185b98fbaa6c53996053f206dd16c681e6067fbd9e200e534a1f8158ec5",
+    "passed": 187,
+    "worker_timeout_failures": 3,
+    "scope": "Not a passing layer; earlier core and focused rerun remain separate."
+  },
+  "legacy_layers": [
+    {
+      "layer": "unit",
+      "returncode": 0,
+      "elapsed_seconds": 4.451330773998052
+    },
+    {
+      "layer": "simulation",
+      "returncode": 0,
+      "elapsed_seconds": 20.856608391739428
+    },
+    {
+      "layer": "contract",
+      "returncode": 0,
+      "elapsed_seconds": 5.91810132516548
+    },
+    {
+      "layer": "blind",
+      "returncode": 0,
+      "elapsed_seconds": 9.09274160163477
+    },
+    {
+      "layer": "observability",
+      "returncode": 0,
+      "elapsed_seconds": 1.1230748919770122
+    },
+    {
+      "layer": "api",
+      "returncode": 0,
+      "elapsed_seconds": 14.09547155490145
+    },
+    {
+      "layer": "ui",
+      "returncode": 0,
+      "elapsed_seconds": 3.436691720969975
+    },
+    {
+      "layer": "browser",
+      "returncode": 0,
+      "elapsed_seconds": 36.95541767869145
+    }
+  ],
+  "kernel_build": {
+    "compiler": "/usr/bin/x86_64-linux-gnu-g++-13",
+    "compiler_sha256": "1353e9bdd29a7295c7226bf6c63abccce056d8cac31f112e5cdbecc3f28c2769",
+    "flags": [
+      "-O3",
+      "-std=c++17",
+      "-fPIC",
+      "-shared",
+      "-ffp-contract=off",
+      "-fno-fast-math",
+      "-Wl,--build-id=none"
+    ],
+    "source_sha256": "79366716cfa5c329f0ee8cbe55b9935a8796f429f71c91aa57d96e31c9a7494d",
+    "artifact_sha256": "d8730d5317af6f01728cce8e200ed4a16ff679099d05de0a72a45b655c86337f"
+  },
+  "source_test_identity": {
+    "kind": "native_patched_upstream_compatibility",
+    "upstream_commit": "14e616c382a9db8026cbb4ab86bdd803d56ca72e",
+    "source_tests_sha256": "4ac1bb4a0f29472b14c86635f58c0d3a86971e5d3657ed863e51aff61c31f753",
+    "runtime_tests_sha256": "1a9bd15093ec88a5b4795cd5a98a371fd5d4aea596699cba18ef351658c5d0d8",
+    "configuration_sha256": {
+      "pyproject.toml": "6cd181b35372cc42d2a1be2d1d8726bd348a4df6eecfafdcf74b7fb995648397"
+    },
+    "patches": {
+      "0001-optional-native-cycle-event-source.patch": "ac30b08cc7536c73aa2b888727f83b3b043ef8835c328fecdfb7e81d4e20dca6",
+      "0002-native-measured-status-artifact.patch": "7f0131a47d892461ef42dc1e69f3ff4f6162223b31ccd08837896820dcbdef61",
+      "0003-native-resampling.patch": "31b8017841b7ca05024eeec8f21382390df05f0446da41ad352697a019385431",
+      "0004-native-empty-scoring-key.patch": "7a3d2503a8ff3e458d89def14dbede4ef4dfe51d95f85eb00b3309756a4591da",
+      "0005-native-digital-event-journal.patch": "cc4c633c7271160fae38c73932dfa42fcfc4111c9c808950b0d8867e2ee537da",
+      "0006-native-sweep-observer.patch": "f7d93229def8292785b61124e231e212f359a75e7ce061d02ea47f187fd0cf22",
+      "0007-native-event-instrument-acquisition.patch": "00c7efba4636ba866bebcfe20e047e723a6dd039370a58440ac066c949f4159a",
+      "0008-native-digital-feedback-quantization.patch": "8fe6a00350c41d14395418e599e704bdcac39ce00d8ac6ff510391a627067221",
+      "0009-native-config-aware-benign-events.patch": "5726d2a5b1aa6a563aa7e390df6b88ae5d7669b6613885a34e98e9c9c932ce76",
+      "0010-native-optional-pfd-layout-tests.patch": "d39a0fcff5684e78c4e418a60561932c179125288af3ad3490425a7fb5bb715d",
+      "0011-native-short-campaign-duration.patch": "c2032cd65e19bd054d106c41f269552603377f704d1754260479b256c619d399"
+    },
+    "compatibility_changes": {
+      "0010-native-optional-pfd-layout-tests.patch": [
+        "tests/test_pipeline.py::test_write_dataset_emits_the_documented_layout",
+        "tests/test_pipeline.py::test_make_challenge_leaves_the_answers_behind"
+      ]
+    }
+  },
+  "remote_execution": {
+    "state": "BLOCKED_BEFORE_STEPS",
+    "account_annotation": "The job was not started because your account is locked due to a billing issue.",
+    "native_workflow": 40921693639,
+    "original_workflow": 40921693702,
+    "codeql_workflow": 40921679393,
+    "current_head_CodeQL_clearance": false,
+    "billing_or_branch_protection_changed": false
+  },
+  "native_qualification": {
+    "wizard_status": "UNQUALIFIED_PRACTICE",
+    "dataset_status": "UNVALIDATED",
+    "engineering_failure_blocks_registration": true,
+    "native_battery_performed": true,
+    "native_battery_failures_preserved": true,
+    "external_EKAS_target_connected": false,
+    "paid_provider_calls": 0,
+    "paid_provider_calls_scope": "This guided-line implementation and verification; earlier provider evidence remains separate.",
+    "production_activation": false,
+    "merge": false
+  }
+}

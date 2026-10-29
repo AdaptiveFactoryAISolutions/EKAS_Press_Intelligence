@@ -34,6 +34,8 @@ Counts differ normally while parts fill the die, travel and await packing. Do no
 
 The default healthy and feeder-slip 60-minute cases were run through the actual SDK and native worker on the development workstation. Both passed the model's engineering accounting and registered unqualified practice evidence. Healthy native findings included encoder noise and expected fault/twin divergence; the feeder case retained the encoder finding. All original validation results remain recorded.
 
+**Healthy line** means no machine fault was injected. A native validation finding checks the model or its data; it does not automatically mean the virtual press has a machine fault. Read the practice status and measured signals together. The unresolved model checks still prevent production qualification.
+
 ## Recovery if the connection drops
 
 Reopen guided setup and **Resume** the saved setup. The server records the submitted job with its exact setup revision. Retry uses that original revision/key; it must not silently start another job. Use the existing-run option to open **Durable jobs**. To deliberately start another test, choose **Start a new setup** or change and review a new configuration revision.

@@ -103,9 +103,13 @@ Final R7 manifest SHA256:
 `d4fec6156a82d1d97825cf2fd88aa81fe6d8259f369cc910aeea7b7baa20ebc3`.
 Derived-source verification passed. Comparing R6/R7 runtime hashes finds exactly
 one changed file, `stamping_line/__init__.py`; all physics, compiled artifacts,
-instruments and catalog expectations are unchanged. The final full upstream
-rerun is required in exact-head remote CI; a focused recipe pass does not stand
-in for that result.
+instruments and catalog expectations are unchanged. The final complete local
+prepared-upstream rerun passed **187 tests, zero skipped**, in 1,536.744 seconds:
+`work/native-test-reports/upstream/87367683-f70a-43c4-992f-fc6808c82ec9`.
+Its source/test/configuration hashes remain recorded. The two invalid added
+RCA-benchmark parametrizations disappear when practice is correctly classified;
+no original test source was changed or skipped. Remote CI remains separately
+blocked as recorded below.
 
 R7 controlled reload preserved the five existing practice datasets/jobs. Final
 one-hour healthy job `5d1c77e6-a731-4b1a-8bd7-8bf4857d99ac` and feeder-slip job
@@ -116,8 +120,46 @@ zero skipped, 116.921 seconds, report
 `work/native-test-reports/physics/cdc4d532-e34a-4e46-8595-678d4fc63181`.
 Final actual browser: 27 passed, zero skipped, 137.423 seconds, report
 `work/native-test-reports/browser/c569ea44-378f-4b85-8574-66e34d8fcce8`.
-Exact-head remote checks and their complete upstream result are the publication
-receipt in [draft PR2](https://github.com/AdaptiveFactoryAISolutions/EKAS_Press_Intelligence/pull/2).
+Exact-head remote execution status and local upstream receipts are recorded in
+[draft PR2](https://github.com/AdaptiveFactoryAISolutions/EKAS_Press_Intelligence/pull/2).
+
+The [machine-readable software receipt](../../validation/native/guided-line-software-receipt.json)
+binds these local results, source hashes and the remote execution block.
+
+## Publication and remote execution block
+
+Software commit `b314e3a4c705279e8bd0a3b026f2d7699f40e1ec` was published to the
+candidate branch. GitHub native workflow `40921693639`, original validation
+workflow `40921693702` and CodeQL workflow `40921679393` failed before executing
+any steps. GitHub's annotation states: “The job was not started because your
+account is locked due to a billing issue.” This was verified on native-upstream
+check `123616343181` and Python CodeQL check `123616302165`.
+
+No current-head remote test success or CodeQL clearance is claimed. Billing
+settings, branch protections and failed checks were not changed or bypassed.
+The account owner must resolve the lock before those remote checks can run.
+The simulator and local evidence browsing remain available independently.
+
+A duplicate final core run was stopped to reduce host memory pressure after its
+owned process reached about 2.8 GB RSS; unrelated workloads were untouched.
+Its retained report is marked TEST_INTERRUPTED and contains 187 passing cases
+plus three worker timeout failures, not a passing layer:
+`work/native-test-reports/core/88c596eb-7fad-4883-9fac-c483e69dc093`.
+The three failed tests were rerun separately with unchanged deadlines and all
+passed in 23.00 seconds (`work/final-worker-timeout-rerun.xml`). Memory pressure
+fell from avg10 68.88% to 0.00% after the owned extra process was removed. This
+supports an environmental timing explanation; it does not erase the adverse
+report or substitute for a fresh remotely executed core check. The earlier
+complete 190-test backend pass remains a separate receipt above.
+
+All eight original project validation layers were also run locally through
+their existing runner and passed: unit 52, simulation 23, contract 3, blind 38,
+observability 6, API 20, UI 1 and browser 3. Layer counts overlap and must not be
+summed as unique tests. Logs and result receipt are retained at
+`work/final-legacy-layers-b314e3a`. Fresh browser artifacts were hash-compared
+and retained there; previously published browser evidence was restored rather
+than overwritten. No paid provider was called. The unchanged pinned 173-test
+baseline's prior pass is preserved; no new remote baseline pass is asserted.
 
 ## Retained adverse and superseded results
 
