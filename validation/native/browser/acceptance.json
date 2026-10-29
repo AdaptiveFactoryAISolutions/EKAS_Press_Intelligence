@@ -1,0 +1,67 @@
+{
+  "recorded_at": "2026-10-29T01:30:56.545959+00:00",
+  "command": "PLAYWRIGHT_BROWSERS_PATH=work/browsers work/venv/bin/python -m pytest tests/test_native_browser.py -q --tb=short",
+  "result": "6 passed in 23.47s",
+  "actual_browser": "Chrome Headless Shell 156.0.8078.4 / Playwright Chromium v1248",
+  "mocked_routes": false,
+  "flows": [
+    "complete original HistorianRCA metadata/raw/grid/truncation disclosure/full tag-file download/process/PFD/external-score status",
+    "native full-config conflict regression; native describe artifact; job reload persistence; typed invalid option",
+    "actual native quick generation cancellation",
+    "analyst forbidden adjudication; self-judgment rejection; immutable free-text CSV acceptance/conflict",
+    "390px mobile overflow, accessible names, keyboard skip, dialog Escape",
+    "native full-range plot of complete original90-day dataset; original PNG display and download"
+  ],
+  "inspected_screenshots": [
+    "explorer-desktop.png",
+    "explorer-mobile.png",
+    "native-full-range-plot.png"
+  ],
+  "diagnostics": {
+    "explorer-network.json": {
+      "requests": 17,
+      "responses": 17,
+      "page_errors": [],
+      "request_failures": [],
+      "console_errors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ],
+      "intentional_http_failures": [
+        {
+          "url": "http://127.0.0.1:36225/v2/health",
+          "status": 401
+        },
+        {
+          "url": "http://127.0.0.1:36225/v2/datasets/historianrca/score",
+          "status": 409
+        }
+      ]
+    },
+    "native-plot-network.json": {
+      "requests": 19,
+      "responses": 19,
+      "page_errors": [],
+      "request_failures": [],
+      "console_errors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "intentional_http_failures": [
+        {
+          "url": "http://127.0.0.1:36225/v2/health",
+          "status": 401
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "Structural keyboard checks are not full WCAG certification.",
+    "Native generated-key successful scoring and evaluator adjudication are covered by service qualification rather than this browser suite.",
+    "Browser acceptance does not qualify the full press matrix, original native gates, full profiles, or blind provider workflow.",
+    "Original published benchmark has no local answer key; official scoring remains unavailable."
+  ],
+  "adverse_evidence": [
+    "adverse-setup.json",
+    "pfd-adverse-network.json"
+  ]
+}

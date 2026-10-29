@@ -1,0 +1,1392 @@
+{
+  "plant": "stamping_press",
+  "revision": "R7",
+  "tags": [
+    {
+      "name": "SIC-271.PV",
+      "description": "SIC-271 PV",
+      "units": "SPM",
+      "lo": -5,
+      "hi": 150,
+      "instrument": "pulse_speed",
+      "role": "PV",
+      "source": "SI-271",
+      "loop": "SIC-271",
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "SIC-271.SP",
+      "description": "SIC-271 SP",
+      "units": "SPM",
+      "lo": -5,
+      "hi": 150,
+      "instrument": "status",
+      "role": "SP",
+      "source": "SIC-271.SP",
+      "loop": "SIC-271",
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "SIC-271.OP",
+      "description": "SIC-271 OP",
+      "units": "%",
+      "lo": 0,
+      "hi": 100,
+      "instrument": "valve",
+      "role": "OP",
+      "source": "SIC-271.OP",
+      "loop": "SIC-271",
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "SIC-271.MODE",
+      "description": "SIC-271 MODE",
+      "units": "-",
+      "lo": 0,
+      "hi": 2,
+      "instrument": "status",
+      "role": "MODE",
+      "source": "SIC-271.MODE",
+      "loop": "SIC-271",
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "FDC-271.PV",
+      "description": "FDC-271 PV",
+      "units": "mm",
+      "lo": 0,
+      "hi": 250,
+      "instrument": "pulse_position",
+      "role": "PV",
+      "source": "ZI-271",
+      "loop": "FDC-271",
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "FDC-271.SP",
+      "description": "FDC-271 SP",
+      "units": "mm",
+      "lo": 0,
+      "hi": 250,
+      "instrument": "status",
+      "role": "SP",
+      "source": "FDC-271.SP",
+      "loop": "FDC-271",
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "FDC-271.OP",
+      "description": "FDC-271 OP",
+      "units": "%",
+      "lo": 0,
+      "hi": 100,
+      "instrument": "valve",
+      "role": "OP",
+      "source": "FDC-271.OP",
+      "loop": "FDC-271",
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "FDC-271.MODE",
+      "description": "FDC-271 MODE",
+      "units": "-",
+      "lo": 0,
+      "hi": 2,
+      "instrument": "status",
+      "role": "MODE",
+      "source": "FDC-271.MODE",
+      "loop": "FDC-271",
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "LIC-271.PV",
+      "description": "LIC-271 PV",
+      "units": "m",
+      "lo": 0,
+      "hi": 2.5,
+      "instrument": "level",
+      "role": "PV",
+      "source": "LI-271",
+      "loop": "LIC-271",
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "LIC-271.SP",
+      "description": "LIC-271 SP",
+      "units": "m",
+      "lo": 0,
+      "hi": 2.5,
+      "instrument": "status",
+      "role": "SP",
+      "source": "LIC-271.SP",
+      "loop": "LIC-271",
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "LIC-271.OP",
+      "description": "LIC-271 OP",
+      "units": "%",
+      "lo": 0,
+      "hi": 100,
+      "instrument": "valve",
+      "role": "OP",
+      "source": "LIC-271.OP",
+      "loop": "LIC-271",
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "LIC-271.MODE",
+      "description": "LIC-271 MODE",
+      "units": "-",
+      "lo": 0,
+      "hi": 2,
+      "instrument": "status",
+      "role": "MODE",
+      "source": "LIC-271.MODE",
+      "loop": "LIC-271",
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "PIC-272.PV",
+      "description": "PIC-272 PV",
+      "units": "bar",
+      "lo": 0,
+      "hi": 12,
+      "instrument": "pressure",
+      "role": "PV",
+      "source": "PI-272",
+      "loop": "PIC-272",
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "PIC-272.SP",
+      "description": "PIC-272 SP",
+      "units": "bar",
+      "lo": 0,
+      "hi": 12,
+      "instrument": "status",
+      "role": "SP",
+      "source": "PIC-272.SP",
+      "loop": "PIC-272",
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "PIC-272.OP",
+      "description": "PIC-272 OP",
+      "units": "%",
+      "lo": 0,
+      "hi": 100,
+      "instrument": "valve",
+      "role": "OP",
+      "source": "PIC-272.OP",
+      "loop": "PIC-272",
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "PIC-272.MODE",
+      "description": "PIC-272 MODE",
+      "units": "-",
+      "lo": 0,
+      "hi": 2,
+      "instrument": "status",
+      "role": "MODE",
+      "source": "PIC-272.MODE",
+      "loop": "PIC-272",
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "TIC-271.PV",
+      "description": "TIC-271 PV",
+      "units": "degC",
+      "lo": 0,
+      "hi": 120,
+      "instrument": "temperature",
+      "role": "PV",
+      "source": "TI-271",
+      "loop": "TIC-271",
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "TIC-271.SP",
+      "description": "TIC-271 SP",
+      "units": "degC",
+      "lo": 0,
+      "hi": 120,
+      "instrument": "status",
+      "role": "SP",
+      "source": "TIC-271.SP",
+      "loop": "TIC-271",
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "TIC-271.OP",
+      "description": "TIC-271 OP",
+      "units": "%",
+      "lo": 0,
+      "hi": 100,
+      "instrument": "valve",
+      "role": "OP",
+      "source": "TIC-271.OP",
+      "loop": "TIC-271",
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "TIC-271.MODE",
+      "description": "TIC-271 MODE",
+      "units": "-",
+      "lo": 0,
+      "hi": 2,
+      "instrument": "status",
+      "role": "MODE",
+      "source": "TIC-271.MODE",
+      "loop": "TIC-271",
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "ZI-276",
+      "description": "ZI-276 measured observation",
+      "units": "mm",
+      "lo": 0,
+      "hi": 250,
+      "instrument": "pulse_position",
+      "role": "IND",
+      "source": "ZI-276",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "CALC-TRAVEL-GAP",
+      "description": "CALC-TRAVEL-GAP measured observation",
+      "units": "mm",
+      "lo": -25,
+      "hi": 75,
+      "instrument": "calculated",
+      "role": "CALC",
+      "source": "CALC-TRAVEL-GAP",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "FI-275",
+      "description": "FI-275 measured observation",
+      "units": "m/s",
+      "lo": 0,
+      "hi": 0.3,
+      "instrument": "flow",
+      "role": "IND",
+      "source": "FI-275",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "SI-272",
+      "description": "SI-272 measured observation",
+      "units": "SPM",
+      "lo": -5,
+      "hi": 150,
+      "instrument": "pulse_speed",
+      "role": "IND",
+      "source": "SI-272",
+      "loop": null,
+      "node": "NODE-B",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "ZI-272",
+      "description": "ZI-272 measured observation",
+      "units": "mm",
+      "lo": 0,
+      "hi": 250,
+      "instrument": "pulse_position",
+      "role": "IND",
+      "source": "ZI-272",
+      "loop": null,
+      "node": "NODE-B",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "ZI-274",
+      "description": "ZI-274 measured observation",
+      "units": "mm",
+      "lo": -5,
+      "hi": 250,
+      "instrument": "pulse_position",
+      "role": "IND",
+      "source": "ZI-274",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "ZI-275",
+      "description": "ZI-275 measured observation",
+      "units": "mm",
+      "lo": -5,
+      "hi": 250,
+      "instrument": "pulse_position",
+      "role": "IND",
+      "source": "ZI-275",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "LI-272",
+      "description": "LI-272 measured observation",
+      "units": "m",
+      "lo": 0,
+      "hi": 2.5,
+      "instrument": "level",
+      "role": "IND",
+      "source": "LI-272",
+      "loop": null,
+      "node": "NODE-B",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "PI-273",
+      "description": "PI-273 measured observation",
+      "units": "bar",
+      "lo": 0,
+      "hi": 12,
+      "instrument": "pressure",
+      "role": "IND",
+      "source": "PI-273",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "TI-272",
+      "description": "TI-272 measured observation",
+      "units": "degC",
+      "lo": 0,
+      "hi": 100,
+      "instrument": "temperature_slow",
+      "role": "IND",
+      "source": "TI-272",
+      "loop": null,
+      "node": "NODE-B",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "JI-271",
+      "description": "JI-271 measured observation",
+      "units": "kW",
+      "lo": 0,
+      "hi": 5,
+      "instrument": "power",
+      "role": "IND",
+      "source": "JI-271",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "WI-271",
+      "description": "WI-271 measured observation",
+      "units": "kN",
+      "lo": 0,
+      "hi": 250,
+      "instrument": "pressure",
+      "role": "IND",
+      "source": "WI-271",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "WI-273",
+      "description": "WI-273 measured observation",
+      "units": "kN",
+      "lo": -5,
+      "hi": 250,
+      "instrument": "pressure",
+      "role": "IND",
+      "source": "WI-273",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "FI-271",
+      "description": "FI-271 measured observation",
+      "units": "L/min",
+      "lo": 0,
+      "hi": 12,
+      "instrument": "flow",
+      "role": "IND",
+      "source": "FI-271",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "DPI-271",
+      "description": "DPI-271 measured observation",
+      "units": "bar",
+      "lo": 0,
+      "hi": 3,
+      "instrument": "pressure",
+      "role": "IND",
+      "source": "DPI-271",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "PI-271",
+      "description": "PI-271 measured observation",
+      "units": "N",
+      "lo": 0,
+      "hi": 300,
+      "instrument": "pressure",
+      "role": "IND",
+      "source": "PI-271",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "FI-272",
+      "description": "FI-272 measured observation",
+      "units": "L/min",
+      "lo": 0,
+      "hi": 15,
+      "instrument": "flow",
+      "role": "IND",
+      "source": "FI-272",
+      "loop": null,
+      "node": "NODE-B",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "TI-273",
+      "description": "TI-273 measured observation",
+      "units": "degC",
+      "lo": 0,
+      "hi": 80,
+      "instrument": "temperature",
+      "role": "IND",
+      "source": "TI-273",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "QI-271",
+      "description": "QI-271 measured observation",
+      "units": "mm",
+      "lo": 95,
+      "hi": 105,
+      "instrument": "optical_gauge",
+      "role": "IND",
+      "source": "QI-271",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "QI-272",
+      "description": "QI-272 measured observation",
+      "units": "mm",
+      "lo": 95,
+      "hi": 105,
+      "instrument": "optical_gauge",
+      "role": "IND",
+      "source": "QI-272",
+      "loop": null,
+      "node": "NODE-B",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "AI-271",
+      "description": "AI-271 measured observation",
+      "units": "ratio",
+      "lo": 0.5,
+      "hi": 2,
+      "instrument": "analyzer",
+      "role": "IND",
+      "source": "AI-271",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "AI-272",
+      "description": "AI-272 measured observation",
+      "units": "mm",
+      "lo": 0,
+      "hi": 3,
+      "instrument": "analyzer",
+      "role": "IND",
+      "source": "AI-272",
+      "loop": null,
+      "node": "NODE-B",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "EI-271",
+      "description": "EI-271 measured observation",
+      "units": "V",
+      "lo": 0,
+      "hi": 600,
+      "instrument": "power",
+      "role": "IND",
+      "source": "EI-271",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "FI-273",
+      "description": "FI-273 measured observation",
+      "units": "L/min",
+      "lo": 0,
+      "hi": 0.3,
+      "instrument": "flow",
+      "role": "IND",
+      "source": "FI-273",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "DI-271",
+      "description": "DI-271 measured observation",
+      "units": "-",
+      "lo": 0,
+      "hi": 1,
+      "instrument": "status",
+      "role": "IND",
+      "source": "DI-271",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "DI-272",
+      "description": "DI-272 measured observation",
+      "units": "-",
+      "lo": 0,
+      "hi": 1,
+      "instrument": "status",
+      "role": "IND",
+      "source": "DI-272",
+      "loop": null,
+      "node": "NODE-B",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "PHASE-271",
+      "description": "PHASE-271 measured observation",
+      "units": "rev",
+      "lo": 0,
+      "hi": 1,
+      "instrument": "status",
+      "role": "IND",
+      "source": "PHASE-271",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "COUNT-271",
+      "description": "COUNT-271 measured observation",
+      "units": "pieces",
+      "lo": 0,
+      "hi": 100000000.0,
+      "instrument": "status",
+      "role": "IND",
+      "source": "COUNT-271",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "COUNT-272",
+      "description": "COUNT-272 measured observation",
+      "units": "pieces",
+      "lo": 0,
+      "hi": 100000000.0,
+      "instrument": "status",
+      "role": "IND",
+      "source": "COUNT-272",
+      "loop": null,
+      "node": "NODE-B",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "COUNT-273",
+      "description": "COUNT-273 measured observation",
+      "units": "pieces",
+      "lo": 0,
+      "hi": 100000000.0,
+      "instrument": "status",
+      "role": "IND",
+      "source": "COUNT-273",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "COUNT-274",
+      "description": "COUNT-274 measured observation",
+      "units": "pieces",
+      "lo": 0,
+      "hi": 100000000.0,
+      "instrument": "status",
+      "role": "IND",
+      "source": "COUNT-274",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "CALC-WORK",
+      "description": "CALC-WORK measured observation",
+      "units": "J",
+      "lo": 0,
+      "hi": 3000,
+      "instrument": "calculated",
+      "role": "CALC",
+      "source": "CALC-WORK",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "CALC-SUPPLY",
+      "description": "CALC-SUPPLY measured observation",
+      "units": "m/s",
+      "lo": 0,
+      "hi": 0.3,
+      "instrument": "calculated",
+      "role": "CALC",
+      "source": "CALC-SUPPLY",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "CALC-CONSUMPTION",
+      "description": "CALC-CONSUMPTION measured observation",
+      "units": "m/s",
+      "lo": 0,
+      "hi": 0.3,
+      "instrument": "calculated",
+      "role": "CALC",
+      "source": "CALC-CONSUMPTION",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "WI-272",
+      "description": "WI-272 measured observation",
+      "units": "kN",
+      "lo": -100,
+      "hi": 100,
+      "instrument": "pressure",
+      "role": "IND",
+      "source": "WI-272",
+      "loop": null,
+      "node": "NODE-B",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "ZI-273",
+      "description": "ZI-273 measured observation",
+      "units": "mm",
+      "lo": -10,
+      "hi": 20,
+      "instrument": "level",
+      "role": "IND",
+      "source": "ZI-273",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "FI-274",
+      "description": "FI-274 measured observation",
+      "units": "L/min",
+      "lo": -0.25,
+      "hi": 5,
+      "instrument": "flow",
+      "role": "IND",
+      "source": "FI-274",
+      "loop": null,
+      "node": "NODE-A",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    },
+    {
+      "name": "JI-272",
+      "description": "JI-272 measured observation",
+      "units": "kW",
+      "lo": 0,
+      "hi": 1,
+      "instrument": "power",
+      "role": "IND",
+      "source": "JI-272",
+      "loop": null,
+      "node": "NODE-B",
+      "transport_lag_s": 0.0,
+      "ballast": false
+    }
+  ],
+  "loops": [
+    {
+      "name": "SIC-271",
+      "pv_source": "SI-271",
+      "mv_tag": "DRIVE-271",
+      "kc": 0.003,
+      "ti": 120.0,
+      "td": 0.0,
+      "sp": 60.0,
+      "action": "reverse",
+      "mode": "AUTO",
+      "man_output": 0.5,
+      "out_min": 0.0,
+      "out_max": 1.0,
+      "out_rate_limit": null,
+      "scan_s": null,
+      "sp_limits": null,
+      "cascade_to": null,
+      "ratio_to": null,
+      "ratio": null
+    },
+    {
+      "name": "FDC-271",
+      "pv_source": "ZI-271",
+      "mv_tag": "FEED-271",
+      "kc": 0.003,
+      "ti": 60.0,
+      "td": 0.0,
+      "sp": 100.0,
+      "action": "reverse",
+      "mode": "AUTO",
+      "man_output": 0.5,
+      "out_min": 0.0,
+      "out_max": 1.0,
+      "out_rate_limit": null,
+      "scan_s": null,
+      "sp_limits": null,
+      "cascade_to": null,
+      "ratio_to": null,
+      "ratio": null
+    },
+    {
+      "name": "LIC-271",
+      "pv_source": "LI-271",
+      "mv_tag": "DECOIL-271",
+      "kc": 0.1,
+      "ti": 300.0,
+      "td": 0.0,
+      "sp": 1.0,
+      "action": "reverse",
+      "mode": "AUTO",
+      "man_output": 0.5,
+      "out_min": 0.0,
+      "out_max": 1.0,
+      "out_rate_limit": null,
+      "scan_s": null,
+      "sp_limits": null,
+      "cascade_to": null,
+      "ratio_to": null,
+      "ratio": null
+    },
+    {
+      "name": "PIC-272",
+      "pv_source": "PI-272",
+      "mv_tag": "PUMP-272",
+      "kc": 0.03,
+      "ti": 120.0,
+      "td": 0.0,
+      "sp": 5.0,
+      "action": "reverse",
+      "mode": "AUTO",
+      "man_output": 0.5,
+      "out_min": 0.0,
+      "out_max": 1.0,
+      "out_rate_limit": null,
+      "scan_s": null,
+      "sp_limits": null,
+      "cascade_to": null,
+      "ratio_to": null,
+      "ratio": null
+    },
+    {
+      "name": "TIC-271",
+      "pv_source": "TI-271",
+      "mv_tag": "COOL-271",
+      "kc": 0.03,
+      "ti": 600.0,
+      "td": 0.0,
+      "sp": 50.0,
+      "action": "direct",
+      "mode": "AUTO",
+      "man_output": 0.5,
+      "out_min": 0.0,
+      "out_max": 1.0,
+      "out_rate_limit": null,
+      "scan_s": null,
+      "sp_limits": null,
+      "cascade_to": null,
+      "ratio_to": null,
+      "ratio": null
+    }
+  ],
+  "control_pathways": [
+    {
+      "loop": "SIC-271",
+      "pv_tag": "SIC-271.PV",
+      "pv_source": "SI-271",
+      "mv": "DRIVE-271",
+      "measurement_path": "M 284,1550 L 500,1550",
+      "output_path": "M 1150,1550 L 1440,1550"
+    },
+    {
+      "loop": "FDC-271",
+      "pv_tag": "FDC-271.PV",
+      "pv_source": "ZI-271",
+      "mv": "FEED-271",
+      "measurement_path": "M 284,1695 L 500,1695",
+      "output_path": "M 1150,1695 L 1440,1695"
+    },
+    {
+      "loop": "LIC-271",
+      "pv_tag": "LIC-271.PV",
+      "pv_source": "LI-271",
+      "mv": "DECOIL-271",
+      "measurement_path": "M 284,1840 L 500,1840",
+      "output_path": "M 1150,1840 L 1440,1840"
+    },
+    {
+      "loop": "PIC-272",
+      "pv_tag": "PIC-272.PV",
+      "pv_source": "PI-272",
+      "mv": "PUMP-272",
+      "measurement_path": "M 284,1985 L 500,1985",
+      "output_path": "M 1150,1985 L 1440,1985"
+    },
+    {
+      "loop": "TIC-271",
+      "pv_tag": "TIC-271.PV",
+      "pv_source": "TI-271",
+      "mv": "COOL-271",
+      "measurement_path": "M 284,2130 L 500,2130",
+      "output_path": "M 1150,2130 L 1440,2130"
+    }
+  ],
+  "sensor_symbols": [
+    {
+      "tag": "FI-275",
+      "x": 270,
+      "y": 430,
+      "radius": 27
+    },
+    {
+      "tag": "PI-271",
+      "x": 355,
+      "y": 430,
+      "radius": 27
+    },
+    {
+      "tag": "LI-272",
+      "x": 490,
+      "y": 610,
+      "radius": 27
+    },
+    {
+      "tag": "ZI-276",
+      "x": 695,
+      "y": 610,
+      "radius": 27
+    },
+    {
+      "tag": "ZI-272",
+      "x": 780,
+      "y": 610,
+      "radius": 27
+    },
+    {
+      "tag": "ZI-273",
+      "x": 865,
+      "y": 610,
+      "radius": 27
+    },
+    {
+      "tag": "ZI-274",
+      "x": 950,
+      "y": 610,
+      "radius": 27
+    },
+    {
+      "tag": "ZI-275",
+      "x": 1035,
+      "y": 610,
+      "radius": 27
+    },
+    {
+      "tag": "AI-271",
+      "x": 740,
+      "y": 250,
+      "radius": 27
+    },
+    {
+      "tag": "AI-272",
+      "x": 880,
+      "y": 250,
+      "radius": 27
+    },
+    {
+      "tag": "QI-271",
+      "x": 1530,
+      "y": 270,
+      "radius": 27
+    },
+    {
+      "tag": "QI-272",
+      "x": 1640,
+      "y": 270,
+      "radius": 27
+    },
+    {
+      "tag": "EI-271",
+      "x": 1050,
+      "y": 190,
+      "radius": 27
+    },
+    {
+      "tag": "JI-271",
+      "x": 1140,
+      "y": 190,
+      "radius": 27
+    },
+    {
+      "tag": "SI-272",
+      "x": 1170,
+      "y": 650,
+      "radius": 27
+    },
+    {
+      "tag": "WI-271",
+      "x": 1350,
+      "y": 650,
+      "radius": 27
+    },
+    {
+      "tag": "WI-273",
+      "x": 1170,
+      "y": 740,
+      "radius": 27
+    },
+    {
+      "tag": "WI-272",
+      "x": 1410,
+      "y": 740,
+      "radius": 27
+    },
+    {
+      "tag": "PHASE-271",
+      "x": 1510,
+      "y": 850,
+      "radius": 27
+    },
+    {
+      "tag": "DI-271",
+      "x": 1630,
+      "y": 850,
+      "radius": 27
+    },
+    {
+      "tag": "DI-272",
+      "x": 1035,
+      "y": 740,
+      "radius": 27
+    },
+    {
+      "tag": "FI-272",
+      "x": 700,
+      "y": 850,
+      "radius": 27
+    },
+    {
+      "tag": "TI-273",
+      "x": 400,
+      "y": 850,
+      "radius": 27
+    },
+    {
+      "tag": "FI-271",
+      "x": 650,
+      "y": 1100,
+      "radius": 27
+    },
+    {
+      "tag": "DPI-271",
+      "x": 840,
+      "y": 990,
+      "radius": 27
+    },
+    {
+      "tag": "PI-273",
+      "x": 980,
+      "y": 1100,
+      "radius": 27
+    },
+    {
+      "tag": "TI-272",
+      "x": 150,
+      "y": 1180,
+      "radius": 27
+    },
+    {
+      "tag": "FI-273",
+      "x": 1450,
+      "y": 1000,
+      "radius": 27
+    },
+    {
+      "tag": "FI-274",
+      "x": 800,
+      "y": 1230,
+      "radius": 27
+    },
+    {
+      "tag": "JI-272",
+      "x": 500,
+      "y": 990,
+      "radius": 27
+    },
+    {
+      "tag": "COUNT-271",
+      "x": 1480,
+      "y": 750,
+      "radius": 27
+    },
+    {
+      "tag": "COUNT-272",
+      "x": 1592,
+      "y": 750,
+      "radius": 27
+    },
+    {
+      "tag": "COUNT-273",
+      "x": 1704,
+      "y": 750,
+      "radius": 27
+    },
+    {
+      "tag": "COUNT-274",
+      "x": 1816,
+      "y": 750,
+      "radius": 27
+    },
+    {
+      "tag": "SIC-271.PV",
+      "x": 250,
+      "y": 1550,
+      "radius": 34
+    },
+    {
+      "tag": "FDC-271.PV",
+      "x": 250,
+      "y": 1695,
+      "radius": 34
+    },
+    {
+      "tag": "LIC-271.PV",
+      "x": 250,
+      "y": 1840,
+      "radius": 34
+    },
+    {
+      "tag": "PIC-272.PV",
+      "x": 250,
+      "y": 1985,
+      "radius": 34
+    },
+    {
+      "tag": "TIC-271.PV",
+      "x": 250,
+      "y": 2130,
+      "radius": 34
+    }
+  ],
+  "signal_paths": [
+    {
+      "path": "M 1008,740 L 510,740",
+      "meaning": "DI-272 feed-complete latch to interlock"
+    },
+    {
+      "path": "M 510,690 L 1080,690 L 1080,550 L 1110,550",
+      "meaning": "interlock enable to P-27 clutch/drive"
+    },
+    {
+      "path": "M 284,1550 L 500,1550",
+      "meaning": "SIC-271: measured PV to controller"
+    },
+    {
+      "path": "M 1150,1550 L 1440,1550",
+      "meaning": "SIC-271: controller to DRIVE-271"
+    },
+    {
+      "path": "M 284,1695 L 500,1695",
+      "meaning": "FDC-271: measured PV to controller"
+    },
+    {
+      "path": "M 1150,1695 L 1440,1695",
+      "meaning": "FDC-271: controller to FEED-271"
+    },
+    {
+      "path": "M 284,1840 L 500,1840",
+      "meaning": "LIC-271: measured PV to controller"
+    },
+    {
+      "path": "M 1150,1840 L 1440,1840",
+      "meaning": "LIC-271: controller to DECOIL-271"
+    },
+    {
+      "path": "M 284,1985 L 500,1985",
+      "meaning": "PIC-272: measured PV to controller"
+    },
+    {
+      "path": "M 1150,1985 L 1440,1985",
+      "meaning": "PIC-272: controller to PUMP-272"
+    },
+    {
+      "path": "M 284,2130 L 500,2130",
+      "meaning": "TIC-271: measured PV to controller"
+    },
+    {
+      "path": "M 1150,2130 L 1440,2130",
+      "meaning": "TIC-271: controller to COOL-271"
+    }
+  ],
+  "process_paths": [
+    {
+      "path": "M 60,430 L 108,430",
+      "color": "#3c5872",
+      "arrow": true,
+      "meaning": "coil input"
+    },
+    {
+      "path": "M 212,430 L 410,430",
+      "color": "#3c5872",
+      "arrow": true,
+      "meaning": "decoiler to buffer"
+    },
+    {
+      "path": "M 570,430 L 720,430",
+      "color": "#3c5872",
+      "arrow": true,
+      "meaning": "buffer to feeder"
+    },
+    {
+      "path": "M 940,430 L 1110,430",
+      "color": "#3c5872",
+      "arrow": true,
+      "meaning": "completed feed to die"
+    },
+    {
+      "path": "M 1410,430 L 1480,430",
+      "color": "#3c5872",
+      "arrow": true,
+      "meaning": "formed parts to delayed inspection"
+    },
+    {
+      "path": "M 1700,430 L 1800,430",
+      "color": "#3c5872",
+      "arrow": true,
+      "meaning": "good product outlet"
+    },
+    {
+      "path": "M 1700,470 L 1760,470 L 1760,610 L 1800,610",
+      "color": "#3c5872",
+      "arrow": true,
+      "meaning": "rejected product outlet"
+    },
+    {
+      "path": "M 1410,520 L 1450,520 L 1450,700 L 1800,700",
+      "color": "#3c5872",
+      "arrow": true,
+      "meaning": "geometric trim outlet"
+    },
+    {
+      "path": "M 60,850 L 1260,850 L 1260,570",
+      "color": "#2a7f8f",
+      "arrow": true,
+      "meaning": "cooling water supply to die"
+    },
+    {
+      "path": "M 1320,570 L 1320,930 L 60,930",
+      "color": "#2a7f8f",
+      "arrow": true,
+      "meaning": "heated cooling water return"
+    },
+    {
+      "path": "M 1060,190 L 1180,190 L 1180,310",
+      "color": "#936049",
+      "arrow": true,
+      "meaning": "electrical drive energy"
+    },
+    {
+      "path": "M 300,1100 L 460,1100",
+      "color": "#9b6a24",
+      "arrow": true,
+      "meaning": "oil supply to pump"
+    },
+    {
+      "path": "M 540,1100 L 760,1100",
+      "color": "#9b6a24",
+      "arrow": true,
+      "meaning": "pump to filter"
+    },
+    {
+      "path": "M 920,1100 L 1200,1100",
+      "color": "#9b6a24",
+      "arrow": true,
+      "meaning": "filtered oil header to bearings"
+    },
+    {
+      "path": "M 1300,1185 L 1300,1300 L 200,1300 L 200,1210",
+      "color": "#9b6a24",
+      "arrow": true,
+      "meaning": "bearing return to reservoir"
+    },
+    {
+      "path": "M 1050,1100 L 1050,1230 L 200,1230",
+      "color": "#9b6a24",
+      "arrow": true,
+      "meaning": "measured return bypass branch"
+    },
+    {
+      "path": "M 1080,1100 L 1080,1000 L 1600,1000 L 1600,1060",
+      "color": "#9b6a24",
+      "arrow": true,
+      "meaning": "die guide film branch"
+    },
+    {
+      "path": "M 1720,1130 L 1800,1130 L 1800,1340 L 200,1340 L 200,1300",
+      "color": "#9b6a24",
+      "arrow": true,
+      "meaning": "film branch return manifold"
+    },
+    {
+      "path": "M 300,990 L 500,990 L 500,1060",
+      "color": "#936049",
+      "arrow": true,
+      "meaning": "electrical pump input"
+    }
+  ],
+  "source_sha256": {
+    "__init__.py": "526cb4ab72da9f246f572dae6474ad7709827269eba6becaa6791d252890218c",
+    "tags.py": "5415c47fe26c33f3bfb370d7dbcc5a6a28da7a7fa2d275a550023aacdf0062e4",
+    "loops.py": "0108347958cb65415a4c42efed3e0dc6b5843b488acd36f3498657477f86dc12",
+    "model.py": "e139d52ef28c4a573a1e0e4940682188a58c45df2db965c199323aec02e17255",
+    "cycles.py": "37b50d73f1e3fa6932581858b6e2d75a4166e7188785f646037d3b7a77bf32f4",
+    "compiled_backend.py": "fcc81b4246864d9170aa9ca3af0477d93b0f9edd3489a0b70473918cd4a57788",
+    "cycle_kernel.cpp": "a2ce1c4f8dfb5fc439a63e5199def2e587e0482470ae4138f71d4c411753ef27",
+    "description.py": "905459948a9f4987a3f46b33c50054b5ea7fda1468c71776c226493899661be4",
+    "instruments.py": "b017867ccfdc97de10bacbac4f85571c7d264c71c73202ec4bb244f20af723d2",
+    "../../patches/0007-native-event-instrument-acquisition.patch": "00c7efba4636ba866bebcfe20e047e723a6dd039370a58440ac066c949f4159a",
+    "../../patches/0008-native-digital-feedback-quantization.patch": "8fe6a00350c41d14395418e599e704bdcac39ce00d8ac6ff510391a627067221",
+    "../../patches/0009-native-config-aware-benign-events.patch": "5726d2a5b1aa6a563aa7e390df6b88ae5d7669b6613885a34e98e9c9c932ce76"
+  },
+  "assumptions": [
+    "Conceptual equipment and pipe geometry; no sizing or safety certification.",
+    "Oil branches show lumped model relationships; no resolved reservoir or piping inventory.",
+    "Native actuator keys are equipment labels, not additional historian tags."
+  ],
+  "excluded_public_signals": [
+    "CALC-MATERIAL-RESIDUAL",
+    "CALC-ENERGY-RESIDUAL",
+    "AUDIT-ENERGY-RELATIVE-RESIDUAL",
+    "AUDIT-MATERIAL-RELATIVE-RESIDUAL",
+    "AUDIT-COUNTER-RESIDUAL",
+    "AUDIT-MOTOR-ENERGY-J",
+    "AUDIT-SUPPLIED-MASS-KG"
+  ]
+}

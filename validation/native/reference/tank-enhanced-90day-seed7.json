@@ -1,0 +1,319 @@
+{
+  "id": "c253826c-5d18-4928-8015-25b80405685f",
+  "operation": "observability_export",
+  "parameters": {
+    "dataset_dir": "/home/pat/Documents/Codex/2026-10-28/files-mentioned-by-the-user-ekas/outputs/EKAS_Press_Intelligence_Full_Stack/work/reference-qualification/artifacts/14d6aa0d-62e8-4226-ac52-c8e001283640/public",
+    "dataset_id": "14d6aa0d-62e8-4226-ac52-c8e001283640",
+    "profile": "enhanced"
+  },
+  "state": "succeeded",
+  "created_at": "2026-10-29T03:15:46.344954+00:00",
+  "updated_at": "2026-10-29T03:15:50.337191+00:00",
+  "error": null,
+  "audit_failures": [],
+  "result": {
+    "dataset_id": "c253826c-5d18-4928-8015-25b80405685f",
+    "files": [
+      {
+        "name": "CHALLENGE.md",
+        "sha256": "f99978c0910dd8b38c27312d226f64201364dbe0bca5e0a2b2f3f6da84a541db",
+        "size_bytes": 5891
+      },
+      {
+        "name": "PFD.png",
+        "sha256": "ce864da7edcf178b243951dac6ec2b625c973e1ec82297bb159285c651a5c0b3",
+        "size_bytes": 365470
+      },
+      {
+        "name": "PFD.svg",
+        "sha256": "2ec05560eb76f9c5afd6da9b4dadc882f2a26a027894ffc2c0554efb1939cefe",
+        "size_bytes": 23490
+      },
+      {
+        "name": "PROCESS_DESCRIPTION.md",
+        "sha256": "7ed28e0d33194fe8489f33f1b9a50cdbbbeee8a9212767c0bd3355a94795ace3",
+        "size_bytes": 25613
+      },
+      {
+        "name": "SOURCE_AVAILABILITY.json",
+        "sha256": "6e5a910537aef756665e5878706ca34dc6306ea5f52390fbc877f5804149ca69",
+        "size_bytes": 5283
+      },
+      {
+        "name": "SOURCE_AVAILABILITY.md",
+        "sha256": "fcc36c1f0ea725caa9f445c094b5f0a919309b34c7334890cb7b27d9f4b056b0",
+        "size_bytes": 941
+      },
+      {
+        "name": "historian_10s.parquet",
+        "sha256": "233a400573d79a21dd180cf470984d00c2430afc8d107e8f17210404c140c504",
+        "size_bytes": 31347646
+      },
+      {
+        "name": "historian_60s.parquet",
+        "sha256": "6a861f1d9f897d54f4f75c31d8fa66a84be3ae665691557c5c2b94406016f57b",
+        "size_bytes": 24105942
+      },
+      {
+        "name": "submission_template.csv",
+        "sha256": "81e01f8c1af93c394bdcc8661afeb503f9cfc4288b3617fdfe74b4afd6230698",
+        "size_bytes": 215
+      },
+      {
+        "name": "tags.csv",
+        "sha256": "3e94abd9e996372a02ca4f18bb90100faa6a759fb14453f706b170375b4657d0",
+        "size_bytes": 9625
+      }
+    ],
+    "native_contract_sha256": "98cfe166bf5fd6461ddeb85d455d3bb34e80c036630a1fe67a377c17a3ee5e09",
+    "observability_profile": "enhanced",
+    "operation": "observability_export",
+    "passed": null,
+    "plant": "heated_stirred_tank",
+    "profile": "enhanced",
+    "resimulated": false,
+    "retained_tag_count": 90,
+    "same_physical_run": true,
+    "source_dataset_id": "14d6aa0d-62e8-4226-ac52-c8e001283640",
+    "source_digests": [
+      {
+        "name": "CHALLENGE.md",
+        "sha256": "4edeef3e0305092b99c99b7034d2ed896099f3a152cc8b85fade45746971b0a6",
+        "size_bytes": 4945
+      },
+      {
+        "name": "PFD.png",
+        "sha256": "ce864da7edcf178b243951dac6ec2b625c973e1ec82297bb159285c651a5c0b3",
+        "size_bytes": 365470
+      },
+      {
+        "name": "PFD.svg",
+        "sha256": "2ec05560eb76f9c5afd6da9b4dadc882f2a26a027894ffc2c0554efb1939cefe",
+        "size_bytes": 23490
+      },
+      {
+        "name": "PROCESS_DESCRIPTION.md",
+        "sha256": "6db1f5ebca6793b02bb580c2300ca99270c967dd8ec3eba75490554987cecdaa",
+        "size_bytes": 24667
+      },
+      {
+        "name": "historian_10s.parquet",
+        "sha256": "233a400573d79a21dd180cf470984d00c2430afc8d107e8f17210404c140c504",
+        "size_bytes": 31347646
+      },
+      {
+        "name": "historian_60s.parquet",
+        "sha256": "6a861f1d9f897d54f4f75c31d8fa66a84be3ae665691557c5c2b94406016f57b",
+        "size_bytes": 24105942
+      },
+      {
+        "name": "submission_template.csv",
+        "sha256": "81e01f8c1af93c394bdcc8661afeb503f9cfc4288b3617fdfe74b4afd6230698",
+        "size_bytes": 215
+      },
+      {
+        "name": "tags.csv",
+        "sha256": "3e94abd9e996372a02ca4f18bb90100faa6a759fb14453f706b170375b4657d0",
+        "size_bytes": 9625
+      }
+    ],
+    "source_tag_count": 90,
+    "streaming": {
+      "batch_rows": 16384,
+      "max_batch_rows": 0
+    },
+    "validation_performed": false,
+    "withheld_tag_count": 0,
+    "worker_configuration": {
+      "blas_environment": {
+        "MKL_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      },
+      "requested_blas_threads": "1"
+    }
+  },
+  "dataset_summary": {
+    "start": "2024-03-01T06:00:00Z",
+    "end": "2024-05-30T05:59:50Z",
+    "rows": 5465110,
+    "raw": {
+      "columns": [
+        "tag",
+        "timestamp",
+        "value",
+        "quality"
+      ],
+      "end": "2024-05-30T05:59:50Z",
+      "file": "historian_10s.parquet",
+      "rows": 5465110,
+      "size_bytes": 31347646,
+      "start": "2024-03-01T06:00:00Z"
+    },
+    "grid": {
+      "columns": [
+        "timestamp",
+        "TIC-101.PV",
+        "TIC-101.SP",
+        "TIC-101.OP",
+        "TIC-101.MODE",
+        "FIC-201.PV",
+        "FIC-201.SP",
+        "FIC-201.OP",
+        "FIC-201.MODE",
+        "LIC-101.PV",
+        "LIC-101.SP",
+        "LIC-101.OP",
+        "LIC-101.MODE",
+        "TV-101.POS",
+        "LV-101.POS",
+        "FI-101",
+        "TI-100",
+        "FI-102",
+        "TI-102",
+        "LI-102",
+        "PI-201",
+        "TI-201",
+        "TI-202",
+        "TI-901",
+        "AI-101",
+        "CALC-DUTY",
+        "CALC-DUTY-PROC",
+        "CALC-EBAL",
+        "CALC-UA",
+        "CALC-APPROACH",
+        "CALC-MBAL",
+        "CW-FIC-201.PV",
+        "CW-FIC-201.SP",
+        "CW-FIC-201.OP",
+        "CW-FIC-201.MODE",
+        "CW-TIC-202.PV",
+        "CW-TIC-202.SP",
+        "CW-TIC-202.OP",
+        "CW-TIC-202.MODE",
+        "CW-PIC-203.PV",
+        "CW-PIC-203.SP",
+        "CW-PIC-203.OP",
+        "CW-PIC-203.MODE",
+        "CW-LIC-204.PV",
+        "CW-LIC-204.SP",
+        "CW-LIC-204.OP",
+        "CW-LIC-204.MODE",
+        "CW-FIC-205.PV",
+        "CW-FIC-205.SP",
+        "CW-FIC-205.OP",
+        "CW-FIC-205.MODE",
+        "N2-TIC-201.PV",
+        "N2-TIC-201.SP",
+        "N2-TIC-201.OP",
+        "N2-TIC-201.MODE",
+        "N2-PIC-202.PV",
+        "N2-PIC-202.SP",
+        "N2-PIC-202.OP",
+        "N2-PIC-202.MODE",
+        "N2-LIC-203.PV",
+        "N2-LIC-203.SP",
+        "N2-LIC-203.OP",
+        "N2-LIC-203.MODE",
+        "N2-FIC-204.PV",
+        "N2-FIC-204.SP",
+        "N2-FIC-204.OP",
+        "N2-FIC-204.MODE",
+        "SD-TIC-201.PV",
+        "SD-TIC-201.SP",
+        "SD-TIC-201.OP",
+        "SD-TIC-201.MODE",
+        "SD-PIC-202.PV",
+        "SD-PIC-202.SP",
+        "SD-PIC-202.OP",
+        "SD-PIC-202.MODE",
+        "SD-LIC-203.PV",
+        "SD-LIC-203.SP",
+        "SD-LIC-203.OP",
+        "SD-LIC-203.MODE",
+        "SD-FIC-204.PV",
+        "SD-FIC-204.SP",
+        "SD-FIC-204.OP",
+        "SD-FIC-204.MODE",
+        "AIR-TIC-201.PV",
+        "AIR-TIC-201.SP",
+        "AIR-TIC-201.OP",
+        "AIR-TIC-201.MODE",
+        "AIR-PIC-202.PV",
+        "AIR-PIC-202.SP",
+        "AIR-PIC-202.OP",
+        "AIR-PIC-202.MODE"
+      ],
+      "end": "2024-05-30T05:59:00Z",
+      "file": "historian_60s.parquet",
+      "rows": 129600,
+      "size_bytes": 24105942,
+      "start": "2024-03-01T06:00:00Z"
+    },
+    "event_files": {},
+    "disclosure": {
+      "grid": "Native derived regular grid reconstructed from compressed samples; bad quality becomes null; no gap filling performed by this service.",
+      "raw": "Primary irregular compressed recorded samples; quality retained."
+    }
+  },
+  "verified_public_files": [
+    {
+      "name": "CHALLENGE.md",
+      "size_bytes": 5891,
+      "sha256": "f99978c0910dd8b38c27312d226f64201364dbe0bca5e0a2b2f3f6da84a541db"
+    },
+    {
+      "name": "PFD.png",
+      "size_bytes": 365470,
+      "sha256": "ce864da7edcf178b243951dac6ec2b625c973e1ec82297bb159285c651a5c0b3"
+    },
+    {
+      "name": "PFD.svg",
+      "size_bytes": 23490,
+      "sha256": "2ec05560eb76f9c5afd6da9b4dadc882f2a26a027894ffc2c0554efb1939cefe"
+    },
+    {
+      "name": "PROCESS_DESCRIPTION.md",
+      "size_bytes": 25613,
+      "sha256": "7ed28e0d33194fe8489f33f1b9a50cdbbbeee8a9212767c0bd3355a94795ace3"
+    },
+    {
+      "name": "SOURCE_AVAILABILITY.json",
+      "size_bytes": 5283,
+      "sha256": "6e5a910537aef756665e5878706ca34dc6306ea5f52390fbc877f5804149ca69"
+    },
+    {
+      "name": "SOURCE_AVAILABILITY.md",
+      "size_bytes": 941,
+      "sha256": "fcc36c1f0ea725caa9f445c094b5f0a919309b34c7334890cb7b27d9f4b056b0"
+    },
+    {
+      "name": "historian_10s.parquet",
+      "size_bytes": 31347646,
+      "sha256": "233a400573d79a21dd180cf470984d00c2430afc8d107e8f17210404c140c504"
+    },
+    {
+      "name": "historian_60s.parquet",
+      "size_bytes": 24105942,
+      "sha256": "6a861f1d9f897d54f4f75c31d8fa66a84be3ae665691557c5c2b94406016f57b"
+    },
+    {
+      "name": "submission_template.csv",
+      "size_bytes": 215,
+      "sha256": "81e01f8c1af93c394bdcc8661afeb503f9cfc4288b3617fdfe74b4afd6230698"
+    },
+    {
+      "name": "tags.csv",
+      "size_bytes": 9625,
+      "sha256": "3e94abd9e996372a02ca4f18bb90100faa6a759fb14453f706b170375b4657d0"
+    }
+  ],
+  "registration": {
+    "id": "c253826c-5d18-4928-8015-25b80405685f",
+    "parent_dataset_id": "14d6aa0d-62e8-4226-ac52-c8e001283640",
+    "scoring_status": "LOCAL_GENERATED_KEY",
+    "source": "observability_export",
+    "status": "UNVALIDATED"
+  },
+  "scope": "Actual completed native job, unchanged pass/fail findings and public hashes. No press qualification or EKAS deployment readiness is inferred; private answer keys are omitted."
+}

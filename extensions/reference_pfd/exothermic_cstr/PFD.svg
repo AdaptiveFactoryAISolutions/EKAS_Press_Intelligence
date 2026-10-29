@@ -1,0 +1,274 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2500" height="2250" viewBox="0 0 2500 2250" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif">
+<rect width="2500" height="2250" fill="#ffffff"/>
+<rect x="20" y="20" width="2460" height="2210" fill="none" stroke="#b8bec7" stroke-width="1"/>
+<text x="45" y="60" font-size="21" font-weight="bold" fill="#111418" text-anchor="start">R-201 / NATIVE REFERENCE PROCESS</text>
+<text x="45" y="82" font-size="11.5" font-weight="normal" fill="#5a6472" text-anchor="start">Conceptual PFD | native tags and control topology | no event or cause information</text>
+<rect x="2278" y="42" width="177" height="24" fill="none" stroke="#b02418" stroke-width="1.4"/>
+<text x="2366" y="59" font-size="11" font-weight="bold" fill="#b02418" text-anchor="middle" letter-spacing="0.4">NOT FOR CONSTRUCTION</text>
+<path d="M 786,650 L 1054,650 Q 1080,650 1080,676 L 1080,1094 Q 1080,1120 1054,1120 L 786,1120 Q 760,1120 760,1094 L 760,676 Q 760,650 786,650 Z" fill="#f7f8fa" stroke="#343a46" stroke-width="2.2" stroke-linejoin="miter"/>
+<path d="M 760,780 L 1080,780 L 1080,1094 Q 1080,1120 1054,1120 L 786,1120 Q 760,1120 760,1094 Z" fill="#dce8f5"/>
+<line x1="766" y1="780" x2="1074" y2="780" stroke="#1d4e89" stroke-width="1.2" stroke-dasharray="7,5"/>
+<rect x="740" y="780" width="360" height="280" rx="16" fill="none" stroke="#2a7f8f" stroke-width="2.4"/>
+<polygon class="arrowhead" points="1000,650 994.5,637.0 1005.5,637.0" fill="#1d4e89"/>
+<path d="M 60,420 L 1000,420 L 1000,642.2" fill="none" stroke="#1d4e89" stroke-width="2.4" stroke-linejoin="round"/>
+<polygon class="arrowhead" points="820,650 814.5,637.0 825.5,637.0" fill="#1d4e89"/>
+<path d="M 60,560 L 820,560 L 820,642.2" fill="none" stroke="#1d4e89" stroke-width="2.4" stroke-linejoin="round"/>
+<polygon class="arrowhead" points="1100,1060 1113.0,1054.5 1113.0,1065.5" fill="#2a7f8f"/>
+<path d="M 1540,1060 L 1107.8,1060" fill="none" stroke="#2a7f8f" stroke-width="2.4" stroke-linejoin="round"/>
+<polygon class="arrowhead" points="1540,800 1527.0,805.5 1527.0,794.5" fill="#2a7f8f"/>
+<path d="M 1100,800 L 1532.2,800" fill="none" stroke="#2a7f8f" stroke-width="2.4" stroke-linejoin="round"/>
+<polygon class="arrowhead" points="1540,1240 1527.0,1245.5 1527.0,1234.5" fill="#1d4e89"/>
+<path d="M 920,1120 L 920,1240 L 1532.2,1240" fill="none" stroke="#1d4e89" stroke-width="2.4" stroke-linejoin="round"/>
+<rect x="892" y="606" width="56" height="44" fill="#ffffff" stroke="#343a46" stroke-width="1.6"/>
+<text x="920" y="635" font-size="15" font-weight="bold" fill="#111418" text-anchor="middle">M</text>
+<line x1="920" y1="650" x2="920" y2="980" stroke="#343a46" stroke-width="2"/>
+<path d="M 888,984 L 916,966 L 916,975 L 888,993 Z" fill="#343a46"/>
+<path d="M 952,984 L 924,966 L 924,975 L 952,993 Z" fill="#343a46"/>
+<text x="962" y="632" font-size="10.5" font-weight="bold" fill="#111418" text-anchor="start">M-201</text>
+<text x="920" y="1090" font-size="14" font-weight="bold" fill="#111418" text-anchor="middle">R-201</text>
+<text x="920" y="1108" font-size="10" font-weight="normal" fill="#5a6472" text-anchor="middle" letter-spacing="0.4">Jacketed exothermic reactor</text>
+<text x="60" y="340" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">PROCESS WATER / P-202</text>
+<text x="60" y="360" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">Acid dosed upstream</text>
+<text x="60" y="380" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">7 m3/h | 30 degC</text>
+<text x="60" y="508" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">PO FROM STORAGE / P-201</text>
+<text x="60" y="530" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">2 m3/h | 20 degC</text>
+<text x="1335" y="745" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">TO CW RETURN</text>
+<text x="1310" y="1010" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">FROM COOLING TOWER</text>
+<text x="1355" y="1029" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">29 degC | 2.5 bar dP</text>
+<text x="1270" y="1305" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">TO PG PURIFICATION</text>
+<circle cx="550" cy="420" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="550" y="418" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">FT</text>
+<text x="550" y="432" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">202</text>
+<circle cx="680" cy="420" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="680" y="418" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">TI</text>
+<text x="680" y="432" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">102</text>
+<circle cx="500" cy="560" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="500" y="558" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">FT</text>
+<text x="500" y="572" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">201</text>
+<circle cx="650" cy="560" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="650" y="558" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">TI</text>
+<text x="650" y="572" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">101</text>
+<circle cx="1460" cy="800" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="1460" y="798" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">TT</text>
+<text x="1460" y="812" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">202</text>
+<circle cx="1380" cy="1060" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="1380" y="1058" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">FI</text>
+<text x="1380" y="1072" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">301</text>
+<circle cx="1500" cy="1060" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="1500" y="1058" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">TI</text>
+<text x="1500" y="1072" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">301</text>
+<line x1="1540" y1="1060" x2="1540" y2="1150" stroke="#343a46" stroke-width="1.2"/>
+<line x1="1540" y1="1150" x2="1522" y2="1150" stroke="#343a46" stroke-width="1.2"/>
+<circle cx="1500" cy="1150" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="1500" y="1148" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">PI</text>
+<text x="1500" y="1162" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">301</text>
+<circle cx="1300" cy="1240" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="1300" y="1238" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">FI</text>
+<text x="1300" y="1252" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">203</text>
+<circle cx="1400" cy="1240" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="1400" y="1238" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">TI</text>
+<text x="1400" y="1252" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">203</text>
+<circle cx="1500" cy="1240" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="1500" y="1238" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">AI</text>
+<text x="1500" y="1252" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">201</text>
+<line x1="1080" y1="860" x2="1098" y2="860" stroke="#343a46" stroke-width="1.2"/>
+<circle cx="1120" cy="860" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="1120" y="858" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">TT</text>
+<text x="1120" y="872" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">201</text>
+<line x1="760" y1="860" x2="702" y2="860" stroke="#343a46" stroke-width="1.2"/>
+<circle cx="680" cy="860" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="680" y="858" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">TI</text>
+<text x="680" y="872" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">204</text>
+<line x1="1080" y1="1020" x2="1098" y2="1020" stroke="#343a46" stroke-width="1.2"/>
+<circle cx="1120" cy="1020" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="1120" y="1018" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">LT</text>
+<text x="1120" y="1032" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">201</text>
+<line x1="920" y1="606" x2="920" y2="582" stroke="#343a46" stroke-width="1.2"/>
+<circle cx="920" cy="560" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="920" y="558" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">JI</text>
+<text x="920" y="572" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">201</text>
+<circle cx="1440" cy="160" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="1440" y="158" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">TI</text>
+<text x="1440" y="172" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">901</text>
+<text x="1370" y="207" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">Ambient air</text>
+<polygon class="arrowhead" points="500,222 504.0,232.0 496.0,232.0" fill="#50565f"/>
+<path d="M 500,538 L 500,228" fill="none" stroke="#50565f" stroke-width="1.35" stroke-dasharray="7,5.5"/>
+<polygon class="arrowhead" points="350,528 346.0,518.0 354.0,518.0" fill="#50565f"/>
+<path d="M 500,178 L 350,178 L 350,522" fill="none" stroke="#50565f" stroke-width="1.35" stroke-dasharray="7,5.5"/>
+<polygon class="arrowhead" points="1000,222 1004.0,232.0 996.0,232.0" fill="#50565f"/>
+<path d="M 550,398 L 650,398 L 650,300 L 1000,300 L 1000,228" fill="none" stroke="#50565f" stroke-width="1.35" stroke-dasharray="7,5.5"/>
+<polygon class="arrowhead" points="718,200 708.0,204.0 708.0,196.0" fill="#50565f"/>
+<path d="M 522,200 L 712,200" fill="none" stroke="#50565f" stroke-width="1.35" stroke-dasharray="7,5.5"/>
+<rect x="718" y="178" width="94" height="44" fill="white" stroke="#343a46" stroke-width="1.4"/>
+<text x="732" y="195" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">FY ratio</text>
+<text x="735" y="212" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">x 3.5</text>
+<polygon class="arrowhead" points="978,200 968.0,204.0 968.0,196.0" fill="#50565f"/>
+<path d="M 812,200 L 972,200" fill="none" stroke="#50565f" stroke-width="1.35" stroke-dasharray="7,5.5"/>
+<text x="680" y="255" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">Remote SP = 3.5 x FIC-201.PV</text>
+<polygon class="arrowhead" points="250,388 246.0,378.0 254.0,378.0" fill="#50565f"/>
+<path d="M 1000,178 L 1000,130 L 250,130 L 250,382" fill="none" stroke="#50565f" stroke-width="1.35" stroke-dasharray="7,5.5"/>
+<polygon class="arrowhead" points="1238,680 1228.0,684.0 1228.0,676.0" fill="#50565f"/>
+<path d="M 1142,860 L 1180,860 L 1180,680 L 1232,680" fill="none" stroke="#50565f" stroke-width="1.35" stroke-dasharray="7,5.5"/>
+<polygon class="arrowhead" points="1260,878 1256.0,868.0 1264.0,868.0" fill="#50565f"/>
+<path d="M 1260,702 L 1260,872" fill="none" stroke="#50565f" stroke-width="1.35" stroke-dasharray="7,5.5"/>
+<text x="1285" y="770" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">Cascade remote SP</text>
+<polygon class="arrowhead" points="1282,900 1292.0,896.0 1292.0,904.0" fill="#50565f"/>
+<path d="M 1460,822 L 1460,900 L 1288,900" fill="none" stroke="#50565f" stroke-width="1.35" stroke-dasharray="7,5.5"/>
+<polygon class="arrowhead" points="1200,1028 1196.0,1018.0 1204.0,1018.0" fill="#50565f"/>
+<path d="M 1238,900 L 1200,900 L 1200,1022" fill="none" stroke="#50565f" stroke-width="1.35" stroke-dasharray="7,5.5"/>
+<polygon class="arrowhead" points="1238,1380 1228.0,1384.0 1228.0,1376.0" fill="#50565f"/>
+<path d="M 1120,1042 L 1120,1380 L 1232,1380" fill="none" stroke="#50565f" stroke-width="1.35" stroke-dasharray="7,5.5"/>
+<polygon class="arrowhead" points="1180,1272 1190.0,1268.0 1190.0,1276.0" fill="#50565f"/>
+<path d="M 1260,1358 L 1260,1272 L 1186,1272" fill="none" stroke="#50565f" stroke-width="1.35" stroke-dasharray="7,5.5"/>
+<rect x="478" y="178" width="44" height="44" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<circle cx="500" cy="200" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="500" y="198" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">FIC</text>
+<text x="500" y="212" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">201</text>
+<rect x="978" y="178" width="44" height="44" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<circle cx="1000" cy="200" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="1000" y="198" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">FFC</text>
+<text x="1000" y="212" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">202</text>
+<rect x="1238" y="658" width="44" height="44" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<circle cx="1260" cy="680" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="1260" y="678" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">TIC</text>
+<text x="1260" y="692" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">201</text>
+<rect x="1238" y="878" width="44" height="44" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<circle cx="1260" cy="900" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="1260" y="898" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">TIC</text>
+<text x="1260" y="912" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">202</text>
+<rect x="1238" y="1358" width="44" height="44" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<circle cx="1260" cy="1380" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="1260" y="1378" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">LIC</text>
+<text x="1260" y="1392" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">201</text>
+<path d="M 232,408 L 232,432 L 250,420 Z" fill="#ffffff" stroke="#343a46" stroke-width="1.6" stroke-linejoin="miter"/>
+<path d="M 268,408 L 268,432 L 250,420 Z" fill="#ffffff" stroke="#343a46" stroke-width="1.6" stroke-linejoin="miter"/>
+<line x1="250" y1="420" x2="250" y2="400" stroke="#343a46" stroke-width="1.4"/>
+<rect x="236" y="382" width="28" height="12" rx="6" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="250" y="482" font-size="10.5" font-weight="bold" fill="#111418" text-anchor="middle">FV-202  (FC*)</text>
+<path d="M 332,548 L 332,572 L 350,560 Z" fill="#ffffff" stroke="#343a46" stroke-width="1.6" stroke-linejoin="miter"/>
+<path d="M 368,548 L 368,572 L 350,560 Z" fill="#ffffff" stroke="#343a46" stroke-width="1.6" stroke-linejoin="miter"/>
+<line x1="350" y1="560" x2="350" y2="540" stroke="#343a46" stroke-width="1.4"/>
+<rect x="336" y="522" width="28" height="12" rx="6" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="350" y="622" font-size="10.5" font-weight="bold" fill="#111418" text-anchor="middle">FV-201  (FC*)</text>
+<path d="M 1182,1048 L 1182,1072 L 1200,1060 Z" fill="#ffffff" stroke="#343a46" stroke-width="1.6" stroke-linejoin="miter"/>
+<path d="M 1218,1048 L 1218,1072 L 1200,1060 Z" fill="#ffffff" stroke="#343a46" stroke-width="1.6" stroke-linejoin="miter"/>
+<line x1="1200" y1="1060" x2="1200" y2="1040" stroke="#343a46" stroke-width="1.4"/>
+<rect x="1186" y="1022" width="28" height="12" rx="6" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="1200" y="1122" font-size="10.5" font-weight="bold" fill="#111418" text-anchor="middle">TV-202  (FO*)</text>
+<path d="M 1162,1228 L 1162,1252 L 1180,1240 Z" fill="#ffffff" stroke="#343a46" stroke-width="1.6" stroke-linejoin="miter"/>
+<path d="M 1198,1228 L 1198,1252 L 1180,1240 Z" fill="#ffffff" stroke="#343a46" stroke-width="1.6" stroke-linejoin="miter"/>
+<line x1="1180" y1="1240" x2="1180" y2="1260" stroke="#343a46" stroke-width="1.4"/>
+<rect x="1166" y="1266" width="28" height="12" rx="6" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="1180" y="1302" font-size="10.5" font-weight="bold" fill="#111418" text-anchor="middle">LV-201  (FL*)</text>
+<text x="60" y="470" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">PO: AUTO / reverse action</text>
+<text x="815" y="350" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">Water: CAS ratio / reverse action</text>
+<text x="1260" y="625" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">Master: AUTO / reverse / 60 degC</text>
+<text x="1260" y="958" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">Slave: CAS / direct / jacket temperature</text>
+<text x="1285" y="1400" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">AUTO / direct / 1.8 m</text>
+<text x="1630" y="135" font-size="14" font-weight="normal" fill="#111418" text-anchor="start">COMPLETE NATIVE HISTORIAN TAG REGISTER</text>
+<text x="1630" y="160" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">40 actual native tags; controller modes 0 MAN / 1 AUTO / 2 CAS</text>
+<text x="1630" y="205" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">TIC-201.PV</text>
+<text x="1825" y="205" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Reactor temperature [degC]</text>
+<text x="1630" y="250" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">TIC-201.SP</text>
+<text x="1825" y="250" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Reactor temperature setpoint [degC]</text>
+<text x="1630" y="295" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">TIC-201.OP</text>
+<text x="1825" y="295" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Reactor temperature controller output [%]</text>
+<text x="1630" y="340" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">TIC-201.MODE</text>
+<text x="1825" y="340" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Reactor temperature controller mode [-]</text>
+<text x="1630" y="385" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">TIC-202.PV</text>
+<text x="1825" y="385" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Jacket outlet temperature [degC]</text>
+<text x="1630" y="430" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">TIC-202.SP</text>
+<text x="1825" y="430" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Jacket temperature setpoint [degC]</text>
+<text x="1630" y="475" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">TIC-202.OP</text>
+<text x="1825" y="475" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Cooling water valve demand [%]</text>
+<text x="1630" y="520" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">TIC-202.MODE</text>
+<text x="1825" y="520" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Jacket outlet temperature controller mode [-]</text>
+<text x="1630" y="565" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">FIC-201.PV</text>
+<text x="1825" y="565" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">PO feed flow [m3/h]</text>
+<text x="1630" y="610" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">FIC-201.SP</text>
+<text x="1825" y="610" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">PO feed flow setpoint [m3/h]</text>
+<text x="1630" y="655" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">FIC-201.OP</text>
+<text x="1825" y="655" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">PO feed valve demand [%]</text>
+<text x="1630" y="700" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">FIC-201.MODE</text>
+<text x="1825" y="700" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">PO feed flow controller mode [-]</text>
+<text x="1630" y="745" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">FFC-202.PV</text>
+<text x="1825" y="745" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Process water feed flow [m3/h]</text>
+<text x="1630" y="790" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">FFC-202.SP</text>
+<text x="1825" y="790" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Process water flow setpoint [m3/h]</text>
+<text x="1630" y="835" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">FFC-202.OP</text>
+<text x="1825" y="835" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Process water valve demand [%]</text>
+<text x="1630" y="880" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">FFC-202.MODE</text>
+<text x="1825" y="880" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Process water feed flow controller mode [-]</text>
+<text x="1630" y="925" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">LIC-201.PV</text>
+<text x="1825" y="925" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Reactor level [m]</text>
+<text x="1630" y="970" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">LIC-201.SP</text>
+<text x="1825" y="970" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Reactor level setpoint [m]</text>
+<text x="1630" y="1015" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">LIC-201.OP</text>
+<text x="1825" y="1015" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Outlet valve demand [%]</text>
+<text x="1630" y="1060" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">LIC-201.MODE</text>
+<text x="1825" y="1060" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Reactor level controller mode [-]</text>
+<text x="1630" y="1105" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">TV-202.POS</text>
+<text x="1825" y="1105" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Cooling water valve position feedback [%]</text>
+<text x="1630" y="1150" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">FV-201.POS</text>
+<text x="1825" y="1150" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">PO feed valve position feedback [%]</text>
+<text x="1630" y="1195" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">FV-202.POS</text>
+<text x="1825" y="1195" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Process water valve position feedback [%]</text>
+<text x="1630" y="1240" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">LV-201.POS</text>
+<text x="1825" y="1240" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Outlet valve position feedback [%]</text>
+<text x="1630" y="1285" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">TI-204</text>
+<text x="1825" y="1285" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Reactor temperature, second element [degC]</text>
+<text x="1630" y="1330" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">TI-101</text>
+<text x="1825" y="1330" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">PO feed temperature [degC]</text>
+<text x="1630" y="1375" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">TI-102</text>
+<text x="1825" y="1375" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Process water feed temperature [degC]</text>
+<text x="1630" y="1420" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">FI-203</text>
+<text x="1825" y="1420" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Product flow [m3/h]</text>
+<text x="1630" y="1465" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">TI-203</text>
+<text x="1825" y="1465" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Product line temperature [degC]</text>
+<text x="1630" y="1510" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">AI-201</text>
+<text x="1825" y="1510" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Residual PO analyzer on product [wt%]</text>
+<text x="1630" y="1555" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">TI-301</text>
+<text x="1825" y="1555" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Cooling water supply temperature [degC]</text>
+<text x="1630" y="1600" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">PI-301</text>
+<text x="1825" y="1600" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Cooling water header differential pressure [bar]</text>
+<text x="1630" y="1645" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">FI-301</text>
+<text x="1825" y="1645" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Cooling water flow to jacket [m3/h]</text>
+<text x="1630" y="1690" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">JI-201</text>
+<text x="1825" y="1690" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Agitator M-201 motor power [kW]</text>
+<text x="1630" y="1735" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">TI-901</text>
+<text x="1825" y="1735" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Ambient temperature [degC]</text>
+<text x="1630" y="1780" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">CALC-QJ</text>
+<text x="1825" y="1780" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Jacket duty, cooling water side [kW]</text>
+<text x="1630" y="1825" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">CALC-UA</text>
+<text x="1825" y="1825" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Back-calculated jacket UA [kW/K]</text>
+<text x="1630" y="1870" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">CALC-MBAL</text>
+<text x="1825" y="1870" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Liquid balance residual, feeds minus product [m3/h]</text>
+<text x="1630" y="1915" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">CALC-RATIO</text>
+<text x="1825" y="1915" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Measured water to PO feed ratio [-]</text>
+<text x="1630" y="1960" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">CALC-CONV</text>
+<text x="1825" y="1960" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">PO conversion from analyzer and feed flows [%]</text>
+<text x="60" y="1540" font-size="14" font-weight="normal" fill="#111418" text-anchor="start">NATIVE CONTROL CONTRACT / EXACT PARAMETER REGISTER</text>
+<text x="60" y="1570" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">TIC-201: PV source TI-201; MV TIC-201.OUT; mode AUTO; SP 60; reverse</text>
+<text x="85" y="1593" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">Output cascades to TIC-202; remote-SP range is declared by the slave sp_limits.</text>
+<text x="60" y="1623" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">TIC-202: PV source TI-202; MV TV-202; mode CAS; SP 48.955; direct</text>
+<text x="60" y="1653" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">FIC-201: PV source FI-201; MV FV-201; mode AUTO; SP 2; reverse</text>
+<text x="60" y="1683" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">FFC-202: PV source FI-202; MV FV-202; mode CAS; SP 7; reverse</text>
+<text x="85" y="1706" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">Ratio feedforward: FI-201 x 3.5; mode CAS recomputes SP every scan.</text>
+<text x="60" y="1736" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">LIC-201: PV source LI-201; MV LV-201; mode AUTO; SP 1.8; direct</text>
+<text x="60" y="1784" font-size="13" font-weight="normal" fill="#111418" text-anchor="start">DESIGN BASIS / MAPPING / ASSUMPTIONS</text>
+<text x="60" y="1809" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">R-201: PO2 + water7 m3/h; bulk60 degC; level1.8 m; jacket design SP computed from native equilibrium.</text>
+<text x="60" y="1834" font-size="10.5" font-weight="normal" fill="#111418" text-anchor="start">TT-201 = TI-201 source of TIC-201.PV; TT-202 = TI-202 source of TIC-202.PV, at jacket outlet.</text>
+<text x="60" y="1859" font-size="10.5" font-weight="normal" fill="#111418" text-anchor="start">FT-201 = FI-201 source of FIC-201.PV; FT-202 = FI-202 source of FFC-202.PV.</text>
+<text x="60" y="1884" font-size="10.5" font-weight="normal" fill="#111418" text-anchor="start">LT-201 = LI-201 source of LIC-201.PV; TI-204 is a separate thermowell, indication only.</text>
+<text x="60" y="1909" font-size="10.5" font-weight="normal" fill="#111418" text-anchor="start">FY is a conceptual ratio computation, not an additional historian tag; exact ratio_to source is FI-201.</text>
+<text x="60" y="1934" font-size="10.5" font-weight="normal" fill="#111418" text-anchor="start">Valve failures (*) are assumptions: feeds FC, cooling FO, product FL; no loss-of-air dynamics modelled.</text>
+<text x="60" y="1959" font-size="10.5" font-weight="normal" fill="#111418" text-anchor="start">Upstream feed pumps are outside the unit; both feeds enter above liquid; product drains under head.</text>
+<text x="60" y="1989" font-size="10.5" font-weight="normal" fill="#111418" text-anchor="start">Conceptual only: relief, isolation, vents, drains, line numbers, insulation and equipment sizing omitted.</text>
+<line x1="60" y1="2170" x2="105" y2="2170" stroke="#1d4e89" stroke-width="2.8"/>
+<text x="115" y="2175" font-size="12" font-weight="normal" fill="#5a6472" text-anchor="start">Process liquid</text>
+<line x1="360" y1="2170" x2="405" y2="2170" stroke="#2a7f8f" stroke-width="2.8"/>
+<text x="415" y="2175" font-size="12" font-weight="normal" fill="#5a6472" text-anchor="start">Cooling water</text>
+<line x1="660" y1="2170" x2="705" y2="2170" stroke="#50565f" stroke-width="1.6" stroke-dasharray="7,5.5"/>
+<text x="715" y="2175" font-size="12" font-weight="normal" fill="#5a6472" text-anchor="start">DCS / instrument signal</text>
+<text x="2445" y="2210" font-size="9" font-weight="normal" fill="#5a6472" text-anchor="end">R6 | pinned upstream reference | generated from native contracts</text>
+</svg>

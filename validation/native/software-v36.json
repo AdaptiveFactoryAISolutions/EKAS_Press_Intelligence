@@ -1,0 +1,42 @@
+{
+  "scope": "Local software regression checkpoint, not full press qualification or final remote CI.",
+  "full_press_qualified": false,
+  "core": {
+    "passed": 143, "skipped": 0, "returncode": 0,
+    "elapsed_seconds": 392.04663157463074,
+    "report": "work/native-test-reports/core/8c29bde3-b7d1-43d4-b73c-e01fbbaf0d41/result.json",
+    "report_sha256": "2fb262b5060ace20791f466d30e4b5caeae6654f066ba609e4824e98c306d6dc"
+  },
+  "physics": {
+    "passed": 41, "skipped": 0, "returncode": 0,
+    "elapsed_seconds": 165.8278844356537,
+    "report": "work/native-test-reports/physics/9c3db3cd-f23a-4a6b-8ff3-39d4a8c17e1b/result.json",
+    "report_sha256": "851604baa0dd0d4dd521d65163411617e6fcd1265f8bbbd196ec89e884041f68",
+    "runtime_manifest_sha256": "55c05c92ee589c8692dd8e77128d6f0591056dbb8ad4b9facad9a4ff74368fa2"
+  },
+  "prepared_upstream": {
+    "passed": 181, "skipped": 0, "returncode": 0,
+    "elapsed_seconds": 934.2057585716248,
+    "identity": "native_patched_upstream_compatibility",
+    "upstream_commit": "14e616c382a9db8026cbb4ab86bdd803d56ca72e",
+    "source_tests_sha256": "4ac1bb4a0f29472b14c86635f58c0d3a86971e5d3657ed863e51aff61c31f753",
+    "runtime_tests_sha256": "1a9bd15093ec88a5b4795cd5a98a371fd5d4aea596699cba18ef351658c5d0d8",
+    "report": "work/native-test-reports/upstream/5f719b3b-3185-4f04-9501-3f767f28009f/result.json",
+    "report_sha256": "04c4a44d9418cd9446399e6c887eb503fe65195b4eb4e37d2c34ebb6aea5413c",
+    "runtime_manifest_sha256": "90247c643f1b4f0807188593f13ebef3168c74a92873185ffd85377201c05bcd",
+    "test_compatibility_change": "Patch0010 updates two optional-PFD layout assertions and requires exact copied asset bytes; it does not alter physics or scoring thresholds."
+  },
+  "provenance": "Both fresh prepared runtime manifests equal frozen v36 as parsed source maps. Raw digests differ because JSON key serialization order is not canonical.",
+  "original_application_layers": {
+    "unit": 52, "simulation": 23, "contract": 3, "blind": 38,
+    "observability": 6, "api": 20, "ui": 1, "browser": 3,
+    "disclosure": "All passed; these per-layer counts overlap and are not a unique-test total."
+  },
+  "distributions": {
+    "verification_passed": true,
+    "client_sha256": "5c6f65c7bb7f2db6fa996a838b96c386fe74d0ff4ccd07dd3bea39077108996c",
+    "server_sha256": "af5205fb2655188957836acd320894ce185de61fd6343aab70c56e21c5008082",
+    "version": "2.0.0.dev0"
+  },
+  "press_gate_evidence": "press/v36-gates.json"
+}

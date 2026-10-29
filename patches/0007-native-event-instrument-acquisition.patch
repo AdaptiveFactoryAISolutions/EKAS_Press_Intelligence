@@ -1,0 +1,85 @@
+--- a/src/historiansim/measurement/apply.py
++++ b/src/historiansim/measurement/apply.py
+@@ -123,12 +123,28 @@
+         faults_by_tag.setdefault(fault.tag, []).append(fault)
+ 
+     t_grid = np.arange(result.n) * dt
++    acquired_events = {}
++    event_source = getattr(result, "events", None)
++    event_projection = getattr(event_source, "measurement_event_series", None)
+     protected = np.zeros(result.n, dtype=bool)
+     for lo_s, hi_s in protected_windows_s:
+         protected[max(int(lo_s / dt), 0):max(int(hi_s / dt), 0)] = True
+ 
+     for spec in specs:
+         if spec.name in withheld_set:
++            continue
++
++        # Optional event-backed instrument: real acquisition at physical event
++        # timestamps, then held on the scan grid. It is not measured twice.
++        event_data = event_projection(spec.source or spec.name) if callable(event_projection) else None
++        if event_data is not None:
++            from historiansim.measurement.event_acquisition import acquire_event_series
++            times, readings, sampled = acquire_event_series(event_data, spec, seeds, faults_by_tag.get(spec.name, ()), t_grid)
++            acquired_events[spec.name] = (times, readings)
++            values[spec.name] = sampled
++            frozen_masks[spec.name] = np.zeros(len(sampled), dtype=bool)
++            quality[spec.name] = np.full(len(sampled), Quality.GOOD, dtype=np.int8)
++            kept[spec.name] = spec
+             continue
+ 
+         # -- source ------------------------------------------------------
+@@ -186,6 +202,12 @@
+         quality[spec.name] = np.full(len(measured), Quality.GOOD, dtype=np.int8)
+         kept[spec.name] = spec
+ 
++    event_statuses = getattr(event_source, "measurement_statuses", None)
++    if callable(event_statuses):
++        for name, sampled in event_statuses(acquired_events, t_grid, values).items():
++            if name in kept:
++                values[name] = np.asarray(sampled, dtype=float)
++
+     # -- DCS calculations ---------------------------------------------------
+     # Rebuilt from the measured tags, after instrument faults have corrupted
+     # them, so a drifting transmitter opens the balance it feeds.
+--- /dev/null
++++ b/src/historiansim/measurement/event_acquisition.py
+@@ -0,0 +1,38 @@
++"""Native instrument acquisition at irregular physical event timestamps.
++
++All event readings pass through actual instrument faults, independent named
++noise/drift streams and quantization before PLC derived statuses. Historian
++node quality is applied later to the held scan observations as usual.
++"""
++from dataclasses import replace
++import math
++import numpy as np
++from historiansim.measurement.instrument import INSTRUMENT_CLASSES,apply_instrument,drift_direction
++
++def acquire_event_series(event_data,spec,seeds,faults,t_grid):
++    times,raw,initial=event_data
++    times=np.asarray(times,dtype=float);readings=np.asarray(raw,dtype=float).copy()
++    if len(times)!=len(readings) or np.any(np.diff(times)<0) or np.any(times<0) or not np.isfinite(times).all():raise ValueError('invalid event instrument series')
++    cls=INSTRUMENT_CLASSES[spec.instrument]
++    if cls.tau_s or cls.sample_s or cls.spike_per_day or cls.freeze_per_month or spec.transport_lag_s:
++        raise ValueError('event instrument requires explicit zero-lag per-event acquisition; transport belongs to the physical event source')
++    for fault in faults:
++        severity=np.array([fault.severity_at(float(t)) for t in times])
++        readings=readings*(1+severity*fault.magnitude) if fault.mode=='scale' else readings+severity*fault.magnitude
++    rng=seeds.get('instrument/'+spec.name+'/events')
++    width=abs(spec.hi-spec.lo) or 1.
++    if cls.noise_sigma and len(times):
++        white=rng.normal(size=len(times));noise=np.empty(len(times));noise[0]=cls.noise_sigma*width*white[0]
++        for i in range(1,len(times)):
++            a=math.exp(-(times[i]-times[i-1])/cls.noise_tau_s) if cls.noise_tau_s>0 else 0.
++            noise[i]=a*noise[i-1]+cls.noise_sigma*width*math.sqrt(max(0.,1-a*a))*white[i]
++        readings+=noise
++    if cls.drift_per_day:
++        readings+=drift_direction(seeds,spec.name)*cls.drift_per_day*width*times/86400.
++    # Reuse native ADC quantization, after the time-aware noise and drift.
++    quantizer=replace(cls,noise_sigma=0.,drift_per_day=0.)
++    readings=apply_instrument(readings,quantizer,spec.span,1.,rng)
++    readings=np.clip(readings,spec.lo,spec.hi)
++    index=np.searchsorted(times,t_grid,side='right')-1
++    sampled=np.where(index>=0,readings[np.maximum(index,0)],initial) if len(readings) else np.full(len(t_grid),initial)
++    return times,readings,sampled

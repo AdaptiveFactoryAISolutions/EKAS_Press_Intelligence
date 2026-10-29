@@ -1,0 +1,11 @@
+--- a/src/historiansim/challenge.py
++++ b/src/historiansim/challenge.py
+@@ -61,7 +61,7 @@
+             "failed_component": e.get("failed_component", "") if fault else "",
+             "mechanism": e.get("mechanism", "") if fault else "",
+         })
+-    return pd.DataFrame(rows)
++    return pd.DataFrame(rows, columns=["event_id", "kind", "start_utc", "end_utc", "cause_id", "cause", "failed_component", "mechanism"])
+ 
+ 
+ def _neighbour_prefixes() -> str:

@@ -1,0 +1,31 @@
+{
+  "adverse_commit": "5d5dae944f794e148362db75279c39cba7513744",
+  "codeql_analysis_id": 2051185833,
+  "aggregate_check_id": 123271820171,
+  "aggregate_conclusion": "failure",
+  "annotations": {"high": 17, "api_path_sinks": 11, "data_path_sinks": 6},
+  "finding_title": "Uncontrolled data used in path expression",
+  "review": {
+    "ordinary_remote_traversal_exploit_confirmed": false,
+    "existing_controls": "Generated-UUID database lookup, public filename allowlist, symlink rejection, containment and role/frozen-key checks.",
+    "corrupted_database_counterexample_confirmed": true,
+    "counterexample": "A directly corrupted/imported job ID '..', not creatable through the API, exposed a state-root PROCESS_DESCRIPTION.md through artifact lookup before hardening. It now returns404 before filesystem access.",
+    "changes": "Artifact paths use an exact canonical UUID from the durable record. Public names are reconstructed from constants or ASCII numeric tokens. Artifact filenames iterate trusted literals. Response filenames use the resolved basename.",
+    "alerts_suppressed_or_dismissed": false,
+    "new_codeql_clearance": "pending_new_head_scan"
+  },
+  "local_backend": {
+    "passed": 153, "skipped": 0, "returncode": 0,
+    "elapsed_seconds": 144.79984760284424,
+    "provider_invoked": false,
+    "report": "work/native-test-reports/core/fc7bbb96-5303-4e95-b498-e5fc51c931c7/result.json",
+    "report_sha256": "832d05f2665bafe0d139ae8573c29c7b5c61882f79f998b7fa4de2acf5e14580"
+  },
+  "reviewed_source_sha256": {
+    "src/ekas_press_intelligence/native/api.py": "63912d83e43b7abb5100b7a00665e7bb96991631f8787cb06e685f27c2a37f31",
+    "src/ekas_press_intelligence/native/data.py": "7bd00c584ad67b90085951265d1a0a511c172a6606be8a92a7591cb89eea3df7"
+  },
+  "press_qualified": false,
+  "press_gate_evidence": "press/v36-gates.json",
+  "limits": "This is source/path hardening, not proof against arbitrary malicious database contents or concurrent hostile host filesystem mutation. No physical model or native validation threshold changed."
+}

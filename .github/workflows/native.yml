@@ -1,0 +1,41 @@
+name: Native full-stack verification
+permissions:
+  contents: read
+on:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  native:
+    name: Native ${{ matrix.layer }}
+    runs-on: ubuntu-22.04
+    timeout-minutes: 330
+    strategy:
+      fail-fast: false
+      matrix:
+        layer: [core, browser, physics, upstream]
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      EKAS_NATIVE_BLAS_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with: {submodules: recursive, fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12', cache: pip, cache-dependency-path: requirements-lock.txt}
+      - run: sudo apt-get update && sudo apt-get install -y bubblewrap g++ openssl
+      - run: python -m pip install -r requirements-lock.txt
+      - run: python -m pip install --no-deps -e 'vendor/HistorianSim[dev]' -e '.[dev]'
+      - run: bash scripts/verify_upstreams.sh
+      - if: matrix.layer == 'core'
+        run: python -m pip wheel --no-deps --wheel-dir work/wheels ./sdk . && python scripts/verify_distributions.py work/wheels
+      - if: matrix.layer == 'browser'
+        run: python -m playwright install --with-deps chromium
+      - run: python scripts/run_native_tests.py ${{ matrix.layer }} --timeout 18000
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-${{ matrix.layer }}-test-evidence
+          path: work/native-test-reports/
+      - if: always()
+        run: git diff --exit-code --submodule=diff -- vendor

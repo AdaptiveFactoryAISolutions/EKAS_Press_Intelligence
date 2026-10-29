@@ -1,0 +1,34 @@
+#view-report {max-width:1100px;margin:auto;font-size:1.05rem;line-height:1.65;color:#172b3a}
+#view-report h1 {font-size:2rem;line-height:1.25;margin:1rem 0}
+.report-status {padding:.8rem 1rem;background:#fff4ce;border-left:5px solid #b37400;font-weight:700}
+.report-actions {display:flex;flex-wrap:wrap;gap:.7rem;margin-bottom:1rem}
+.report-section {padding:1.4rem 1.7rem;margin:1.2rem 0;background:white;border:1px solid #dce3e9;border-radius:8px}
+.report-section h2 {font-size:1.35rem;line-height:1.3;margin:0 0 1rem}
+.report-section p {max-width:80ch;margin:.7rem 0}
+.report-facts {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.report-facts>div {padding:1rem;background:#eef7f7;border-radius:6px}
+.report-facts strong {font-size:1.45rem}
+.report-facts p {font-size:.9rem;overflow-wrap:anywhere}
+.report-figure {margin:1.5rem 0;padding:1rem;border:1px solid #dce3e9;break-inside:avoid}
+.report-figure svg {display:block;width:100%;height:auto}
+.report-figure h3 {margin:0 0 .8rem;font-size:1.2rem}
+.report-figure figcaption {font-size:.95rem}
+.report-section table {width:100%;border-collapse:collapse;font-size:.95rem}
+.report-section caption {text-align:left;margin-bottom:.7rem}
+.report-section th,.report-section td {text-align:left;padding:.6rem;border-bottom:1px solid #dce3e9;overflow-wrap:anywhere}
+.report-section dt {font-weight:700;margin-top:1rem}
+.report-section dd {margin-left:0}
+.report-section pre {white-space:pre-wrap;overflow-wrap:anywhere;font-size:.8rem}
+@media(max-width:650px){.report-facts{grid-template-columns:1fr}.report-section{padding:1rem}.report-section table{font-size:.8rem}}
+@media print {
+  @page {margin:15mm;size:A4}
+  .topbar,.sidebar,.report-actions,#notice,#error {display:none!important}
+  body,.shell,main,#view-report {display:block!important;margin:0!important;padding:0!important;background:white!important;width:auto!important;max-width:none!important}
+  .view[hidden],#view-report[hidden] {display:none!important}
+  .report-section {border:0;border-radius:0;padding:0;margin:1rem 0;box-shadow:none}
+  .report-section h2,.report-section h3 {break-after:avoid}
+  .report-figure,.report-facts,table tr {break-inside:avoid}
+  #view-report {font-size:10.5pt;line-height:1.5}
+  .report-status {border:1px solid #777}
+  details pre {font-size:8pt}
+}

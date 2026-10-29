@@ -1,0 +1,149 @@
+{
+  "console_errors": [
+    "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+    "Loading the image 'blob:http://127.0.0.1:58439/44128118-f11b-415a-b997-35e0e5c4e024' violates the following Content Security Policy directive: \"img-src 'self' data:\". The action has been blocked."
+  ],
+  "page_errors": [],
+  "requests": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:58439/"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:58439/native/app.css"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:58439/native/app.js"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:58439/v2/health"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:58439/v2/health"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:58439/v2/capabilities"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:58439/v2/datasets"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:58439/v2/datasets/historianrca"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:58439/v2/datasets/historianrca/tags"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:58439/v2/datasets/historianrca/files"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:58439/v2/jobs"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:58439/v2/datasets/historianrca/samples?tags=AI-101&source=raw&max_points=2000"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:58439/v2/datasets/historianrca/samples?tags=AI-101&source=grid&max_points=2000"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:58439/v2/datasets/historianrca/files/tags.csv"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:58439/v2/datasets/historianrca/files/PROCESS_DESCRIPTION.md"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:58439/v2/datasets/historianrca/files/tk-101-hold-tank.png"
+    },
+    {
+      "method": "GET",
+      "url": "blob:http://127.0.0.1:58439/44128118-f11b-415a-b997-35e0e5c4e024"
+    }
+  ],
+  "responses": [
+    {
+      "url": "http://127.0.0.1:58439/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:58439/native/app.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:58439/native/app.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:58439/v2/health",
+      "status": 401
+    },
+    {
+      "url": "http://127.0.0.1:58439/v2/health",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:58439/v2/capabilities",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:58439/v2/datasets",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:58439/v2/datasets/historianrca",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:58439/v2/datasets/historianrca/tags",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:58439/v2/datasets/historianrca/files",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:58439/v2/jobs",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:58439/v2/datasets/historianrca/samples?tags=AI-101&source=raw&max_points=2000",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:58439/v2/datasets/historianrca/samples?tags=AI-101&source=grid&max_points=2000",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:58439/v2/datasets/historianrca/files/tags.csv",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:58439/v2/datasets/historianrca/files/PROCESS_DESCRIPTION.md",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:58439/v2/datasets/historianrca/files/tk-101-hold-tank.png",
+      "status": 200
+    }
+  ],
+  "request_failures": [
+    {
+      "url": "blob:http://127.0.0.1:58439/44128118-f11b-415a-b997-35e0e5c4e024",
+      "failure": "csp"
+    }
+  ]
+}

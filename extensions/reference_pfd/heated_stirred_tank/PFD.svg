@@ -1,0 +1,203 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2500" height="2250" viewBox="0 0 2500 2250" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif">
+<rect width="2500" height="2250" fill="#ffffff"/>
+<rect x="20" y="20" width="2460" height="2210" fill="none" stroke="#b8bec7" stroke-width="1"/>
+<text x="45" y="60" font-size="21" font-weight="bold" fill="#111418" text-anchor="start">TK-101 / NATIVE REFERENCE PROCESS</text>
+<text x="45" y="82" font-size="11.5" font-weight="normal" fill="#5a6472" text-anchor="start">Conceptual PFD | native tags and control topology | no event or cause information</text>
+<rect x="2278" y="42" width="177" height="24" fill="none" stroke="#b02418" stroke-width="1.4"/>
+<text x="2366" y="59" font-size="11" font-weight="bold" fill="#b02418" text-anchor="middle" letter-spacing="0.4">NOT FOR CONSTRUCTION</text>
+<path d="M 766,500 L 1054,500 Q 1080,500 1080,526 L 1080,974 Q 1080,1000 1054,1000 L 766,1000 Q 740,1000 740,974 L 740,526 Q 740,500 766,500 Z" fill="#f7f8fa" stroke="#343a46" stroke-width="2.2" stroke-linejoin="miter"/>
+<path d="M 740,650 L 1080,650 L 1080,974 Q 1080,1000 1054,1000 L 766,1000 Q 740,1000 740,974 Z" fill="#dce8f5"/>
+<line x1="746" y1="650" x2="1074" y2="650" stroke="#1d4e89" stroke-width="1.2" stroke-dasharray="7,5"/>
+<polygon class="arrowhead" points="800,500 794.5,487.0 805.5,487.0" fill="#1d4e89"/>
+<path d="M 60,430 L 800,430 L 800,492.2" fill="none" stroke="#1d4e89" stroke-width="2.4" stroke-linejoin="round"/>
+<polygon class="arrowhead" points="740,800 727.0,805.5 727.0,794.5" fill="#a34a28"/>
+<path d="M 60,800 L 732.2,800" fill="none" stroke="#a34a28" stroke-width="2.4" stroke-linejoin="round"/>
+<polygon class="arrowhead" points="1540,900 1527.0,905.5 1527.0,894.5" fill="#a34a28"/>
+<path d="M 1010,900 L 1532.2,900" fill="none" stroke="#a34a28" stroke-width="2.4" stroke-linejoin="round"/>
+<polygon class="arrowhead" points="1540,1060 1527.0,1065.5 1527.0,1054.5" fill="#1d4e89"/>
+<path d="M 920,1000 L 920,1060 L 1532.2,1060" fill="none" stroke="#1d4e89" stroke-width="2.4" stroke-linejoin="round"/>
+<path d="M 740,800 L 790,800 L 790,835 L 1010,835 L 1010,865 L 790,865 L 790,900 L 1010,900" fill="none" stroke="#a34a28" stroke-width="2.4" stroke-linejoin="round"/>
+<rect x="892" y="456" width="56" height="44" fill="#ffffff" stroke="#343a46" stroke-width="1.6"/>
+<text x="920" y="485" font-size="15" font-weight="bold" fill="#111418" text-anchor="middle">M</text>
+<line x1="920" y1="500" x2="920" y2="760" stroke="#343a46" stroke-width="2"/>
+<path d="M 888,764 L 916,746 L 916,755 L 888,773 Z" fill="#343a46"/>
+<path d="M 952,764 L 924,746 L 924,755 L 952,773 Z" fill="#343a46"/>
+<text x="962" y="482" font-size="10.5" font-weight="bold" fill="#111418" text-anchor="start">Agitator</text>
+<text x="910" y="970" font-size="14" font-weight="bold" fill="#111418" text-anchor="middle">TK-101</text>
+<text x="910" y="988" font-size="10" font-weight="normal" fill="#5a6472" text-anchor="middle" letter-spacing="0.4">Heated stirred hold tank</text>
+<text x="795" y="935" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">E-101 submerged steam coil</text>
+<text x="60" y="382" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">FROM UPSTREAM STORAGE / P-100</text>
+<text x="60" y="402" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">15 m3/h | 25 degC | top entry</text>
+<text x="60" y="750" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">FROM SHARED STEAM HEADER</text>
+<text x="60" y="770" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">6 barg | saturated steam</text>
+<text x="1315" y="960" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">TO CONDENSATE RETURN</text>
+<text x="1270" y="1130" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">TO DOWNSTREAM RECOVERY</text>
+<rect x="1196.0" y="886.0" width="28" height="28" fill="#ffffff" stroke="#343a46" stroke-width="1.5"/>
+<line x1="1196.0" y1="914.0" x2="1224.0" y2="886.0" stroke="#343a46" stroke-width="1.5"/>
+<text x="1210" y="936.0" font-size="10" font-weight="bold" fill="#111418" text-anchor="middle">Condensate trap</text>
+<circle cx="140" cy="800" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="140" y="798" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">PI</text>
+<text x="140" y="812" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">201</text>
+<circle cx="220" cy="800" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="220" y="798" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">TI</text>
+<text x="220" y="812" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">201</text>
+<circle cx="500" cy="800" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="500" y="798" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">FT</text>
+<text x="500" y="812" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">201</text>
+<circle cx="330" cy="430" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="330" y="428" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">FI</text>
+<text x="330" y="442" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">101</text>
+<circle cx="480" cy="430" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="480" y="428" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">TI</text>
+<text x="480" y="442" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">100</text>
+<circle cx="1370" cy="900" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="1370" y="898" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">TI</text>
+<text x="1370" y="912" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">202</text>
+<circle cx="1300" cy="1060" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="1300" y="1058" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">FI</text>
+<text x="1300" y="1072" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">102</text>
+<circle cx="1400" cy="1060" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="1400" y="1058" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">TI</text>
+<text x="1400" y="1072" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">102</text>
+<circle cx="1500" cy="1060" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="1500" y="1058" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">AI</text>
+<text x="1500" y="1072" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">101</text>
+<line x1="740" y1="700" x2="722" y2="700" stroke="#343a46" stroke-width="1.2"/>
+<circle cx="700" cy="700" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="700" y="698" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">TT</text>
+<text x="700" y="712" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">101</text>
+<line x1="1080" y1="700" x2="1098" y2="700" stroke="#343a46" stroke-width="1.2"/>
+<circle cx="1120" cy="700" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="1120" y="698" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">LT</text>
+<text x="1120" y="712" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">101</text>
+<line x1="1080" y1="740" x2="1158" y2="740" stroke="#343a46" stroke-width="1.2"/>
+<circle cx="1180" cy="740" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="1180" y="738" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">LI</text>
+<text x="1180" y="752" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">102</text>
+<circle cx="1440" cy="160" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="1440" y="158" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">TI</text>
+<text x="1440" y="172" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">901</text>
+<text x="1370" y="207" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">Ambient air</text>
+<polygon class="arrowhead" points="700,282 704.0,292.0 696.0,292.0" fill="#50565f"/>
+<path d="M 700,678 L 700,288" fill="none" stroke="#50565f" stroke-width="1.35" stroke-dasharray="7,5.5"/>
+<polygon class="arrowhead" points="472,260 482.0,256.0 482.0,264.0" fill="#50565f"/>
+<path d="M 678,260 L 478,260" fill="none" stroke="#50565f" stroke-width="1.35" stroke-dasharray="7,5.5"/>
+<text x="490" y="218" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">CASCADE SP: FIC-201.SP = 30 x TIC-101.OP</text>
+<polygon class="arrowhead" points="450,282 454.0,292.0 446.0,292.0" fill="#50565f"/>
+<path d="M 500,778 L 500,740 L 450,740 L 450,288" fill="none" stroke="#50565f" stroke-width="1.35" stroke-dasharray="7,5.5"/>
+<polygon class="arrowhead" points="300,768 296.0,758.0 304.0,758.0" fill="#50565f"/>
+<path d="M 428,260 L 300,260 L 300,762" fill="none" stroke="#50565f" stroke-width="1.35" stroke-dasharray="7,5.5"/>
+<polygon class="arrowhead" points="1238,700 1228.0,704.0 1228.0,696.0" fill="#50565f"/>
+<path d="M 1142,700 L 1232,700" fill="none" stroke="#50565f" stroke-width="1.35" stroke-dasharray="7,5.5"/>
+<polygon class="arrowhead" points="1180,1028 1176.0,1018.0 1184.0,1018.0" fill="#50565f"/>
+<path d="M 1260,722 L 1260,980 L 1180,980 L 1180,1022" fill="none" stroke="#50565f" stroke-width="1.35" stroke-dasharray="7,5.5"/>
+<rect x="678" y="238" width="44" height="44" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<circle cx="700" cy="260" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="700" y="258" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">TIC</text>
+<text x="700" y="272" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">101</text>
+<rect x="428" y="238" width="44" height="44" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<circle cx="450" cy="260" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="450" y="258" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">FIC</text>
+<text x="450" y="272" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">201</text>
+<rect x="1238" y="678" width="44" height="44" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<circle cx="1260" cy="700" r="22" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="1260" y="698" font-size="11.5" font-weight="bold" fill="#111418" text-anchor="middle">LIC</text>
+<text x="1260" y="712" font-size="10" font-weight="normal" fill="#111418" text-anchor="middle">101</text>
+<path d="M 282,788 L 282,812 L 300,800 Z" fill="#ffffff" stroke="#343a46" stroke-width="1.6" stroke-linejoin="miter"/>
+<path d="M 318,788 L 318,812 L 300,800 Z" fill="#ffffff" stroke="#343a46" stroke-width="1.6" stroke-linejoin="miter"/>
+<line x1="300" y1="800" x2="300" y2="780" stroke="#343a46" stroke-width="1.4"/>
+<rect x="286" y="762" width="28" height="12" rx="6" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="300" y="862" font-size="10.5" font-weight="bold" fill="#111418" text-anchor="middle">TV-101  (FC*)</text>
+<path d="M 1162,1048 L 1162,1072 L 1180,1060 Z" fill="#ffffff" stroke="#343a46" stroke-width="1.6" stroke-linejoin="miter"/>
+<path d="M 1198,1048 L 1198,1072 L 1180,1060 Z" fill="#ffffff" stroke="#343a46" stroke-width="1.6" stroke-linejoin="miter"/>
+<line x1="1180" y1="1060" x2="1180" y2="1040" stroke="#343a46" stroke-width="1.4"/>
+<rect x="1166" y="1022" width="28" height="12" rx="6" fill="#ffffff" stroke="#343a46" stroke-width="1.4"/>
+<text x="1180" y="1122" font-size="10.5" font-weight="bold" fill="#111418" text-anchor="middle">LV-101  (FL*)</text>
+<text x="780" y="330" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">Master: AUTO / reverse action / 75 degC</text>
+<text x="60" y="320" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">Slave: CAS / reverse action</text>
+<text x="60" y="340" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">Steam mass flow</text>
+<text x="1320" y="740" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">AUTO / direct / 2 m</text>
+<text x="1630" y="135" font-size="14" font-weight="normal" fill="#111418" text-anchor="start">COMPLETE NATIVE HISTORIAN TAG REGISTER</text>
+<text x="1630" y="160" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">30 actual native tags; controller modes 0 MAN / 1 AUTO / 2 CAS</text>
+<text x="1630" y="205" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">TIC-101.PV</text>
+<text x="1825" y="205" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Tank temperature [degC]</text>
+<text x="1630" y="250" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">TIC-101.SP</text>
+<text x="1825" y="250" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Tank temperature setpoint [degC]</text>
+<text x="1630" y="295" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">TIC-101.OP</text>
+<text x="1825" y="295" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Tank temperature controller output [%]</text>
+<text x="1630" y="340" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">TIC-101.MODE</text>
+<text x="1825" y="340" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Tank temperature controller mode [-]</text>
+<text x="1630" y="385" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">FIC-201.PV</text>
+<text x="1825" y="385" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Steam flow to coil [kg/h]</text>
+<text x="1630" y="430" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">FIC-201.SP</text>
+<text x="1825" y="430" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Steam flow setpoint [kg/h]</text>
+<text x="1630" y="475" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">FIC-201.OP</text>
+<text x="1825" y="475" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Steam valve demand [%]</text>
+<text x="1630" y="520" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">FIC-201.MODE</text>
+<text x="1825" y="520" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Steam flow controller mode [-]</text>
+<text x="1630" y="565" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">LIC-101.PV</text>
+<text x="1825" y="565" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Tank level [m]</text>
+<text x="1630" y="610" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">LIC-101.SP</text>
+<text x="1825" y="610" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Tank level setpoint [m]</text>
+<text x="1630" y="655" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">LIC-101.OP</text>
+<text x="1825" y="655" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Outlet valve demand [%]</text>
+<text x="1630" y="700" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">LIC-101.MODE</text>
+<text x="1825" y="700" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Level controller mode [-]</text>
+<text x="1630" y="745" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">TV-101.POS</text>
+<text x="1825" y="745" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Steam valve position feedback [%]</text>
+<text x="1630" y="790" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">LV-101.POS</text>
+<text x="1825" y="790" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Outlet valve position feedback [%]</text>
+<text x="1630" y="835" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">FI-101</text>
+<text x="1825" y="835" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Feed flow from upstream storage [m3/h]</text>
+<text x="1630" y="880" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">TI-100</text>
+<text x="1825" y="880" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Feed temperature [degC]</text>
+<text x="1630" y="925" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">FI-102</text>
+<text x="1825" y="925" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Product flow [m3/h]</text>
+<text x="1630" y="970" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">TI-102</text>
+<text x="1825" y="970" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Product line temperature [degC]</text>
+<text x="1630" y="1015" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">LI-102</text>
+<text x="1825" y="1015" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Tank level, redundant transmitter [m]</text>
+<text x="1630" y="1060" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">PI-201</text>
+<text x="1825" y="1060" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Steam header pressure [barg]</text>
+<text x="1630" y="1105" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">TI-201</text>
+<text x="1825" y="1105" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Steam saturation temperature [degC]</text>
+<text x="1630" y="1150" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">TI-202</text>
+<text x="1825" y="1150" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Condensate return temperature [degC]</text>
+<text x="1630" y="1195" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">TI-901</text>
+<text x="1825" y="1195" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Ambient temperature [degC]</text>
+<text x="1630" y="1240" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">AI-101</text>
+<text x="1825" y="1240" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Product purity analyzer (desired product in dissolved organics)</text>
+<text x="1825" y="1254" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">[%]</text>
+<text x="1630" y="1285" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">CALC-DUTY</text>
+<text x="1825" y="1285" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Coil duty, steam side [kW]</text>
+<text x="1630" y="1330" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">CALC-DUTY-PROC</text>
+<text x="1825" y="1330" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Coil duty, process side [kW]</text>
+<text x="1630" y="1375" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">CALC-EBAL</text>
+<text x="1825" y="1375" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Energy balance gap, steam minus process [kW]</text>
+<text x="1630" y="1420" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">CALC-UA</text>
+<text x="1825" y="1420" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Back-calculated coil UA [W/K]</text>
+<text x="1630" y="1465" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">CALC-APPROACH</text>
+<text x="1825" y="1465" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Steam to bulk approach [K]</text>
+<text x="1630" y="1510" font-size="11" font-weight="bold" fill="#111418" text-anchor="start">CALC-MBAL</text>
+<text x="1825" y="1510" font-size="10.5" font-weight="normal" fill="#5a6472" text-anchor="start">Mass balance residual [m3/h]</text>
+<text x="60" y="1540" font-size="14" font-weight="normal" fill="#111418" text-anchor="start">NATIVE CONTROL CONTRACT / EXACT PARAMETER REGISTER</text>
+<text x="60" y="1570" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">TIC-101: PV source TI-101; MV TIC-101.OUT; mode AUTO; SP 75; reverse</text>
+<text x="85" y="1593" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">Output cascades to FIC-201; remote-SP range is declared by the slave sp_limits.</text>
+<text x="60" y="1623" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">FIC-201: PV source FI-201; MV TV-101; mode CAS; SP 1533.1; reverse</text>
+<text x="60" y="1653" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">LIC-101: PV source LI-101; MV LV-101; mode AUTO; SP 2; direct</text>
+<text x="60" y="1701" font-size="13" font-weight="normal" fill="#111418" text-anchor="start">DESIGN BASIS / MAPPING / ASSUMPTIONS</text>
+<text x="60" y="1726" font-size="11" font-weight="normal" fill="#111418" text-anchor="start">TK-101: feed15 m3/h; bulk75 degC; level2 m; steam6 barg; native equilibrium computes required steam flow.</text>
+<text x="60" y="1751" font-size="10.5" font-weight="normal" fill="#111418" text-anchor="start">TT-101 = native TI-101 source of TIC-101.PV; FT-201 = native FI-201 source of FIC-201.PV.</text>
+<text x="60" y="1776" font-size="10.5" font-weight="normal" fill="#111418" text-anchor="start">LT-101 = native LI-101 source of LIC-101.PV. LI-102 is independent indication, never a voting input.</text>
+<text x="60" y="1801" font-size="10.5" font-weight="normal" fill="#111418" text-anchor="start">Valve .POS tags are measured stem feedback; controller .OP tags are demand, not the same observation.</text>
+<text x="60" y="1826" font-size="10.5" font-weight="normal" fill="#111418" text-anchor="start">Steam trap, piping elevations and valve failure positions (*) are conceptual engineering assumptions.</text>
+<text x="60" y="1851" font-size="10.5" font-weight="normal" fill="#111418" text-anchor="start">FC steam stops heat input; FL product avoids asserting an unmodelled automatic release on loss of air.</text>
+<text x="60" y="1881" font-size="10.5" font-weight="normal" fill="#111418" text-anchor="start">Conceptual only: relief, isolation, vents, drains, line numbers, insulation and equipment sizing omitted.</text>
+<line x1="60" y1="2170" x2="105" y2="2170" stroke="#1d4e89" stroke-width="2.8"/>
+<text x="115" y="2175" font-size="12" font-weight="normal" fill="#5a6472" text-anchor="start">Process liquid</text>
+<line x1="360" y1="2170" x2="405" y2="2170" stroke="#a34a28" stroke-width="2.8"/>
+<text x="415" y="2175" font-size="12" font-weight="normal" fill="#5a6472" text-anchor="start">Steam / condensate</text>
+<line x1="660" y1="2170" x2="705" y2="2170" stroke="#50565f" stroke-width="1.6" stroke-dasharray="7,5.5"/>
+<text x="715" y="2175" font-size="12" font-weight="normal" fill="#5a6472" text-anchor="start">DCS / instrument signal</text>
+<text x="2445" y="2210" font-size="9" font-weight="normal" fill="#5a6472" text-anchor="end">R6 | pinned upstream reference | generated from native contracts</text>
+</svg>

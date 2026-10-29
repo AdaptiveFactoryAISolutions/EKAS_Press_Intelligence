@@ -6,3 +6,7 @@ vendor/HistorianSim/
 vendor/HistorianRCA/
 output/
 .env
+work/
+*.egg-info/
+dist/
+build/

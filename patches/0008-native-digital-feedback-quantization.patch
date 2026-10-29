@@ -1,0 +1,40 @@
+--- a/src/historiansim/pipeline.py
++++ b/src/historiansim/pipeline.py
+@@ -93,6 +93,7 @@
+     signal_for_tag = {t.name: t.source for t in specs if t.source}
+     controlled = {loop.pv_source for loop in cfg.loops}
+ 
++    quantizers: dict[str, float] = {}
+     offsets: dict[str, np.ndarray] = {}
+     scales: dict[str, np.ndarray] = {}
+     t_grid = np.arange(n_steps, dtype=float) * dt
+@@ -102,6 +103,11 @@
+         if spec.role != "PV" or spec.loop not in loop_names:
+             continue
+         cls = INSTRUMENT_CLASSES[spec.instrument]
++        # A zero-lag, noiseless digital pulse acquisition reports ADC codes
++        # to the controller as well as the historian. Existing analogue
++        # reference instruments retain their original path exactly.
++        if spec.source in controlled and cls.tau_s == 0 and cls.noise_sigma == 0 and cls.lsb > 0 and cls.sample_s == 0:
++            quantizers[spec.source] = cls.lsb * (spec.hi - spec.lo)
+         if spec.source not in controlled or cls.drift_per_day == 0.0:
+             continue
+         offsets[spec.source] = offsets.get(spec.source, np.zeros(n_steps)) + (
+@@ -125,7 +131,7 @@
+                 severity * fault.magnitude
+             )
+ 
+-    if not offsets and not scales:
++    if not offsets and not scales and not quantizers:
+         return None
+ 
+     def sensor_fn(true_sig: dict[str, float], k: int) -> dict[str, float]:
+@@ -134,6 +140,8 @@
+             seen[name] = seen[name] * arr[k]
+         for name, arr in offsets.items():
+             seen[name] = seen[name] + arr[k]
++        for name, step in quantizers.items():
++            seen[name] = float(np.round(seen[name] / step) * step)
+         return seen
+ 
+     return sensor_fn

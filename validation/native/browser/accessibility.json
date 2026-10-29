@@ -1,0 +1,12 @@
+{
+  "checks": [
+    "language",
+    "one main",
+    "visible h1",
+    "control names",
+    "mobile overflow",
+    "dialog Escape",
+    "keyboard skip"
+  ],
+  "scope": "Structural and keyboard checks, not complete WCAG certification."
+}

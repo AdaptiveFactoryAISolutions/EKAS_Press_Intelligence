@@ -1,0 +1,65 @@
+--- a/src/historiansim/pipeline.py
++++ b/src/historiansim/pipeline.py
+@@ -307,6 +307,11 @@
+             public = pd.DataFrame({"timestamp": dataset.index, **{tag: dataset.measured.values[tag] for tag in event_tags}})
+             public.to_parquet(out_dir / layout.CYCLE_EVENTS, index=False)
+ 
++    from historiansim.measurement.events import public_status_journal
++    journal = public_status_journal(dataset.truth.events, dataset.measured, dataset.index[0])
++    if journal is not None:
++        journal.to_parquet(out_dir / layout.CYCLE_EVENT_JOURNAL, index=False)
++
+     equipment = get_plant(dataset.cfg.unit).equipment
+     build_tag_master(dataset.measured, equipment).to_csv(out_dir / layout.TAGS, index=False)
+ 
+--- a/src/historiansim/layout.py
++++ b/src/historiansim/layout.py
+@@ -45,7 +45,8 @@
+ #: has one. It shows the plant only, so it also goes into a challenge folder.
+ PFD_FILES = ("PFD.svg", "PFD.png")
+ CYCLE_EVENTS = "cycle_events.parquet"
+-OPTIONAL_PUBLIC_FILES = (CYCLE_EVENTS,)
++CYCLE_EVENT_JOURNAL = "cycle_event_journal.parquet"
++OPTIONAL_PUBLIC_FILES = (CYCLE_EVENTS, CYCLE_EVENT_JOURNAL)
+ 
+ 
+ def metadata_file(dataset_dir: Path, name: str) -> Path:
+--- /dev/null
++++ b/src/historiansim/measurement/events.py
+@@ -0,0 +1,36 @@
++"""Optional digital event acquisition, independent of analogue scan interpolation.
++
++A source must explicitly project safe digital fields and associate each event
++code with an actual status tag. The 1ms PLC clock is quantized independently of
++scan time; native acquisition quality at the event's preceding scan masks bad
++or uncertain payloads. No geometry, inspection result or private ledger is read.
++"""
++from __future__ import annotations
++import numpy as np
++import pandas as pd
++
++def public_status_journal(events, measured, origin):
++    project = getattr(events, "public_status_columns", None)
++    if not callable(project):
++        return None
++    times, codes, counts, status_tags = project()
++    times = np.asarray(times, dtype=float)
++    codes = np.asarray(codes, dtype=np.int8).copy()
++    counts = np.asarray(counts, dtype=float).copy()
++    if not (len(times) == len(codes) == len(counts)) or not np.all(np.isfinite(times)) or np.any(times < 0) or np.any(np.diff(times) < 0):
++        raise ValueError("invalid digital event acquisition columns")
++    quality = np.full(len(times), 2, dtype=np.uint8)
++    scan = np.minimum((times / measured.dt).astype(np.int64), measured.n - 1)
++    for code, tag in status_tags.items():
++        mask = codes == code
++        if tag in measured.quality and tag in measured.values:
++            quality[mask] = measured.quality[tag][scan[mask]]
++            invalid = ~np.isfinite(measured.values[tag][scan[mask]])
++            selected = np.flatnonzero(mask)
++            quality[selected[invalid]] = 2
++    hidden = quality != 0
++    codes[hidden] = -1
++    counts[hidden] = np.nan
++    clock_ns = np.rint(times * 1000).astype(np.int64) * 1000000
++    return pd.DataFrame({"timestamp": pd.Timestamp(origin) + pd.to_timedelta(clock_ns, unit="ns"),
++                         "event_code": codes, "count": counts, "quality": quality})

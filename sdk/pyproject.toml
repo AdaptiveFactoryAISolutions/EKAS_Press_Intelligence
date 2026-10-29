@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ekas-historian-client"
+version = "2.0.0.dev0"
+description = "HTTP-only EKAS native historian SDK"
+requires-python = ">=3.11"
+dependencies = ["httpx>=0.27,<1"]
+
+[tool.setuptools.packages.find]
+where = ["../src"]
+include = ["ekas_historian_client"]

@@ -1,0 +1,107 @@
+{
+  "recorded_at": "2026-10-29T03:21:31.790603+00:00",
+  "command": "PLAYWRIGHT_BROWSERS_PATH=work/browsers work/venv/bin/python -m pytest tests/test_native_browser.py -q --tb=short --junitxml=validation/native/browser/observability-events-junit.xml",
+  "result": {
+    "tests": "8",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "57.796"
+  },
+  "cases": [
+    "test_original_dataset_raw_grid_metadata_download_and_external_score",
+    "test_native_jobs_failure_and_durable_reload",
+    "test_cancel_native_generation",
+    "test_analyst_evaluator_boundary_and_submission_validation",
+    "test_mobile_keyboard_dialog_and_accessible_controls",
+    "test_native_full_range_plot_job_and_original_png",
+    "test_provider_workflow_forms_real_preflight_failure_and_evaluator_boundary",
+    "test_event_acquisition_contract_and_actual_observability_export"
+  ],
+  "source_files_sha256": {
+    "src/ekas_press_intelligence/native_ui/index.html": "ea3deceab9a81e39a1cbaa14e31cac04dd89e37dba3ed0210dca942fdd329331",
+    "src/ekas_press_intelligence/native_ui/app.js": "1ada3dc463cd6cbf1b904e33750ec480bdc2e16bc12fb293c463ba3480175d64",
+    "src/ekas_press_intelligence/native_ui/app.css": "2d7c1a25a1594039850838205b8274a227d351b0cab61d17a89b88241d1f7ab1",
+    "tests/test_native_browser.py": "949921fd48ba959134a46837239a17bd377aaf1a830709c41938ee36094769ef"
+  },
+  "browser_route_mocks": false,
+  "event_fixture_scope": "Explicitly labeled shape-valid Parquet acquisition contract fixture, registered only in isolated test state. Not a native simulation, physical dataset or native qualification.",
+  "actual_observability_scope": "Actual service job exports sparse observations from complete original HistorianRCA public data, registers UNVALIDATED derived dataset, opens its source availability/provenance, and rejects enhanced restoration from sparse source.",
+  "verified_event_behavior": [
+    "Source journal versus native scan status is explicit",
+    "UTC nanosecond interval boundaries passed through HTTP unchanged",
+    "Quality0/1/2 retained",
+    "Event code-1 retained",
+    "Masked counter null retained, never converted to zero",
+    "Truncation/prefix and no aggregation disclosed",
+    "Status/counters not expanded into individual strokes"
+  ],
+  "diagnostics": {
+    "explorer-network.json": {
+      "request_count": 18,
+      "response_count": 18,
+      "page_errors": [],
+      "request_failures": [],
+      "console_errors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ],
+      "observed_http_errors": [
+        {
+          "url": "http://127.0.0.1:46135/v2/health",
+          "status": 401
+        },
+        {
+          "url": "http://127.0.0.1:46135/v2/datasets/historianrca/submission",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:46135/v2/datasets/historianrca/score",
+          "status": 409
+        }
+      ]
+    },
+    "native-plot-network.json": {
+      "request_count": 20,
+      "response_count": 20,
+      "page_errors": [],
+      "request_failures": [],
+      "console_errors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "observed_http_errors": [
+        {
+          "url": "http://127.0.0.1:46135/v2/health",
+          "status": 401
+        }
+      ]
+    },
+    "observability-events-network.json": {
+      "request_count": 41,
+      "response_count": 41,
+      "page_errors": [],
+      "request_failures": [],
+      "console_errors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "observed_http_errors": [
+        {
+          "url": "http://127.0.0.1:46135/v2/health",
+          "status": 401
+        }
+      ]
+    }
+  },
+  "screenshots_inspected": [
+    "event-journal-contract-fixture.png",
+    "actual-sparse-observability-export.png"
+  ],
+  "limitations": [
+    "No native press qualification inferred from event fixtures or browser acceptance.",
+    "No provider-success qualification; provider UI flow exercises actual invalid-model preflight rejection and evaluator/external-key boundary.",
+    "Original benchmark official scoring remains externally unavailable.",
+    "Structural/keyboard/mobile browser checks do not establish full WCAG certification.",
+    "Backend source is still under coordinated development; root must consolidate final evidence after freeze."
+  ]
+}

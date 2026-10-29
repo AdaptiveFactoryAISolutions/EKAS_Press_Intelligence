@@ -1,0 +1,42 @@
+{
+  "qualified": false,
+  "runtime_manifest_sha256": "b616b57d1c099669e5ed10368365de7f0e5bdd6183ef77a0a340bc2b80304076",
+  "stages": {"1": "passed", "2": "passed", "3": "passed", "4": "passed", "5": "failed"},
+  "stage34_full_exposure_days": 14,
+  "stage34_cause_count": 19,
+  "stage34_elapsed_seconds": 307.91,
+  "stage5_numerical_library_threads": 1,
+  "stage5_checks": {
+    "not_trivially_detectable": "passed",
+    "solvable": "passed",
+    "physical_bounds": "passed",
+    "no_range_clamping": "passed",
+    "mass_balance": "passed",
+    "control_variance_ratio": "passed",
+    "noise_is_colored": "failed",
+    "transport_lag": "passed",
+    "pca_dimensionality": "passed",
+    "historian_irregularity": "passed",
+    "frozen_values": "passed",
+    "correlated_dropouts": "passed",
+    "no_fault_twin": "passed",
+    "baseline_settled": "passed",
+    "recipe": "warning"
+  },
+  "adverse_observation": {
+    "instrument_classes": ["pulse_speed", "pulse_position"],
+    "median_correlation_seconds": 10,
+    "scan_seconds": 10,
+    "native_requirement": "Each included class median must be greater than the scan interval.",
+    "interpretation": "Declared ideal quantization-only digital acquisition is incompatible with this unchanged generic statistical gate; no arbitrary noise or gate exemption has been introduced."
+  },
+  "pca": {"components_for_95_percent_variance": 25, "analog_tags": 41},
+  "matrix_513_cases": "not_started_gate_held",
+  "six_full_90day_press_runs": "not_started_gate_held",
+  "artifacts": [
+    {"path": "work/press-stage5-v36.log", "sha256": "f971364ec50f585291abf81f4b048f3e822d18d66a290115c456c39c87817f63", "bytes": 3113},
+    {"path": "work/press-stages34-v36.log", "sha256": "7e150f7989f47d0d294511404c94547df16e81fe16d32ce12d39a65b98abcbda", "bytes": 7613},
+    {"path": "work/press-sweep-v36.json", "sha256": "df83a544e2c61f1b3652e0a427679e8776f490a990955b9cb6e8b0fc410fcd46", "bytes": 20586}
+  ],
+  "scope": "Engineering/source qualification evidence only. No blind solution or private generated answer key is published. The interrupted oversubscribed attempt is separate adverse execution evidence."
+}

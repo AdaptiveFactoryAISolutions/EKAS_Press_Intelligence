@@ -1,0 +1,253 @@
+{
+  "job_id": "14d6aa0d-62e8-4226-ac52-c8e001283640",
+  "state": "succeeded",
+  "operation": "generate",
+  "parameters": {
+    "profile": "standard",
+    "scenario": "tank-rca",
+    "seed": 7,
+    "validate": true
+  },
+  "created_at": "2026-10-29T01:38:37.991130+00:00",
+  "completed_at": "2026-10-29T01:55:46.062831+00:00",
+  "runtime_kind": "verified_native_reference",
+  "upstream_commit": "14e616c382a9db8026cbb4ab86bdd803d56ca72e",
+  "validation": [
+    {
+      "name": "not_trivially_detectable",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "name": "solvable",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "name": "physical_bounds",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "name": "no_range_clamping",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "name": "mass_balance",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "name": "control_variance_ratio",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "name": "noise_is_colored",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "name": "transport_lag",
+      "passed": true,
+      "severity": "warn"
+    },
+    {
+      "name": "pca_dimensionality",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "name": "historian_irregularity",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "name": "frozen_values",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "name": "correlated_dropouts",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "name": "no_fault_twin",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "name": "baseline_settled",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "name": "recipe",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "name": "dataset_layout",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "name": "no_answer_leak",
+      "passed": true,
+      "severity": "error"
+    }
+  ],
+  "validation_performed": true,
+  "passed": true,
+  "capacity": {
+    "configured_limit_bytes": 12000000000,
+    "duration_days": 90.0,
+    "estimated_bytes": 8957952000,
+    "steps": 777600
+  },
+  "resample": {
+    "native_challenge_canonical_60s_added": false,
+    "requested_seconds": 60.0
+  },
+  "public_files": [
+    {
+      "name": "CHALLENGE.md",
+      "sha256": "4edeef3e0305092b99c99b7034d2ed896099f3a152cc8b85fade45746971b0a6",
+      "size_bytes": 4945
+    },
+    {
+      "name": "PFD.png",
+      "sha256": "ce864da7edcf178b243951dac6ec2b625c973e1ec82297bb159285c651a5c0b3",
+      "size_bytes": 365470
+    },
+    {
+      "name": "PFD.svg",
+      "sha256": "2ec05560eb76f9c5afd6da9b4dadc882f2a26a027894ffc2c0554efb1939cefe",
+      "size_bytes": 23490
+    },
+    {
+      "name": "PROCESS_DESCRIPTION.md",
+      "sha256": "6db1f5ebca6793b02bb580c2300ca99270c967dd8ec3eba75490554987cecdaa",
+      "size_bytes": 24667
+    },
+    {
+      "name": "historian_10s.parquet",
+      "sha256": "233a400573d79a21dd180cf470984d00c2430afc8d107e8f17210404c140c504",
+      "size_bytes": 31347646
+    },
+    {
+      "name": "historian_60s.parquet",
+      "sha256": "6a861f1d9f897d54f4f75c31d8fa66a84be3ae665691557c5c2b94406016f57b",
+      "size_bytes": 24105942
+    },
+    {
+      "name": "submission_template.csv",
+      "sha256": "81e01f8c1af93c394bdcc8661afeb503f9cfc4288b3617fdfe74b4afd6230698",
+      "size_bytes": 215
+    },
+    {
+      "name": "tags.csv",
+      "sha256": "3e94abd9e996372a02ca4f18bb90100faa6a759fb14453f706b170375b4657d0",
+      "size_bytes": 9625
+    }
+  ],
+  "source_manifest": {
+    "kind": "native_reference",
+    "upstream_commit": "14e616c382a9db8026cbb4ab86bdd803d56ca72e",
+    "source": "committed upstream blobs; authored reference PFD overlay only",
+    "runtime_sha256": {
+      "src/historiansim/__init__.py": "71f17f1ae5856d71f763f8787299d44ec38a0264d90b69522746fe8d3a4bad8b",
+      "src/historiansim/ballast.py": "76a82cc4142841c446acbe10f227eb13b35a29a9d2437ae961bb50e547a5f1e2",
+      "src/historiansim/challenge.py": "6a3522036d4f6cafc60ed70035f1b491c45e1c8a4e7a5580ce26a88fcc40d9ca",
+      "src/historiansim/cli.py": "1cb38ea063aa61955be4c1b7c0129d6091953451ad1c1579c8270f569a0e5705",
+      "src/historiansim/config/__init__.py": "2abf6ce8b1fc001967265cdb8c69514a2024b820330d952e2cb318dbc38e6c84",
+      "src/historiansim/config/schema.py": "1a87528810378dae4a34992d481379c1bfc23b32337ee211dd31e43656e47f0a",
+      "src/historiansim/core/__init__.py": "ea28876101a2524c7f7c54826a033a8ac84aac13aa32dbff5b7b47fab4024566",
+      "src/historiansim/core/clock.py": "8b15615ff444a3cc995db256110f8dc03f139e26a0f6d0fdda3f27a812f2a042",
+      "src/historiansim/core/deadtime.py": "28265ba3af13e3bcbb14ae3a9db032ff8d5b834fa4ac6165fb5b3a924a014037",
+      "src/historiansim/core/integrator.py": "1faa959f8fae5db4fb0d33506874df272a4a7fbc4213eec854671cde4f9b6797",
+      "src/historiansim/core/noise.py": "1f54d64982f1f392470e80f7a0d0528ffd4360ded9dbd863c861e300297c224f",
+      "src/historiansim/core/pid.py": "c17bce4e9382631a02c79cedc38d4b01863a9fd2d75511b78b690c15d5e35867",
+      "src/historiansim/core/rng.py": "619830e96e6d11eab66a1f98f45eb9009034c241979e70469eff1c93bd021aef",
+      "src/historiansim/core/sim.py": "51ab8f07718db0a5fc0270101eb3bda10685db8e29d01f6233c680f7faf14ad8",
+      "src/historiansim/core/steam.py": "b8529b19080370556cd0f1315413525b7e867fddc4977d6d3a7088b7caf74023",
+      "src/historiansim/core/valve.py": "f3cac33ddec0fa788e01a74d47660086982221a3cf70b1a28cfc4f50a7a2e5dc",
+      "src/historiansim/disturbances/__init__.py": "263199d9bcaa03a6e8188a42c04162a6ecc5c0df1a48a7a947cf443d52381f09",
+      "src/historiansim/disturbances/bundle.py": "841088da953c2e987bc7ba60b75b627314b51d9ecf9b57360edf37d5f4412d34",
+      "src/historiansim/disturbances/drivers.py": "829e2b7b6037c6c1e83fc3036563d94a383ef3e2f28dba0e3fbb22c0cb52db25",
+      "src/historiansim/faults/__init__.py": "bf45774a76ce701bf484f66d9de01726f7f8fc85b62c96539c90997daa4c78bd",
+      "src/historiansim/faults/base.py": "d765ef2584316b4e37812d711c9af4a37a4028685168c21eb01b51730351da57",
+      "src/historiansim/faults/catalog.py": "d75b6549b6d88163ee967173831b447102fce6cd75a196860eba4001e2343812",
+      "src/historiansim/faults/scheduler.py": "f5e2d872b0e8f515eed03e38b8d50388eb8da6744ad377c881941f02ec0bdbde",
+      "src/historiansim/historian/__init__.py": "6ab35a7240897a5362a4225ef7f24b275ae6b1538c7ae0559af381d64f3a4c90",
+      "src/historiansim/historian/export.py": "e94eed8f2e51ca6025ff3f970a9dca1db63450cccc74b72d73bcda4ca34fa49b",
+      "src/historiansim/historian/swinging_door.py": "28e1a5f802d25dfa6e3896e1967d8485cb92e17129bb94772c9af20f83d566d6",
+      "src/historiansim/layout.py": "91ff9d00db18e9fa21ae038d7ba0641751aa9f40d9f54de8e4b2e58734a4c77b",
+      "src/historiansim/measurement/__init__.py": "f58cca082c34924b3920997ddf300630c0415ea20452abbd7afe5773963a2963",
+      "src/historiansim/measurement/apply.py": "0d761d9cd040d8d59e315c6795aee7af78c9ccc573b54ce0d819f7d4a2b65848",
+      "src/historiansim/measurement/instrument.py": "220ab27e65c5b21d3095f0621753391f12bf469108d7da99a47ddc168e68bec7",
+      "src/historiansim/measurement/pathology.py": "e7e7715810bab32f1f2fa60d701d335246811a74d194aa694d797c0b41adbf1f",
+      "src/historiansim/pipeline.py": "6699c718af23cb144585c480d1536e5c6df1993c2b265f54713b93903a621b96",
+      "src/historiansim/plants/__init__.py": "c6091b8779ec2ef27690cab91061d00de0e5d596b3be14e4c21af8460aabac3c",
+      "src/historiansim/plants/_template/DESIGN.md.tmpl": "d135029a0597ab48cfa3404063c708705927c7a0af075e941ca3ccca7b7d7da4",
+      "src/historiansim/plants/_template/__init__.py.tmpl": "cb729bca267d1f634e8d77169eb2577dd8ddf3c989008c9157e4a07c76497543",
+      "src/historiansim/plants/_template/description.py.tmpl": "c5d561c928a4c1b3571eab180c5513b90ade67270475a603ed6bdedecb2cb021",
+      "src/historiansim/plants/_template/faults.py.tmpl": "7ef4198f3a650d2a73882e70dfb83d3717bc4f91d8b3544fc28e44324a383867",
+      "src/historiansim/plants/_template/loops.py.tmpl": "55d2139c517c05e891ab05547e8af40134b0eb960672eecb48571ca652c82c80",
+      "src/historiansim/plants/_template/model.py.tmpl": "4a48c7a91d8def56e48e926c06a1de3d6002f0911c9ba4ea1729fdff09945bfe",
+      "src/historiansim/plants/_template/tags.py.tmpl": "8a06243729a6274b9025f93af0602b2f5da96afd71cb53dbcb43e81d17601168",
+      "src/historiansim/plants/base.py": "f57f1d47273d4088fc75b1f98098ee262354a94c80d9d71936c354b378bc7a09",
+      "src/historiansim/plants/exothermic_cstr/DESIGN.md": "26871985b92fa264dbfc8bcf44abfc344d7ecd0a084f500c97ffd206345579d2",
+      "src/historiansim/plants/exothermic_cstr/__init__.py": "8730f9c0799caa9b4151512db5a7a3d34781b9f1ff74426f00abfe7e3cb7caf9",
+      "src/historiansim/plants/exothermic_cstr/description.py": "acec3557eb1411e791208f95563aa430a013bbf421f81fd622d79a7d84f6848a",
+      "src/historiansim/plants/exothermic_cstr/faults.py": "b65eda5f0a225579773bfad30c5eeed441d9098ecbb8c670c655a1da878a5e97",
+      "src/historiansim/plants/exothermic_cstr/loops.py": "39f5109a83e75b44f86715a56a14a5040574781634d0331903c1463a9d4f653d",
+      "src/historiansim/plants/exothermic_cstr/model.py": "eac8c20b83d6df482685937e625166552bdcd61892f61aa44821426af0f724d9",
+      "src/historiansim/plants/exothermic_cstr/tags.py": "ef1636a2d0ba8dc79389a04762e5c3e864dfc48f1d2635e529d08a55bb7ee138",
+      "src/historiansim/plants/heated_stirred_tank/__init__.py": "887f7cc76d154856059e8d8741be6c0c417dabb56be92870dedc4c54745ef07c",
+      "src/historiansim/plants/heated_stirred_tank/description.py": "658a9ce6a483b57b74e03c43dbcdbb2db73d332cc42f3dac92b87232e4faac3a",
+      "src/historiansim/plants/heated_stirred_tank/faults.py": "4704b736b7488c33afda1c235e65b2e1ac3f62084eaa8e614fce650c048a14a5",
+      "src/historiansim/plants/heated_stirred_tank/loops.py": "53abb1d03fa58de71af35e6df03124c328561dcc77a5cb480de11b4cb124331a",
+      "src/historiansim/plants/heated_stirred_tank/model.py": "f817bb6639f444f07a8bff21bc71b13862a4f39260bd358bdd04ebda5c44bcf5",
+      "src/historiansim/plants/heated_stirred_tank/tags.py": "9b1dd889c4e6287f0ae39acdc32ec93e4ecf350a7f3b338e1b348cdd5dff9d1e",
+      "src/historiansim/plants/unit.py": "60e3cfb9eb0650203c09ef3b88e81906da9d4f7ec9465de7af3be25d865111ce",
+      "src/historiansim/plotting.py": "0b45c78e3a65c5c299e207d70c45431e26363c003a4f620a82af25aa9aa8bb6d",
+      "src/historiansim/process_doc.py": "a2c32acf1c2c738161efcc6008c0bba8bd363b8b00a756d3eb61805e7958b2e9",
+      "src/historiansim/scaffold.py": "e784a1ae8c929fd3158a8f343672493a8ee321ffd4758ee82f800788fef5ec32",
+      "src/historiansim/scenarios.py": "b60f0b6f292f060fafa876e511f2e95f7cfe22844ac778c082136839327f34e3",
+      "src/historiansim/scoring.py": "dc510866e9f9ab1ac9645f9d5937ea53b675ce592ec76be93f409bd8ee874512",
+      "src/historiansim/summary.py": "704f9b569f89b3ebbbb19ea838bbf56644edda4f016398d47adb354517776582",
+      "src/historiansim/tags.py": "f08885d7f5a2587763ad4927fa800e346bc116e36a3ba2fad5e55f3d4046af24",
+      "src/historiansim/truth/__init__.py": "8d329f3c330c20d2c64ba46f2f2cf4f92c3cd4e59cc920b5563282c6946b6a62",
+      "src/historiansim/truth/labels.py": "ef95fb298dea9000fd7b9aa999e87332406a55177a5738aa7b0fb7c45fe42632",
+      "src/historiansim/truth/manifest.py": "904472ad4eba32e8b20d3e55f39d45e9a669ff5c819e56833ff9fc92cd9f2d65",
+      "src/historiansim/validation/__init__.py": "fd4109ba85f30cac07bcbfa9430532618076cce5ab9a5afb4a43e52683231e8f",
+      "src/historiansim/validation/battery.py": "e93a82e2683176a74af1defca42251f506b6da52e9f0f4bb56f8ef73d2303c06",
+      "src/historiansim/validation/catalog.py": "3dafe238dfabf7a3d060fcdc39e619572f2fc890efa81e71a1895cdfb6a67268",
+      "src/historiansim/validation/plant_checks.py": "033bed0a228997ab1a7daf3a2f528f378a5d6552638aee91a4e3032883c90b30",
+      "src/historiansim/validation/recipe.py": "19776494adb0d4d070eb7325f27dde5c9676c11deecbebd008211dfa43056be8",
+      "src/historiansim/validation/report.py": "5dbdfe4a30dbe32cee838bcb1d4c0b8c639a511e9e397565f7f6a6352e346d8b",
+      "src/historiansim/plants/exothermic_cstr/pfd/PFD.png": "6813cdcef150f375cd152d07ee643d5f1790212b7bbe9c474bb95f375bb6b2ef",
+      "src/historiansim/plants/exothermic_cstr/pfd/PFD.svg": "927365e10e557e609ed8722db042400a7556db684b57a40d8a2d3bf30a11b3b0",
+      "src/historiansim/plants/exothermic_cstr/pfd/build_pfd.py": "6bd05ab23f72cb4925d41eaa5cb86419102d351015e4685d884b5c6b33c1d0a1",
+      "src/historiansim/plants/exothermic_cstr/pfd/pfd_contract.json": "16627ae9d740454f47aeff098a0fd0824dd72b1735fb5d40280c558e6e07ddfa",
+      "src/historiansim/plants/heated_stirred_tank/pfd/PFD.png": "ce864da7edcf178b243951dac6ec2b625c973e1ec82297bb159285c651a5c0b3",
+      "src/historiansim/plants/heated_stirred_tank/pfd/PFD.svg": "2ec05560eb76f9c5afd6da9b4dadc882f2a26a027894ffc2c0554efb1939cefe",
+      "src/historiansim/plants/heated_stirred_tank/pfd/build_pfd.py": "cb93f1ca53758bed65ce4021b0c4e66c0b448fd15c657bdb48642278940ceab4",
+      "src/historiansim/plants/heated_stirred_tank/pfd/pfd_contract.json": "23e6e8831d2574bbdd1a8cc267939cb04c790b4d087efea1d2a6aeef82e572ee"
+    },
+    "reference_pfd_overlay_sha256": {
+      "exothermic_cstr/PFD.png": "6813cdcef150f375cd152d07ee643d5f1790212b7bbe9c474bb95f375bb6b2ef",
+      "exothermic_cstr/PFD.svg": "927365e10e557e609ed8722db042400a7556db684b57a40d8a2d3bf30a11b3b0",
+      "exothermic_cstr/build_pfd.py": "6bd05ab23f72cb4925d41eaa5cb86419102d351015e4685d884b5c6b33c1d0a1",
+      "exothermic_cstr/pfd_contract.json": "16627ae9d740454f47aeff098a0fd0824dd72b1735fb5d40280c558e6e07ddfa",
+      "heated_stirred_tank/PFD.png": "ce864da7edcf178b243951dac6ec2b625c973e1ec82297bb159285c651a5c0b3",
+      "heated_stirred_tank/PFD.svg": "2ec05560eb76f9c5afd6da9b4dadc882f2a26a027894ffc2c0554efb1939cefe",
+      "heated_stirred_tank/build_pfd.py": "cb93f1ca53758bed65ce4021b0c4e66c0b448fd15c657bdb48642278940ceab4",
+      "heated_stirred_tank/pfd_contract.json": "23e6e8831d2574bbdd1a8cc267939cb04c790b4d087efea1d2a6aeef82e572ee"
+    }
+  },
+  "qualification_scope": "Complete original tank reference run only; no press or EKAS readiness claim"
+}

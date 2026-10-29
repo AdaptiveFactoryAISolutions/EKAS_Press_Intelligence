@@ -9,3 +9,11 @@ def verify_upstreams(repo_root: Path) -> None:
     p = subprocess.run([str(script)], capture_output=True, text=True)
     if p.returncode:
         raise UpstreamNotReady((p.stderr or p.stdout).strip())
+
+
+def verify_runtime(repo_root: Path) -> None:
+    verify_upstreams(repo_root)
+    import historiansim
+    expected=repo_root/'vendor'/'HistorianSim'/'src'/'historiansim'
+    if Path(historiansim.__file__).resolve().parent != expected.resolve():
+        raise UpstreamNotReady('Install HistorianSim from this repository\'s verified pinned submodule; an unrelated installation is not permitted')

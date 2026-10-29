@@ -1,0 +1,22 @@
+{
+  "flows": 12,
+  "console_errors": [],
+  "failed_requests": [],
+  "api_calls": [
+    "http://127.0.0.1:56139/",
+    "http://127.0.0.1:56139/static/app.css",
+    "http://127.0.0.1:56139/static/app.js",
+    "http://127.0.0.1:56139/v1/benchmark/run",
+    "http://127.0.0.1:56139/v1/observability/assess",
+    "http://127.0.0.1:56139/v1/signals",
+    "http://127.0.0.1:56139/v1/sensor-gaps?profile=enhanced",
+    "http://127.0.0.1:56139/v1/rca/investigate",
+    "http://127.0.0.1:56139/v1/rca/cases/cc9d1fed-5452-4502-ad8d-56f04000da74/evidence",
+    "http://127.0.0.1:56139/v1/benchmark/6fbf79e6-bbf3-4328-b923-02026f3f6cea/submit",
+    "http://127.0.0.1:56139/v1/benchmark/6fbf79e6-bbf3-4328-b923-02026f3f6cea/truth",
+    "http://127.0.0.1:56139/v1/rca/cases/cc9d1fed-5452-4502-ad8d-56f04000da74/actions",
+    "http://127.0.0.1:56139/v1/rca/cases/cc9d1fed-5452-4502-ad8d-56f04000da74",
+    "http://127.0.0.1:56139/v1/rca/cases/cc9d1fed-5452-4502-ad8d-56f04000da74/verify",
+    "http://127.0.0.1:56139/v1/rca/cases/cc9d1fed-5452-4502-ad8d-56f04000da74"
+  ]
+}
