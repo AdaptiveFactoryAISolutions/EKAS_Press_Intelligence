@@ -6,9 +6,11 @@ The full-stack rebuild uses the actual complete [HistorianSim](https://github.co
 
 ## Start the native reference workspace
 
-Use Linux, Python3.12, Bubblewrap, g++ and OpenSSL. Bubblewrap must support the required namespaces; the blind workflow fails closed if isolation is unavailable. Run these commands from this full-stack candidate checkout with both complete submodules. The candidate branch is not yet published; cloning the public default branch currently retrieves the earlier prototype.
+Use Linux, Python3.12, Bubblewrap, g++ and OpenSSL. Bubblewrap must support the required namespaces; the blind workflow fails closed if isolation is unavailable. Use the `full-stack-foundation` candidate branch in [draft PR2](https://github.com/AdaptiveFactoryAISolutions/EKAS_Press_Intelligence/pull/2), with both complete submodules. The public default branch still contains the earlier prototype.
 
 ```bash
+git clone --recurse-submodules --branch full-stack-foundation https://github.com/AdaptiveFactoryAISolutions/EKAS_Press_Intelligence.git
+cd EKAS_Press_Intelligence
 python3 -m venv .venv
 .venv/bin/python -m pip install -r requirements-lock.txt
 .venv/bin/python -m pip install --no-deps -e 'vendor/HistorianSim[dev]' -e '.[dev]'
