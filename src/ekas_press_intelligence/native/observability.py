@@ -94,6 +94,12 @@ def _disclosure(profile):
         'Public digital events retain their measured clock and quality; channel restrictions, if any, are explicit in the availability manifest.\n\n')
 
 
+def _missing_channels_message(missing):
+    return (' Missing required channels: '+', '.join(sorted(missing))+'. '
+        'The source may use an earlier model version or be incomplete. Select a current dataset, '
+        'or use its original verified runtime. Missing observations cannot be created or restored by export.')
+
+
 def execute_observability(parameters,target,repo_root,progress=None):
     if not isinstance(parameters,dict) or set(parameters)-{'dataset_dir','profile','plant'} or not {'dataset_dir','profile','plant'}.issubset(parameters):raise ValueError('INVALID_PARAMETERS: registered public dataset, native plant and availability profile required')
     profile=parameters['profile']
@@ -116,13 +122,16 @@ def execute_observability(parameters,target,repo_root,progress=None):
         try:previous=json.loads(path.read_text())
         except ValueError:raise ValueError('OBSERVABILITY_SCHEMA_MISMATCH: source availability manifest is invalid') from None
         if not isinstance(previous,dict) or previous.get('profile') not in {'sparse','enhanced'}:raise ValueError('OBSERVABILITY_SCHEMA_MISMATCH: source availability profile is unknown')
-    if profile=='enhanced' and (core-known or (previous and previous['profile']=='sparse')):raise ValueError('OBSERVABILITY_CANNOT_RESTORE: enhanced requires the complete original source channels; sparse observations cannot be restored')
-    if (core-withheld)-known:raise ValueError('OBSERVABILITY_SCHEMA_MISMATCH: source lacks native core channels required even by its sparse profile')
+    if profile=='enhanced' and (core-known or (previous and previous['profile']=='sparse')):raise ValueError('OBSERVABILITY_CANNOT_RESTORE: enhanced requires the complete original source channels; sparse observations cannot be restored'+(_missing_channels_message(core-known) if core-known else ' Use the original full source dataset.'))
+    if (core-withheld)-known:raise ValueError('OBSERVABILITY_SCHEMA_MISMATCH: source lacks native core channels required even by its sparse profile'+_missing_channels_message((core-withheld)-known))
     retained=[name for name in names if profile=='enhanced' or name not in withheld]
     if not retained:raise ValueError('OBSERVABILITY_EMPTY: no retained source channels')
+    restriction_applied=len(retained)<len(names)
+    availability_note=('This plant declares no withheld channels; the sparse profile retains all available source observations.' if profile=='sparse' and not withheld else '')
+    disclosure=_disclosure(profile)+(availability_note+'\n\n' if availability_note else '')
     info=dataset_info(source);grid_channels=set(info['grid']['columns'])-{'timestamp'}
-    if profile=='enhanced' and core-grid_channels:raise ValueError('OBSERVABILITY_CANNOT_RESTORE: source grid lacks native core channels even if the dictionary names them')
-    if (core-withheld)-grid_channels:raise ValueError('OBSERVABILITY_SCHEMA_MISMATCH: source grid lacks channels required by its sparse profile')
+    if profile=='enhanced' and core-grid_channels:raise ValueError('OBSERVABILITY_CANNOT_RESTORE: source grid lacks native core channels even if the dictionary names them'+_missing_channels_message(core-grid_channels))
+    if (core-withheld)-grid_channels:raise ValueError('OBSERVABILITY_SCHEMA_MISMATCH: source grid lacks channels required by its sparse profile'+_missing_channels_message((core-withheld)-grid_channels))
     digests=public_files(source)
     target.mkdir(parents=True,exist_ok=True);target.chmod(0o700);public=target/'public';public.mkdir()
     visible=set(retained);streaming={'batch_rows':BATCH_ROWS,'max_batch_rows':0};artifacts={}
@@ -167,12 +176,14 @@ def execute_observability(parameters,target,repo_root,progress=None):
             if origin.stat().st_size>2097152:raise ValueError('OBSERVABILITY_METADATA_LIMIT: public process/task document exceeds2MB')
             text=origin.read_text(encoding='utf-8')
             if profile=='sparse':text=re.sub(r'Every\s+event\s+has\s+a\s+single,\s+known\s+root\s+cause,\s+and\s+every\s+root\s+cause\s+can\s+be\s+determined\s+from\s+the\s+files\s+in\s+this\s+folder\s+alone\.','The physical source run is unchanged; this availability restriction may leave causal alternatives unresolved.',text,flags=re.I)
-            dest.write_text(_disclosure(profile)+'---\n\n'+text,encoding='utf-8')
+            dest.write_text(disclosure+'---\n\n'+text,encoding='utf-8')
         else:shutil.copyfile(origin,dest)
     phase('writing_availability_provenance')
-    (public/'SOURCE_AVAILABILITY.md').write_text(_disclosure(profile),encoding='utf-8')
+    (public/'SOURCE_AVAILABILITY.md').write_text(disclosure,encoding='utf-8')
     availability={'schema_version':1,'profile':profile,'plant':parameters['plant'],'same_physical_run':True,'resimulated':False,'interpolation_performed':False,'retained_tag_count':len(retained),'available_tags':retained,'withheld_tags':contract['withheld_tags'] if profile=='sparse' else [],'removed_source_tags':[name for name in names if name not in visible],'missing_source_core_tags':[name for name in contract['plant_tags'] if name not in known],'source_digests':digests,'output_artifacts':public_files(public),'native_contract_sha256':contract['contract_sha256'],'runtime_kind':contract['runtime_kind'],'event_artifact_handling':artifacts,'streaming':streaming,'disclosure':'Information restriction of existing public observations. Retained sample values, quality and timestamp order are preserved. Sparse uniqueness of causal diagnosis is not promised.'}
+    availability.update(restriction_applied=restriction_applied,availability_note=availability_note)
     (public/'SOURCE_AVAILABILITY.json').write_text(json.dumps(availability,indent=2,allow_nan=False)+'\n',encoding='utf-8')
     result={'operation':'observability_export','profile':profile,'plant':parameters['plant'],'public_directory':'public','dataset':dataset_info(public),'source_digests':digests,'retained_tag_count':len(retained),'source_tag_count':len(names),'withheld_tag_count':len(availability['withheld_tags']),'same_physical_run':True,'resimulated':False,'native_contract_sha256':contract['contract_sha256'],'streaming':streaming,'files':public_files(public),'validation_performed':False,'passed':None}
+    result.update(restriction_applied=restriction_applied,availability_note=availability_note)
     phase('observability_profile_exported')
     return result

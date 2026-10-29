@@ -11,6 +11,39 @@ from ekas_press_intelligence.native.data import public_files,resolve_public_file
 ROOT=Path(__file__).resolve().parents[1]
 PLANT='heated_stirred_tank'
 
+
+@pytest.mark.parametrize('profile,code',[('sparse','OBSERVABILITY_SCHEMA_MISMATCH'),('enhanced','OBSERVABILITY_CANNOT_RESTORE')])
+def test_missing_required_channels_explain_historical_source_recovery(source,tmp_path,profile,code):
+    folder,contract=source
+    missing=next(n for n in contract['plant_tags'] if n not in contract['withheld_tags'])
+    tags=pd.read_csv(folder/'tags.csv');tags[tags['tag']!=missing].to_csv(folder/'tags.csv',index=False)
+    before=public_files(folder)
+    with pytest.raises(ValueError) as error:
+        execute_observability({'dataset_dir':str(folder),'plant':PLANT,'profile':profile},tmp_path/'output',ROOT)
+    message=str(error.value)
+    assert message.startswith(code+':') and missing in message
+    assert 'earlier model version' in message and 'verified runtime' in message
+    assert public_files(folder)==before and not (tmp_path/'output').exists()
+
+
+def test_sparse_without_declared_withholding_discloses_no_restriction(source,tmp_path,monkeypatch):
+    import hashlib
+    from ekas_press_intelligence.native import observability
+    folder,original=source;contract=dict(original,withheld_tags=[])
+    contract.pop('contract_sha256')
+    contract['contract_sha256']=hashlib.sha256(json.dumps(contract,sort_keys=True).encode()).hexdigest()
+    monkeypatch.setattr(observability,'profile_contract',lambda *_:contract)
+    before=public_files(folder)
+    result=execute_observability({'dataset_dir':str(folder),'plant':PLANT,'profile':'sparse'},tmp_path/'export',ROOT)
+    exported=tmp_path/'export/public'
+    manifest=json.loads((exported/'SOURCE_AVAILABILITY.json').read_text())
+    assert manifest['restriction_applied'] is False and result['restriction_applied'] is False
+    assert 'no withheld channels' in manifest['availability_note']
+    assert 'no withheld channels' in (exported/'SOURCE_AVAILABILITY.md').read_text()
+    for name in ('historian_10s.parquet','historian_60s.parquet','cycle_events.parquet'):
+        pd.testing.assert_frame_equal(pd.read_parquet(folder/name),pd.read_parquet(exported/name))
+    assert public_files(folder)==before and manifest['resimulated'] is False
+
 @pytest.fixture
 def source(tmp_path):
     contract=profile_contract(PLANT,ROOT)

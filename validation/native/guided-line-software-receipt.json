@@ -1,6 +1,20 @@
 {
   "software_source_commit": "b314e3a4c705279e8bd0a3b026f2d7699f40e1ec",
-  "scope": "Local software verification, not production or diagnostic qualification; docs-only receipt publication does not change tested source.",
+  "scope": "Local software verification, not production or diagnostic qualification; base source plus the separately verified export clarification recorded below.",
+  "export_clarification_followup": {
+    "runtime_model_changed": false,
+    "mandatory_channel_guards_preserved": true,
+    "historical_failed_export_preserved": "d4e1a57a-27bb-495e-b079-b57488dec039",
+    "current_channels_both_profiles": 85,
+    "restriction_applied": false,
+    "related_tests_passed": 16,
+    "related_tests_seconds": 30.14,
+    "exact_live_public_parquet_comparisons_passed": 10,
+    "source_digests_unchanged": true,
+    "resimulated": false,
+    "distribution_verification_passed": true,
+    "reports": ["work/final-line-export-regressions.xml", "work/line-export-acceptance-r7-clarified/parity.json"]
+  },
   "qualified": false,
   "live_runtime_manifest_sha256": "d4fec6156a82d1d97825cf2fd88aa81fe6d8259f369cc910aeea7b7baa20ebc3",
   "upstream_pins": {

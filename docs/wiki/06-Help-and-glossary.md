@@ -18,6 +18,7 @@
 | Runtime version changed | Ask the installer to restart using the verified prepared runtime. Review the setup again; a queued run cannot silently execute a different model version. |
 | Washer or packing bottleneck warning | Restore sufficient downstream capacity, or deliberately acknowledge the bottleneck test at Step 6. The application does not silently accept it as normal production. |
 | Validation failed | Retain the result. Passing other checks does not cancel the failure. Ask the maintainer to investigate the specific cause. |
+| Export reports missing required channels | An older dataset may predate the current model's sensors. Select a current line dataset, or ask the maintainer to use its original verified runtime. Export cannot invent missing observations. |
 | Missing or flat readings | Inspect quality and source availability before inferring a machine fault. A bad/missing reading is not a measured zero. |
 | Only early history appears | The query may be truncated. Set a smaller UTC interval or use a complete public download/native plot. |
 | No event journal | Some datasets do not contain one. This does not prove no events occurred. |

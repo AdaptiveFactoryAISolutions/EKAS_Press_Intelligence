@@ -195,6 +195,29 @@ baseline's prior pass is preserved; no new remote baseline pass is asserted.
 
 ## Qualification boundary
 
+### Export clarification follow-up
+
+The failed historical export `d4e1a57a-27bb-495e-b079-b57488dec039`
+compared an earlier 83-channel dataset with the current 85-channel contract.
+It lacked `CALC-FEED-ERROR` and `FI-LUBE-MAKEUP`. The failure remains recorded;
+mandatory-channel and no-restoration guards remain strict. Errors now name
+missing channels and explain how to select a current dataset or its original
+verified runtime.
+
+The current line declares no withheld channels: Sparse and Enhanced both retain
+85 channels. UI, wiki and export manifests explicitly disclose that no sensor
+restriction was applied. This is not a reduced-sensor experiment.
+The related observability suites passed **16 tests** in 30.14 seconds, including
+three red/green regressions. Actual live exports
+`bf4508ad-a437-46e1-bdf1-6fbfc7ffaf79` and
+`25f505c1-e61a-41f0-9de6-84dcfea16c04` passed **10 exact public-Parquet
+comparisons**, preserving values, timestamps, quality, column order and types.
+Source digests remained unchanged; no resimulation occurred. Evidence:
+`work/final-line-export-regressions.xml` and
+`work/line-export-acceptance-r7-clarified/parity.json`.
+Both final wheels built and passed distribution verification. The R7 model
+manifest and protected vendor sources are unchanged by this wrapper follow-up.
+
 All wizard output is explicitly **UNQUALIFIED_PRACTICE / UNVALIDATED**, even
 when engineering accounting passes. The unchanged native validation battery
 runs and retains its findings. Deterministic encoder coloring and healthy-run

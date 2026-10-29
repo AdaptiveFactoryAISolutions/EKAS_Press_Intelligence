@@ -73,6 +73,14 @@ After completing your first healthy/feeder comparison:
 
 The connected model has numerical/native regression coverage and a nine-case native generation/audit set. Those are not the full diagnostic qualification campaign. The older press's qualification plan must be revised explicitly for 10 SPM; the old 45/60/75-SPM matrix cannot qualify this line.
 
+## Export the same measurements
+
+Enhanced and sparse exports use an existing dataset; they do not simulate the line again. Select a current line dataset, choose the profile and queue the export. Keep the new job/dataset number. Its source ID, timestamps, measured values and quality must match the original observations.
+
+The current fully instrumented line declares no channels to withhold. Both profiles therefore retain all **85 channels**. The availability file explicitly records that no restriction was applied; selecting **Sparse** alone does not create a reduced-sensor experiment. Other plants can declare a withholding list. Never infer a sensor gap merely from the profile name.
+
+Early development datasets contained fewer channels. If an export reports missing required channels, use a current generated line dataset or ask the maintainer to export with the original verified runtime. The exporter rejects missing required observations rather than inventing readings.
+
 ## Investigation and paid provider runs
 
 Exploring measurements does not require asking an external AI provider. **Queue blind analysis** and **Queue independent evaluation** can send authorized evidence to a configured provider and incur cost. Use them only under the agreed data-sharing and budget authorization. Do not enter private customer data into a training run without the customer's agreed handling arrangements.

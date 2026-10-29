@@ -51,3 +51,13 @@
 - Owned candidate18729 reloaded only with verified identity/path and zero active jobs; all earlier records retained. Final one-hour healthy job5d1c77e6-a731-4b1a-8bd7-8bf4857d99ac and feeder-slip jobfe5e01a3-faf4-4340-a07d-9aab5cb0d013 passed engineering/public samples and remained UNQUALIFIED_PRACTICE with native acquisition findings retained. Reference18728 record-value hashes were preserved; original18727 was not stopped. No merge, production activation, paid provider call, physical controller write or final diagnostic qualification occurred. Publication/exact-head CI receipt remains with draftPR2.
 - Published software b314e3a4c705279e8bd0a3b026f2d7699f40e1ec. Final R7 complete prepared-upstream LOCAL suite187passed/0skipped1536.744seconds, report87367683-f70a-43c4-992f-fc6808c82ec9; no original test-source or tolerance change. All eight original local validation layers also passed, with fresh legacy browser evidence retained separately and published baseline artifacts restored. GitHub native40921693639/original40921693702/CodeQL40921679393 failed before any steps: account locked due billing issue. No current-head remote clearance, billing alteration, retry loop or branch-protection bypass. Current source remains unqualified practice.
 - High host memory pressure during a duplicate core run produced187passes/3worker-timeout failures; report88c596eb-7fad-4883-9fac-c483e69dc093 is markedTEST_INTERRUPTED and is not a passing layer. Only that owned extra process was stopped, freeing about2.8GB; unrelated workloads were untouched. The same three failed tests passed separately23.00seconds with unchanged deadlines after pressure dropped to0.00%avg10. Earlier complete190backend pass remains separate; adverse results were not overwritten. Full receipts and remaining remote/production boundaries are in validation/native/guided-line-software-receipt.json and docs/validation/guided-1500t-line.md.
+# Export clarification follow-up — 2026-10-29
+
+Historical 83-channel export failure remains recorded. Mandatory-channel checks
+remain strict; recovery text now identifies missing tags and model-version
+mismatch. Current R7 Sparse and Enhanced exports both retain all 85 channels,
+explicitly disclosed as no restriction. Related suites: 16 passed in 30.14s;
+actual live exports: 10 exact public-Parquet comparisons passed, source digests
+unchanged, no resimulation. Both wheels built and distribution checks passed.
+Frozen model/vendor sources unchanged. See the guided-line validation report
+and machine-readable software receipt. Remote CI/CodeQL billing block remains.
